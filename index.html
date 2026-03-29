@@ -1398,13 +1398,8 @@
             <span class="space-icon">🍳</span>
             <span class="space-name" data-it="Cucina" data-en="Kitchen">Cucina</span>
           </div>
-          <div class="amenity-tags">
-            <span class="tag" data-it="Piano cottura" data-en="Stove">Piano cottura</span>
-            <span class="tag" data-it="Forno" data-en="Oven">Forno</span>
-            <span class="tag" data-it="Frigorifero" data-en="Fridge">Frigorifero</span>
-            <span class="tag" data-it="Lavastoviglie" data-en="Dishwasher">Lavastoviglie</span>
-            <span class="tag" data-it="Caffettiera" data-en="Coffee maker">Caffettiera</span>
-            <span class="tag" data-it="Microonde" data-en="Microwave">Microonde</span>
+          <div class="amenity-tags" id="st-kitchen-tags">
+            <!-- populated by JS -->
           </div>
         </div>
 
@@ -1413,41 +1408,15 @@
             <span class="space-icon">🚿</span>
             <span class="space-name" data-it="Bagno" data-en="Bathroom">Bagno</span>
           </div>
-          <div class="amenity-tags">
-            <span class="tag" data-it="Doccia" data-en="Shower">Doccia</span>
-            <span class="tag" data-it="Asciugamani" data-en="Towels">Asciugamani</span>
-            <span class="tag" data-it="Phon" data-en="Hair dryer">Phon</span>
-            <span class="tag" data-it="Prodotti igiene" data-en="Toiletries">Prodotti igiene</span>
+          <div class="amenity-tags" id="st-bathroom-tags">
+            <!-- populated by JS -->
           </div>
         </div>
 
         <!-- Extra Services -->
         <div class="card-title" style="margin-bottom:10px" data-it="✨ Servizi Extra" data-en="✨ Extra Services">✨ Servizi Extra</div>
-        <div class="service-grid" style="margin-bottom:20px">
-          <a class="service-item" href="#" onclick="requestService('Cambio Biancheria','Linen Change');return false;">
-            <div class="service-icon">🧺</div>
-            <div class="service-name" data-it="Cambio Biancheria" data-en="Linen Change">Cambio Biancheria</div>
-            <div class="service-desc" data-it="Ogni 4 giorni su richiesta" data-en="Every 4 days on request">Ogni 4 giorni su richiesta</div>
-            <div class="service-wa-hint" data-it="💬 Richiedi su WhatsApp" data-en="💬 Request on WhatsApp">💬 Richiedi su WhatsApp</div>
-          </a>
-          <a class="service-item" href="#" onclick="requestService('Pulizie Aggiuntive','Extra Cleaning');return false;">
-            <div class="service-icon">🧹</div>
-            <div class="service-name" data-it="Pulizie Aggiuntive" data-en="Extra Cleaning">Pulizie Aggiuntive</div>
-            <div class="service-desc" data-it="Disponibile su richiesta" data-en="Available on request">Disponibile su richiesta</div>
-            <div class="service-wa-hint" data-it="💬 Richiedi su WhatsApp" data-en="💬 Request on WhatsApp">💬 Richiedi su WhatsApp</div>
-          </a>
-          <a class="service-item" href="#" onclick="requestService('Transfer Aeroporto','Airport Transfer');return false;">
-            <div class="service-icon">🚗</div>
-            <div class="service-name" data-it="Transfer Aeroporto" data-en="Airport Transfer">Transfer Aeroporto</div>
-            <div class="service-desc" data-it="Prenotabile in anticipo" data-en="Book in advance">Prenotabile in anticipo</div>
-            <div class="service-wa-hint" data-it="💬 Richiedi su WhatsApp" data-en="💬 Request on WhatsApp">💬 Richiedi su WhatsApp</div>
-          </a>
-          <a class="service-item" href="#" onclick="requestService('Colazione','Breakfast');return false;">
-            <div class="service-icon">☕</div>
-            <div class="service-name" data-it="Colazione" data-en="Breakfast">Colazione</div>
-            <div class="service-desc" data-it="Disponibile su richiesta" data-en="Available on request">Disponibile su richiesta</div>
-            <div class="service-wa-hint" data-it="💬 Richiedi su WhatsApp" data-en="💬 Request on WhatsApp">💬 Richiedi su WhatsApp</div>
-          </a>
+        <div class="service-grid" id="st-extra-services" style="margin-bottom:20px">
+          <!-- populated by JS -->
         </div>
 
       </div>
@@ -1494,7 +1463,7 @@
             <span class="transport-icon">🎫</span>
             <span class="transport-title" data-it="Biglietti" data-en="Tickets">Biglietti</span>
           </div>
-          <p class="transport-desc" data-it="Biglietto singolo: ~€1,50 (valido 90 minuti). Abbonamento giornaliero: ~€5,00. Acquisto alle macchinette in stazione o tramite app." data-en="Single ticket: ~€1.50 (valid 90 minutes). Day pass: ~€5.00. Purchase at station machines or via app.">
+          <p class="transport-desc" id="tr-tickets-desc">
             Biglietto singolo: ~€1,50 (valido 90 minuti). Abbonamento giornaliero: ~€5,00.
           </p>
           <div class="transport-badge">💶 ~€1,50</div>
@@ -1506,7 +1475,7 @@
             <span class="transport-icon">🚖</span>
             <span class="transport-title" data-it="Taxi &amp; App" data-en="Taxi &amp; Apps">Taxi &amp; App</span>
           </div>
-          <p class="transport-desc" data-it="Taxi ufficiali: trovate i posteggi in piazza principale e in stazione. App consigliate: Uber, FREE NOW, Bolt. Tariffa minima ~€5." data-en="Official taxis: find stands in the main square and at the station. Recommended apps: Uber, FREE NOW, Bolt. Minimum fare ~€5.">
+          <p class="transport-desc" id="tr-taxi-desc">
             Taxi ufficiali disponibili in piazza e in stazione. App: Uber, FREE NOW, Bolt.
           </p>
         </div>
@@ -1569,36 +1538,11 @@
         <!-- Checkout steps -->
         <div class="checkout-steps">
           <div class="checkout-title">🏁 <span data-it="Al Check-out" data-en="At Check-out">Al Check-out</span></div>
-          <div class="step-item">
-            <div class="step-num">1</div>
-            <div class="step-body">
-              <div class="step-title" data-it="Raccogliete i vostri effetti personali" data-en="Gather your personal belongings">Raccogliete i vostri effetti personali</div>
-              <div class="step-desc" data-it="Controllate tutti i cassetti, armadi e il bagno per non dimenticare nulla." data-en="Check all drawers, wardrobes and the bathroom so you don't forget anything.">Controllate tutti i cassetti, armadi e il bagno.</div>
-            </div>
+          <div id="departure-steps-list">
+            <!-- populated by JS -->
           </div>
-          <div class="step-item">
-            <div class="step-num">2</div>
-            <div class="step-body">
-              <div class="step-title" data-it="Lasciate le chiavi" data-en="Leave the keys">Lasciate le chiavi</div>
-              <div class="step-desc" data-it="Depositate le chiavi nel luogo indicato dall'host al momento del check-in." data-en="Leave the keys in the place indicated by the host at check-in.">Depositate le chiavi nel luogo indicato dall'host.</div>
-            </div>
-          </div>
-          <div class="step-item">
-            <div class="step-num">3</div>
-            <div class="step-body">
-              <div class="step-title" data-it="Rifiuti e raccolta differenziata" data-en="Waste and recycling">Rifiuti e raccolta differenziata</div>
-              <div class="step-desc" data-it="Smaltite i rifiuti negli appositi contenitori seguendo le istruzioni in cucina." data-en="Dispose of waste in the appropriate containers following the instructions in the kitchen.">Smaltite i rifiuti negli appositi contenitori.</div>
-            </div>
-          </div>
-          <div class="step-item">
-            <div class="step-num">4</div>
-            <div class="step-body">
-              <div class="step-title" data-it="Lasciate una recensione" data-en="Leave a review">Lasciate una recensione</div>
-              <div class="step-desc" data-it="Se avete apprezzato il soggiorno, la vostra recensione è un grande aiuto per noi!" data-en="If you enjoyed your stay, your review is a huge help for us!">Se avete apprezzato il soggiorno, la vostra recensione è per noi un grande aiuto!</div>
-              <div id="google-review-btn-container" style="display:none;margin-top:12px">
-                <a id="google-review-btn" href="#" target="_blank" rel="noopener" class="maps-btn review-btn"><span data-it="⭐ Lascia una Recensione su Google" data-en="⭐ Leave a Google Review">⭐ Lascia una Recensione su Google</span></a>
-              </div>
-            </div>
+          <div id="google-review-btn-container" style="display:none;margin-top:12px;padding:0 4px">
+            <a id="google-review-btn" href="#" target="_blank" rel="noopener" class="maps-btn review-btn"><span data-it="⭐ Lascia una Recensione su Google" data-en="⭐ Leave a Google Review">⭐ Lascia una Recensione su Google</span></a>
           </div>
         </div>
 
@@ -1689,6 +1633,10 @@
         <div class="s-field"><label>Titolo EN</label><input type="text" id="s-closingTitleEn" placeholder="Thank you for choosing our B&amp;B!"></div>
         <div class="s-field"><label>Testo IT</label><textarea id="s-closingTextIt" placeholder="È stato un piacere avervi come ospiti..."></textarea></div>
         <div class="s-field"><label>Testo EN</label><textarea id="s-closingTextEn" placeholder="It was a pleasure having you as guests..."></textarea></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🏁 Istruzioni al Check-out (Partenza)</div>
+        <div id="s-checkout-steps" data-count="0"></div>
+        <button class="s-add-btn" style="margin-top:8px" onclick="addSettingsCheckoutStep()">➕ Aggiungi Passo</button>
       </div>
     </details>
 
@@ -1717,6 +1665,8 @@
       <div class="s-fields" style="margin-top:16px">
         <div class="s-divider"></div>
         <div class="s-sub-title">🛒 Supermercato</div>
+        <div class="s-field"><label>Descrizione IT</label><textarea id="s-supermarketIt" placeholder="Supermercato più vicino a ~300 metri..."></textarea></div>
+        <div class="s-field"><label>Descrizione EN</label><textarea id="s-supermarketEn" placeholder="Nearest supermarket ~300 meters away..."></textarea></div>
         <div class="s-field"><label>Link Google Maps</label><input type="url" id="s-supermarketMaps" placeholder="https://maps.google.com/..."></div>
       </div>
     </details>
@@ -1760,6 +1710,14 @@
         <div class="s-field"><label>IT</label><input type="text" id="s-tr-busIt" placeholder="Linee principali..."></div>
         <div class="s-field"><label>EN</label><input type="text" id="s-tr-busEn" placeholder="Main lines..."></div>
         <div class="s-field"><label>Link Maps</label><input type="url" id="s-tr-busMaps" placeholder="https://maps.google.com/..."></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🎫 Biglietti</div>
+        <div class="s-field"><label>IT</label><textarea id="s-tr-ticketsIt" placeholder="Biglietto singolo: ~€1,50..."></textarea></div>
+        <div class="s-field"><label>EN</label><textarea id="s-tr-ticketsEn" placeholder="Single ticket: ~€1.50..."></textarea></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🚖 Taxi &amp; App</div>
+        <div class="s-field"><label>IT</label><textarea id="s-tr-taxiIt" placeholder="Taxi ufficiali: trovate i posteggi..."></textarea></div>
+        <div class="s-field"><label>EN</label><textarea id="s-tr-taxiEn" placeholder="Official taxis: find stands..."></textarea></div>
       </div>
     </details>
 
@@ -1870,6 +1828,16 @@ const DEFAULT_DATA = {
         { icon: "🐾", titleIt: "Animali Domestici", titleEn: "Pets", descIt: "Gli animali domestici non sono ammessi senza previo accordo con l'host.", descEn: "Pets are not allowed without prior agreement with the host." },
         { icon: "👥", titleIt: "Ospiti Esterni", titleEn: "External Guests", descIt: "Non sono ammesse feste. Il numero di ospiti non deve superare la capienza massima indicata.", descEn: "Parties are not allowed. The number of guests must not exceed the stated maximum capacity." },
         { icon: "♻️", titleIt: "Raccolta Rifiuti", titleEn: "Waste Sorting", descIt: "Si prega di rispettare la raccolta differenziata. Istruzioni in cucina.", descEn: "Please respect waste sorting. Instructions are in the kitchen." }
+      ],
+      kitchenTagsIt: "Piano cottura,Forno,Frigorifero,Lavastoviglie,Caffettiera,Microonde",
+      kitchenTagsEn: "Stove,Oven,Fridge,Dishwasher,Coffee maker,Microwave",
+      bathroomTagsIt: "Doccia,Asciugamani,Phon,Prodotti igiene",
+      bathroomTagsEn: "Shower,Towels,Hair dryer,Toiletries",
+      extraServices: [
+        { icon: "🧺", nameIt: "Cambio Biancheria", nameEn: "Linen Change", descIt: "Ogni 4 giorni su richiesta", descEn: "Every 4 days on request" },
+        { icon: "🧹", nameIt: "Pulizie Aggiuntive", nameEn: "Extra Cleaning", descIt: "Disponibile su richiesta", descEn: "Available on request" },
+        { icon: "🚗", nameIt: "Transfer Aeroporto", nameEn: "Airport Transfer", descIt: "Prenotabile in anticipo", descEn: "Book in advance" },
+        { icon: "☕", nameIt: "Colazione", nameEn: "Breakfast", descIt: "Disponibile su richiesta", descEn: "Available on request" }
       ]
     },
     {
@@ -1898,6 +1866,16 @@ const DEFAULT_DATA = {
         { icon: "🐾", titleIt: "Animali Domestici", titleEn: "Pets", descIt: "Gli animali domestici non sono ammessi senza previo accordo con l'host.", descEn: "Pets are not allowed without prior agreement with the host." },
         { icon: "👥", titleIt: "Ospiti Esterni", titleEn: "External Guests", descIt: "Non sono ammesse feste. Il numero di ospiti non deve superare la capienza massima indicata.", descEn: "Parties are not allowed. The number of guests must not exceed the stated maximum capacity." },
         { icon: "♻️", titleIt: "Raccolta Rifiuti", titleEn: "Waste Sorting", descIt: "Si prega di rispettare la raccolta differenziata. Istruzioni in cucina.", descEn: "Please respect waste sorting. Instructions are in the kitchen." }
+      ],
+      kitchenTagsIt: "Piano cottura,Forno,Frigorifero,Lavastoviglie,Caffettiera,Microonde",
+      kitchenTagsEn: "Stove,Oven,Fridge,Dishwasher,Coffee maker,Microwave",
+      bathroomTagsIt: "Doccia,Asciugamani,Phon,Prodotti igiene",
+      bathroomTagsEn: "Shower,Towels,Hair dryer,Toiletries",
+      extraServices: [
+        { icon: "🧺", nameIt: "Cambio Biancheria", nameEn: "Linen Change", descIt: "Ogni 4 giorni su richiesta", descEn: "Every 4 days on request" },
+        { icon: "🧹", nameIt: "Pulizie Aggiuntive", nameEn: "Extra Cleaning", descIt: "Disponibile su richiesta", descEn: "Available on request" },
+        { icon: "🚗", nameIt: "Transfer Aeroporto", nameEn: "Airport Transfer", descIt: "Prenotabile in anticipo", descEn: "Book in advance" },
+        { icon: "☕", nameIt: "Colazione", nameEn: "Breakfast", descIt: "Disponibile su richiesta", descEn: "Available on request" }
       ]
     }
   ],
@@ -1986,7 +1964,15 @@ const DEFAULT_DATA = {
       maps: "#"
     }
   ],
+  supermarketIt: "Supermercato più vicino a ~300 metri. Orari: Lun–Sab 8:00–20:00, Dom 9:00–13:00.",
+  supermarketEn: "Nearest supermarket ~300 meters away. Hours: Mon–Sat 8:00–20:00, Sun 9:00–13:00.",
   supermarketMaps: "",
+  checkoutSteps: [
+    { titleIt: "Raccogliete i vostri effetti personali", titleEn: "Gather your personal belongings", descIt: "Controllate tutti i cassetti, armadi e il bagno per non dimenticare nulla.", descEn: "Check all drawers, wardrobes and the bathroom so you don't forget anything." },
+    { titleIt: "Lasciate le chiavi", titleEn: "Leave the keys", descIt: "Depositate le chiavi nel luogo indicato dall'host al momento del check-in.", descEn: "Leave the keys in the place indicated by the host at check-in." },
+    { titleIt: "Rifiuti e raccolta differenziata", titleEn: "Waste and recycling", descIt: "Smaltite i rifiuti negli appositi contenitori seguendo le istruzioni in cucina.", descEn: "Dispose of waste in the appropriate containers following the instructions in the kitchen." },
+    { titleIt: "Lasciate una recensione", titleEn: "Leave a review", descIt: "Se avete apprezzato il soggiorno, la vostra recensione è un grande aiuto per noi!", descEn: "If you enjoyed your stay, your review is a huge help for us!" }
+  ],
   transport: {
     airportEnabled: true,
     airportIt: "All'uscita dell'aeroporto trovi i taxi ufficiali. Tariffa fissa ~50–60€ per il centro. In alternativa, treno diretto per la stazione centrale ogni 30 min (~14€).",
@@ -2003,7 +1989,11 @@ const DEFAULT_DATA = {
     busEnabled: true,
     busIt: "Linee principali: Bus 10, 20, 30 verso il centro. Fermata a 200 metri dall'appartamento.",
     busEn: "Main lines: Bus 10, 20, 30 toward the center. Stop 200 meters from the apartment.",
-    busMaps: ""
+    busMaps: "",
+    ticketsIt: "Biglietto singolo: ~€1,50 (valido 90 minuti). Abbonamento giornaliero: ~€5,00. Acquisto alle macchinette in stazione o tramite app.",
+    ticketsEn: "Single ticket: ~€1.50 (valid 90 minutes). Day pass: ~€5.00. Purchase at station machines or via app.",
+    taxiIt: "Taxi ufficiali: trovate i posteggi in piazza principale e in stazione. App consigliate: Uber, FREE NOW, Bolt. Tariffa minima ~€5.",
+    taxiEn: "Official taxis: find stands in the main square and at the station. Recommended apps: Uber, FREE NOW, Bolt. Minimum fare ~€5."
   }
 };
 
@@ -2215,6 +2205,45 @@ function renderApp(aptIndex, lang) {
     ? roomsDesc.split('.').filter(s => s.trim()).map(s => `<span class="tag">${escHtml(s.trim())}</span>`).join('')
     : '';
 
+  // Kitchen tags
+  const kitchenTagsEl = document.getElementById('st-kitchen-tags');
+  if (kitchenTagsEl) {
+    const kitchenRaw = lang === 'it' ? (apt.kitchenTagsIt || '') : (apt.kitchenTagsEn || apt.kitchenTagsIt || '');
+    kitchenTagsEl.innerHTML = kitchenRaw
+      ? kitchenRaw.split(',').map(t => t.trim()).filter(Boolean).map(t => `<span class="tag">${escHtml(t)}</span>`).join('')
+      : '';
+  }
+
+  // Bathroom tags
+  const bathroomTagsEl = document.getElementById('st-bathroom-tags');
+  if (bathroomTagsEl) {
+    const bathroomRaw = lang === 'it' ? (apt.bathroomTagsIt || '') : (apt.bathroomTagsEn || apt.bathroomTagsIt || '');
+    bathroomTagsEl.innerHTML = bathroomRaw
+      ? bathroomRaw.split(',').map(t => t.trim()).filter(Boolean).map(t => `<span class="tag">${escHtml(t)}</span>`).join('')
+      : '';
+  }
+
+  // Extra Services
+  const servicesEl = document.getElementById('st-extra-services');
+  if (servicesEl) {
+    servicesEl.innerHTML = '';
+    const waHint = lang === 'it' ? '💬 Richiedi su WhatsApp' : '💬 Request on WhatsApp';
+    (apt.extraServices || []).forEach(svc => {
+      const name = lang === 'it' ? (svc.nameIt || '') : (svc.nameEn || svc.nameIt || '');
+      const desc = lang === 'it' ? (svc.descIt || '') : (svc.descEn || svc.descIt || '');
+      const a = document.createElement('a');
+      a.className = 'service-item';
+      a.href = '#';
+      a.setAttribute('onclick', `requestService(${JSON.stringify(svc.nameIt || '')},${JSON.stringify(svc.nameEn || '')});return false;`);
+      a.innerHTML = `
+        <div class="service-icon">${escHtml(svc.icon || '✨')}</div>
+        <div class="service-name">${escHtml(name)}</div>
+        <div class="service-desc">${escHtml(desc)}</div>
+        <div class="service-wa-hint">${waHint}</div>`;
+      servicesEl.appendChild(a);
+    });
+  }
+
   // Places
   renderPlaces(d.places, lang);
 
@@ -2303,8 +2332,8 @@ function renderFood(restaurants, lang) {
   // Supermercato
   const superLabel = lang === 'it' ? 'Supermercato' : 'Supermarket';
   const superDesc = lang === 'it'
-    ? 'Supermercato più vicino a ~300 metri. Orari: Lun–Sab 8:00–20:00, Dom 9:00–13:00.'
-    : 'Nearest supermarket ~300 meters away. Hours: Mon–Sat 8:00–20:00, Sun 9:00–13:00.';
+    ? (currentData.supermarketIt || 'Supermercato più vicino a ~300 metri. Orari: Lun–Sab 8:00–20:00, Dom 9:00–13:00.')
+    : (currentData.supermarketEn || 'Nearest supermarket ~300 meters away. Hours: Mon–Sat 8:00–20:00, Sun 9:00–13:00.');
   const superMaps = currentData.supermarketMaps || '';
   const superMapsLabel = lang === 'it' ? '🧭 Vedi su Maps' : '🧭 View on Maps';
   const superMapsBtn = superMaps ? `<a class="maps-btn" href="${escAttr(superMaps)}" target="_blank" rel="noopener">${superMapsLabel}</a>` : '';
@@ -2350,6 +2379,14 @@ function renderTransport(transport, lang) {
     `;
     container.appendChild(card);
   });
+
+  // Biglietti
+  const ticketsEl = document.getElementById('tr-tickets-desc');
+  if (ticketsEl) ticketsEl.textContent = lang === 'it' ? (transport.ticketsIt || '') : (transport.ticketsEn || transport.ticketsIt || '');
+
+  // Taxi & App
+  const taxiEl = document.getElementById('tr-taxi-desc');
+  if (taxiEl) taxiEl.textContent = lang === 'it' ? (transport.taxiIt || '') : (transport.taxiEn || transport.taxiIt || '');
 }
 
 // ════════════════════════════════════════════
@@ -2383,6 +2420,25 @@ function renderDeparture(d, lang) {
   const textEl = document.getElementById('closing-text');
   if (titleEl) titleEl.textContent = lang === 'it' ? (d.closingTitleIt || '') : (d.closingTitleEn || '');
   if (textEl) textEl.textContent = lang === 'it' ? (d.closingTextIt || '') : (d.closingTextEn || '');
+
+  // Checkout steps
+  const stepsContainer = document.getElementById('departure-steps-list');
+  if (stepsContainer) {
+    stepsContainer.innerHTML = '';
+    (d.checkoutSteps || []).forEach((step, i) => {
+      const title = lang === 'it' ? (step.titleIt || '') : (step.titleEn || step.titleIt || '');
+      const desc = lang === 'it' ? (step.descIt || '') : (step.descEn || step.descIt || '');
+      const item = document.createElement('div');
+      item.className = 'step-item';
+      item.innerHTML = `
+        <div class="step-num">${i + 1}</div>
+        <div class="step-body">
+          <div class="step-title">${escHtml(title)}</div>
+          <div class="step-desc">${escHtml(desc)}</div>
+        </div>`;
+      stepsContainer.appendChild(item);
+    });
+  }
 }
 
 // ════════════════════════════════════════════
@@ -2592,9 +2648,22 @@ function renderSettingsApts(apts) {
         <div class="s-sub-title">🏠 Regole della casa</div>
         <div id="s-a${i}-rules" data-count="0"></div>
         <button class="s-add-btn" style="margin-top:8px" onclick="addAptHouseRule(${i})">➕ Aggiungi Regola</button>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🍳 Cucina — Dotazioni (comma-separato)</div>
+        <div class="s-field"><label>IT</label><input type="text" id="s-a${i}-kitchenTagsIt" value="${escAttr(apt.kitchenTagsIt || '')}" placeholder="Piano cottura,Forno,Frigorifero..."></div>
+        <div class="s-field"><label>EN</label><input type="text" id="s-a${i}-kitchenTagsEn" value="${escAttr(apt.kitchenTagsEn || '')}" placeholder="Stove,Oven,Fridge..."></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🚿 Bagno — Dotazioni (comma-separato)</div>
+        <div class="s-field"><label>IT</label><input type="text" id="s-a${i}-bathroomTagsIt" value="${escAttr(apt.bathroomTagsIt || '')}" placeholder="Doccia,Asciugamani,Phon..."></div>
+        <div class="s-field"><label>EN</label><input type="text" id="s-a${i}-bathroomTagsEn" value="${escAttr(apt.bathroomTagsEn || '')}" placeholder="Shower,Towels,Hair dryer..."></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">✨ Servizi Extra</div>
+        <div id="s-a${i}-services" data-count="0"></div>
+        <button class="s-add-btn" style="margin-top:8px" onclick="addAptExtraService(${i})">➕ Aggiungi Servizio</button>
       </div>`;
     container.appendChild(section);
     renderAptHouseRules(i, apt.houseRules || []);
+    renderAptExtraServices(i, apt.extraServices || []);
   });
 }
 
@@ -2604,11 +2673,12 @@ function collectSettingsApts() {
   const apts = [];
   for (let i = 0; i < count; i++) {
     const apt = {};
-    ['name','nameEn','address','addressShort','mapsLink','maxGuests','maxGuestsEn','roomsIt','roomsEn','wifi','wifiPass','checkin','checkout','howToReachIt','howToReachEn','howToAccessIt','howToAccessEn','parkingIt','parkingEn'].forEach(k => {
+    ['name','nameEn','address','addressShort','mapsLink','maxGuests','maxGuestsEn','roomsIt','roomsEn','wifi','wifiPass','checkin','checkout','howToReachIt','howToReachEn','howToAccessIt','howToAccessEn','parkingIt','parkingEn','kitchenTagsIt','kitchenTagsEn','bathroomTagsIt','bathroomTagsEn'].forEach(k => {
       const el = document.getElementById(`s-a${i}-${k}`);
       if (el) apt[k] = el.value;
     });
     apt.houseRules = collectAptHouseRules(i);
+    apt.extraServices = collectAptExtraServices(i);
     apts.push(apt);
   }
   return apts;
@@ -2617,7 +2687,7 @@ function collectSettingsApts() {
 function addSettingsApt() {
   const current = collectSettingsApts();
   const n = current.length + 1;
-  current.push({ name: `Appartamento ${n}`, nameEn: `Apartment ${n}`, address: '', addressShort: '', mapsLink: '', maxGuests: '4 persone', maxGuestsEn: '4 guests', roomsIt: '', roomsEn: '', wifi: '', wifiPass: '', checkin: '15:00', checkout: '10:00', howToReachIt: '', howToReachEn: '', howToAccessIt: '', howToAccessEn: '', parkingIt: '', parkingEn: '', houseRules: [] });
+  current.push({ name: `Appartamento ${n}`, nameEn: `Apartment ${n}`, address: '', addressShort: '', mapsLink: '', maxGuests: '4 persone', maxGuestsEn: '4 guests', roomsIt: '', roomsEn: '', wifi: '', wifiPass: '', checkin: '15:00', checkout: '10:00', howToReachIt: '', howToReachEn: '', howToAccessIt: '', howToAccessEn: '', parkingIt: '', parkingEn: '', houseRules: [], kitchenTagsIt: '', kitchenTagsEn: '', bathroomTagsIt: '', bathroomTagsEn: '', extraServices: [] });
   renderSettingsApts(current);
   const last = document.getElementById('s-apts-container').lastElementChild;
   if (last) { last.open = true; last.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
@@ -2681,6 +2751,109 @@ function removeAptHouseRule(aptIndex, ruleIdx) {
   const current = collectAptHouseRules(aptIndex);
   current.splice(ruleIdx, 1);
   renderAptHouseRules(aptIndex, current);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS: APT EXTRA SERVICES (dynamic)
+// ════════════════════════════════════════════
+function renderAptExtraServices(aptIndex, services) {
+  const container = document.getElementById(`s-a${aptIndex}-services`);
+  if (!container) return;
+  container.dataset.count = services.length;
+  let html = '';
+  services.forEach((svc, j) => {
+    html += `
+      <div class="s-sub-title s-sub-title-row" style="margin-top:12px">
+        <span>Servizio ${j + 1}</span>
+        <button class="s-remove-btn" onclick="removeAptExtraService(${aptIndex}, ${j})">🗑️ Rimuovi</button>
+      </div>
+      <div class="s-field"><label>Icona (emoji)</label><input type="text" id="s-a${aptIndex}-svc${j}-icon" value="${escAttr(svc.icon || '')}" placeholder="✨"></div>
+      <div class="s-field"><label>Nome IT</label><input type="text" id="s-a${aptIndex}-svc${j}-nameIt" value="${escAttr(svc.nameIt || '')}"></div>
+      <div class="s-field"><label>Nome EN</label><input type="text" id="s-a${aptIndex}-svc${j}-nameEn" value="${escAttr(svc.nameEn || '')}"></div>
+      <div class="s-field"><label>Descrizione IT</label><input type="text" id="s-a${aptIndex}-svc${j}-descIt" value="${escAttr(svc.descIt || '')}"></div>
+      <div class="s-field"><label>Descrizione EN</label><input type="text" id="s-a${aptIndex}-svc${j}-descEn" value="${escAttr(svc.descEn || '')}"></div>`;
+  });
+  container.innerHTML = html;
+}
+
+function collectAptExtraServices(aptIndex) {
+  const container = document.getElementById(`s-a${aptIndex}-services`);
+  if (!container) return [];
+  const count = parseInt(container.dataset.count || '0');
+  const services = [];
+  for (let j = 0; j < count; j++) {
+    const svc = {};
+    ['icon', 'nameIt', 'nameEn', 'descIt', 'descEn'].forEach(k => {
+      const el = document.getElementById(`s-a${aptIndex}-svc${j}-${k}`);
+      if (el) svc[k] = el.value;
+    });
+    services.push(svc);
+  }
+  return services;
+}
+
+function addAptExtraService(aptIndex) {
+  const current = collectAptExtraServices(aptIndex);
+  current.push({ icon: '✨', nameIt: '', nameEn: '', descIt: '', descEn: '' });
+  renderAptExtraServices(aptIndex, current);
+}
+
+function removeAptExtraService(aptIndex, svcIdx) {
+  if (!confirm(`Rimuovere il servizio ${svcIdx + 1}?`)) return;
+  const current = collectAptExtraServices(aptIndex);
+  current.splice(svcIdx, 1);
+  renderAptExtraServices(aptIndex, current);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS: CHECKOUT STEPS (dynamic)
+// ════════════════════════════════════════════
+function renderSettingsCheckoutSteps(steps) {
+  const container = document.getElementById('s-checkout-steps');
+  if (!container) return;
+  container.dataset.count = steps.length;
+  let html = '';
+  steps.forEach((step, j) => {
+    html += `
+      <div class="s-sub-title s-sub-title-row" style="margin-top:12px">
+        <span>Passo ${j + 1}</span>
+        <button class="s-remove-btn" onclick="removeSettingsCheckoutStep(${j})">🗑️ Rimuovi</button>
+      </div>
+      <div class="s-field"><label>Titolo IT</label><input type="text" id="s-cs${j}-titleIt" value="${escAttr(step.titleIt || '')}"></div>
+      <div class="s-field"><label>Titolo EN</label><input type="text" id="s-cs${j}-titleEn" value="${escAttr(step.titleEn || '')}"></div>
+      <div class="s-field"><label>Descrizione IT</label><textarea id="s-cs${j}-descIt">${escHtml(step.descIt || '')}</textarea></div>
+      <div class="s-field"><label>Descrizione EN</label><textarea id="s-cs${j}-descEn">${escHtml(step.descEn || '')}</textarea></div>`;
+  });
+  container.innerHTML = html;
+}
+
+function collectSettingsCheckoutSteps() {
+  const container = document.getElementById('s-checkout-steps');
+  if (!container) return [];
+  const count = parseInt(container.dataset.count || '0');
+  const steps = [];
+  for (let j = 0; j < count; j++) {
+    const step = {};
+    ['titleIt', 'titleEn', 'descIt', 'descEn'].forEach(k => {
+      const el = document.getElementById(`s-cs${j}-${k}`);
+      if (el) step[k] = el.value;
+    });
+    steps.push(step);
+  }
+  return steps;
+}
+
+function addSettingsCheckoutStep() {
+  const current = collectSettingsCheckoutSteps();
+  current.push({ titleIt: '', titleEn: '', descIt: '', descEn: '' });
+  renderSettingsCheckoutSteps(current);
+}
+
+function removeSettingsCheckoutStep(idx) {
+  if (!confirm(`Rimuovere il passo ${idx + 1}?`)) return;
+  const current = collectSettingsCheckoutSteps();
+  current.splice(idx, 1);
+  renderSettingsCheckoutSteps(current);
 }
 
 // ════════════════════════════════════════════
@@ -2866,6 +3039,9 @@ function populateSettingsForms() {
   document.getElementById('s-closingTextIt').value = d.closingTextIt || '';
   document.getElementById('s-closingTextEn').value = d.closingTextEn || '';
 
+  // Checkout steps (dynamic)
+  renderSettingsCheckoutSteps(d.checkoutSteps || []);
+
   // Apts (dynamic)
   renderSettingsApts(d.apts);
 
@@ -2876,6 +3052,8 @@ function populateSettingsForms() {
   renderSettingsRests(d.restaurants);
 
   // Supermarket
+  document.getElementById('s-supermarketIt').value = d.supermarketIt || '';
+  document.getElementById('s-supermarketEn').value = d.supermarketEn || '';
   document.getElementById('s-supermarketMaps').value = d.supermarketMaps || '';
 
   // Transport
@@ -2896,6 +3074,10 @@ function populateSettingsForms() {
   document.getElementById('s-tr-busIt').value = tr.busIt || '';
   document.getElementById('s-tr-busEn').value = tr.busEn || '';
   document.getElementById('s-tr-busMaps').value = tr.busMaps || '';
+  document.getElementById('s-tr-ticketsIt').value = tr.ticketsIt || '';
+  document.getElementById('s-tr-ticketsEn').value = tr.ticketsEn || '';
+  document.getElementById('s-tr-taxiIt').value = tr.taxiIt || '';
+  document.getElementById('s-tr-taxiEn').value = tr.taxiEn || '';
 
   // Contacts (dynamic)
   renderSettingsContacts(d.extraContacts || []);
@@ -2917,6 +3099,9 @@ function collectFormData() {
   d.closingTextIt = document.getElementById('s-closingTextIt').value.trim();
   d.closingTextEn = document.getElementById('s-closingTextEn').value.trim();
 
+  // Checkout steps
+  d.checkoutSteps = collectSettingsCheckoutSteps();
+
   // Dynamic apts
   d.apts = collectSettingsApts();
 
@@ -2927,6 +3112,8 @@ function collectFormData() {
   d.restaurants = collectSettingsRests();
 
   // Supermarket
+  d.supermarketIt = document.getElementById('s-supermarketIt').value.trim();
+  d.supermarketEn = document.getElementById('s-supermarketEn').value.trim();
   d.supermarketMaps = document.getElementById('s-supermarketMaps').value.trim();
 
   d.transport.airportEnabled = document.getElementById('s-tr-airportEnabled').checked;
@@ -2945,6 +3132,10 @@ function collectFormData() {
   d.transport.busIt = document.getElementById('s-tr-busIt').value.trim();
   d.transport.busEn = document.getElementById('s-tr-busEn').value.trim();
   d.transport.busMaps = document.getElementById('s-tr-busMaps').value.trim();
+  d.transport.ticketsIt = document.getElementById('s-tr-ticketsIt').value.trim();
+  d.transport.ticketsEn = document.getElementById('s-tr-ticketsEn').value.trim();
+  d.transport.taxiIt = document.getElementById('s-tr-taxiIt').value.trim();
+  d.transport.taxiEn = document.getElementById('s-tr-taxiEn').value.trim();
 
   // Dynamic contacts
   d.extraContacts = collectSettingsContacts();
