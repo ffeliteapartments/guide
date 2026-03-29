@@ -2372,7 +2372,7 @@ function renderApp(aptIndex, lang) {
   }
 
   // Update nav labels and section titles from data (before applyLangAttrs)
-  const nl = d.navLabels;
+  const nl = d.navLabels || DEFAULT_DATA.navLabels;
   const navLabelMap = {
     home: [nl.homeIt, nl.homeEn],
     stay: [nl.stayIt, nl.stayEn],
@@ -2404,7 +2404,7 @@ function renderApp(aptIndex, lang) {
   });
 
   // Update section headers from data
-  const st = d.sectionTitles;
+  const st = d.sectionTitles || DEFAULT_DATA.sectionTitles;
   const sectionHeaderMap = [
     { tab: 'stay',      eyebrowIt: st.stayEyebrowIt,      eyebrowEn: st.stayEyebrowEn,      titleIt: st.stayTitleIt,      titleEn: st.stayTitleEn },
     { tab: 'places',    eyebrowIt: st.placesEyebrowIt,    eyebrowEn: st.placesEyebrowEn,    titleIt: st.placesTitleIt,    titleEn: st.placesTitleEn },
@@ -3230,7 +3230,7 @@ function populateSettingsForms() {
   renderSettingsContacts(d.extraContacts || []);
 
   // Nav Labels
-  const nl = d.navLabels;
+  const nl = d.navLabels || {};
   document.getElementById('s-nl-homeIt').value = nl.homeIt || '';
   document.getElementById('s-nl-homeEn').value = nl.homeEn || '';
   document.getElementById('s-nl-stayIt').value = nl.stayIt || '';
@@ -3245,7 +3245,7 @@ function populateSettingsForms() {
   document.getElementById('s-nl-departureEn').value = nl.departureEn || '';
 
   // Section Titles
-  const st = d.sectionTitles;
+  const st = d.sectionTitles || {};
   document.getElementById('s-st-stayEyebrowIt').value = st.stayEyebrowIt || '';
   document.getElementById('s-st-stayEyebrowEn').value = st.stayEyebrowEn || '';
   document.getElementById('s-st-stayTitleIt').value = st.stayTitleIt || '';
@@ -3408,7 +3408,7 @@ function importJSON(event) {
   reader.onload = e => {
     try {
       const imported = JSON.parse(e.target.result);
-      currentData = imported;
+      currentData = mergeWithDefaults(imported, DEFAULT_DATA);
       saveData(currentData);
       renderLanding();
       populateSettingsForms();
