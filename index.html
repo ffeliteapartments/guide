@@ -74,33 +74,6 @@
     padding: 20px 20px 0;
   }
 
-  .lang-toggle {
-    display: flex;
-    gap: 2px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    overflow: hidden;
-  }
-
-  .lang-toggle button {
-    background: transparent;
-    border: none;
-    color: var(--text2);
-    font-family: 'Jost', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 6px 12px;
-    cursor: pointer;
-    letter-spacing: .5px;
-    transition: all .2s;
-    border-radius: 20px;
-  }
-  .lang-toggle button.active {
-    background: var(--gold);
-    color: var(--bg);
-  }
-
   .landing-hero {
     padding: 32px 24px 20px;
     animation: fadeUp .5s ease both;
@@ -290,32 +263,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-
-  .guide-lang-toggle {
-    display: flex;
-    gap: 2px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    overflow: hidden;
-    flex-shrink: 0;
-  }
-  .guide-lang-toggle button {
-    background: transparent;
-    border: none;
-    color: var(--text2);
-    font-family: 'Jost', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 20px;
-    transition: all .2s;
-  }
-  .guide-lang-toggle button.active {
-    background: var(--gold);
-    color: var(--bg);
   }
 
   /* ── TAB CONTENT ───────────────────────────────────── */
@@ -1173,10 +1120,6 @@
 ════════════════════════════════════════════ -->
 <div id="landing">
   <div class="landing-topbar">
-    <div class="lang-toggle">
-      <button id="landing-it" class="active" onclick="setLandingLang('it')">IT</button>
-      <button id="landing-en" onclick="setLandingLang('en')">EN</button>
-    </div>
   </div>
 
   <div class="landing-hero">
@@ -1191,7 +1134,6 @@
 
   <p class="landing-intro" id="l-intro">
     Benvenuti! Selezionate il vostro appartamento per accedere alla guida completa.
-    <span class="lang-en" style="display:none">Welcome! Select your apartment to access the complete guide.</span>
   </p>
 
   <div class="apt-cards" id="apt-cards-container">
@@ -1209,10 +1151,6 @@
   <div class="guide-header">
     <button class="back-btn" onclick="goBack()" aria-label="Torna indietro">←</button>
     <div class="guide-apt-name" id="guide-apt-name">Appartamento 1</div>
-    <div class="guide-lang-toggle">
-      <button id="guide-it" class="active" onclick="setGuideLang('it')">IT</button>
-      <button id="guide-en" onclick="setGuideLang('en')">EN</button>
-    </div>
   </div>
 
   <div class="guide-content" id="guide-content">
@@ -1229,23 +1167,23 @@
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-icon">🔑</div>
-          <div class="stat-label" data-it="Check-in" data-en="Check-in">Check-in</div>
+          <div class="stat-label">Check-in</div>
           <div class="stat-value" id="s-checkin">15:00</div>
         </div>
         <div class="stat-card">
           <div class="stat-icon">🚪</div>
-          <div class="stat-label" data-it="Check-out" data-en="Check-out">Check-out</div>
+          <div class="stat-label">Check-out</div>
           <div class="stat-value" id="s-checkout">10:00</div>
         </div>
         <div class="stat-card">
           <div class="stat-icon">📶</div>
-          <div class="stat-label" data-it="WiFi" data-en="WiFi">WiFi</div>
+          <div class="stat-label">WiFi</div>
           <div class="stat-value" id="s-wifi">NomeRete</div>
         </div>
         <div class="stat-card">
           <div class="stat-icon">🧭</div>
-          <div class="stat-label" data-it="Mappa" data-en="Maps">Mappa</div>
-          <div class="stat-value"><a id="s-maps" href="#" target="_blank" data-it="Apri Maps" data-en="Open Maps">Apri Maps</a></div>
+          <div class="stat-label">Mappa</div>
+          <div class="stat-value"><a id="s-maps" href="#" target="_blank">Apri Maps</a></div>
         </div>
       </div>
 
@@ -1254,58 +1192,55 @@
         <p class="welcome-text" id="w-text-it">
           Siamo felici di avervi come ospiti! Questo appartamento è stato preparato con cura per rendere il vostro soggiorno indimenticabile. Siamo a vostra disposizione per qualsiasi necessità — non esitate a contattarci.
         </p>
-        <p class="welcome-text lang-en" id="w-text-en" style="display:none">
-          We are delighted to have you as our guests! This apartment has been carefully prepared to make your stay unforgettable. We are at your disposal for any need — please do not hesitate to contact us.
-        </p>
         <div class="welcome-sign" id="w-sign">★ Nome Host</div>
       </div>
 
       <div class="quick-nav">
-        <div class="quick-nav-title" data-it="Esplora la guida" data-en="Explore the guide">Esplora la guida</div>
+        <div class="quick-nav-title">Esplora la guida</div>
         <div class="quick-nav-card" onclick="switchTab('stay')">
           <div class="quick-nav-icon">🛋️</div>
           <div class="quick-nav-body">
-            <div class="quick-nav-label" data-it="Soggiorno" data-en="Stay">Soggiorno</div>
-            <div class="quick-nav-desc" data-it="WiFi, regole, spazi, servizi" data-en="WiFi, rules, spaces, services">WiFi, regole, spazi, servizi</div>
+            <div class="quick-nav-label">Soggiorno</div>
+            <div class="quick-nav-desc">WiFi, regole, spazi, servizi</div>
           </div>
           <div class="quick-nav-arrow">›</div>
         </div>
         <div class="quick-nav-card" onclick="switchTab('places')">
           <div class="quick-nav-icon">🗺️</div>
           <div class="quick-nav-body">
-            <div class="quick-nav-label" data-it="Luoghi" data-en="Places">Luoghi</div>
-            <div class="quick-nav-desc" data-it="Attrazioni e punti di interesse" data-en="Attractions and points of interest">Attrazioni e punti di interesse</div>
+            <div class="quick-nav-label">Luoghi</div>
+            <div class="quick-nav-desc">Attrazioni e punti di interesse</div>
           </div>
           <div class="quick-nav-arrow">›</div>
         </div>
         <div class="quick-nav-card" onclick="switchTab('food')">
           <div class="quick-nav-icon">🍽️</div>
           <div class="quick-nav-body">
-            <div class="quick-nav-label" data-it="Mangiare" data-en="Food">Mangiare</div>
-            <div class="quick-nav-desc" data-it="Ristoranti, bar, supermercati" data-en="Restaurants, bars, supermarkets">Ristoranti, bar, supermercati</div>
+            <div class="quick-nav-label">Mangiare</div>
+            <div class="quick-nav-desc">Ristoranti, bar, supermercati</div>
           </div>
           <div class="quick-nav-arrow">›</div>
         </div>
         <div class="quick-nav-card" onclick="switchTab('transport')">
           <div class="quick-nav-icon">🚇</div>
           <div class="quick-nav-body">
-            <div class="quick-nav-label" data-it="Muoversi" data-en="Getting Around">Muoversi</div>
-            <div class="quick-nav-desc" data-it="Metro, bus, taxi, emergenze" data-en="Metro, bus, taxi, emergencies">Metro, bus, taxi, emergenze</div>
+            <div class="quick-nav-label">Muoversi</div>
+            <div class="quick-nav-desc">Metro, bus, taxi, emergenze</div>
           </div>
           <div class="quick-nav-arrow">›</div>
         </div>
         <div class="quick-nav-card" onclick="switchTab('departure')">
           <div class="quick-nav-icon">🧳</div>
           <div class="quick-nav-body">
-            <div class="quick-nav-label" data-it="Partenza" data-en="Checkout">Partenza</div>
-            <div class="quick-nav-desc" data-it="Check-out e recensione" data-en="Check-out and review">Check-out e recensione</div>
+            <div class="quick-nav-label">Partenza</div>
+            <div class="quick-nav-desc">Check-out e recensione</div>
           </div>
           <div class="quick-nav-arrow">›</div>
         </div>
       </div>
 
       <div id="home-review-section" style="display:none;padding:0 0 4px">
-        <a id="home-review-btn" href="#" target="_blank" rel="noopener" class="maps-btn review-btn" style="display:flex"><span data-it="⭐ Lascia una Recensione su Google" data-en="⭐ Leave a Google Review">⭐ Lascia una Recensione su Google</span></a>
+        <a id="home-review-btn" href="#" target="_blank" rel="noopener" class="maps-btn review-btn" style="display:flex"><span>⭐ Lascia una Recensione su Google</span></a>
       </div>
 
     </div><!-- /tab-home -->
@@ -1313,8 +1248,8 @@
     <!-- ── TAB: STAY ── -->
     <div class="tab-section" id="tab-stay">
       <div class="tab-header">
-        <div class="section-eyebrow" data-it="Il Tuo Appartamento" data-en="Your Apartment">Il Tuo Appartamento</div>
-        <div class="section-title" data-it="Soggiorno" data-en="Stay">Soggiorno</div>
+        <div class="section-eyebrow">Il Tuo Appartamento</div>
+        <div class="section-title">Soggiorno</div>
       </div>
       <div class="section-pad" style="padding-top:0">
 
@@ -1322,32 +1257,32 @@
         <div class="checkinout-row">
           <div class="time-card">
             <div class="time-icon">🔑</div>
-            <div class="time-label" data-it="Check-in" data-en="Check-in">Check-in</div>
+            <div class="time-label">Check-in</div>
             <div class="time-value" id="st-checkin">15:00</div>
           </div>
           <div class="time-card">
             <div class="time-icon">🚪</div>
-            <div class="time-label" data-it="Check-out" data-en="Check-out">Check-out</div>
+            <div class="time-label">Check-out</div>
             <div class="time-value" id="st-checkout">10:00</div>
           </div>
         </div>
-        <div class="guests-badge">👥 <span id="st-guests" data-it-key="maxGuests" data-en-key="maxGuestsEn">4 persone</span></div>
+        <div class="guests-badge">👥 <span id="st-guests">4 persone</span></div>
 
         <!-- Come raggiungerci -->
         <div class="info-card">
           <div class="info-card-header">
             <span class="info-card-icon">📍</span>
-            <span class="info-card-title" data-it="Come raggiungerci" data-en="How to reach us">Come raggiungerci</span>
+            <span class="info-card-title">Come raggiungerci</span>
           </div>
           <p class="info-card-body" id="st-how-reach"></p>
-          <a class="maps-btn" id="st-maps" href="#" target="_blank">🧭 <span data-it="Apri su Maps" data-en="Open in Maps">Apri su Maps</span></a>
+          <a class="maps-btn" id="st-maps" href="#" target="_blank">🧭 <span>Apri su Maps</span></a>
         </div>
 
         <!-- Come accedere -->
         <div class="info-card">
           <div class="info-card-header">
             <span class="info-card-icon">🗝️</span>
-            <span class="info-card-title" data-it="Come accedere" data-en="How to access">Come accedere</span>
+            <span class="info-card-title">Come accedere</span>
           </div>
           <p class="info-card-body" id="st-how-access"></p>
         </div>
@@ -1356,7 +1291,7 @@
         <div class="info-card">
           <div class="info-card-header">
             <span class="info-card-icon">🚗</span>
-            <span class="info-card-title" data-it="Parcheggio" data-en="Parking">Parcheggio</span>
+            <span class="info-card-title">Parcheggio</span>
           </div>
           <p class="info-card-body" id="st-parking"></p>
         </div>
@@ -1373,19 +1308,19 @@
 
         <!-- House Rules -->
         <div class="card" style="margin-bottom:14px">
-          <div class="card-title" data-it="🏠 Regole della casa" data-en="🏠 House Rules">🏠 Regole della casa</div>
+          <div class="card-title">🏠 Regole della casa</div>
           <ul class="rules-list" id="st-rules-list">
             <!-- populated by JS -->
           </ul>
         </div>
 
         <!-- Spaces -->
-        <div class="card-title" style="margin-bottom:10px" data-it="🏡 Gli Spazi" data-en="🏡 The Spaces">🏡 Gli Spazi</div>
+        <div class="card-title" style="margin-bottom:10px">🏡 Gli Spazi</div>
 
         <div class="space-card">
           <div class="space-header">
             <span class="space-icon">🛌</span>
-            <span class="space-name" data-it="Camera da Letto" data-en="Bedroom">Camera da Letto</span>
+            <span class="space-name">Camera da Letto</span>
           </div>
           <div class="amenity-tags" id="st-bedroom-tags">
             <!-- populated by JS -->
@@ -1395,7 +1330,7 @@
         <div class="space-card">
           <div class="space-header">
             <span class="space-icon">🍳</span>
-            <span class="space-name" data-it="Cucina" data-en="Kitchen">Cucina</span>
+            <span class="space-name">Cucina</span>
           </div>
           <div class="amenity-tags" id="st-kitchen-tags">
             <!-- populated by JS -->
@@ -1405,7 +1340,7 @@
         <div class="space-card" style="margin-bottom:20px">
           <div class="space-header">
             <span class="space-icon">🚿</span>
-            <span class="space-name" data-it="Bagno" data-en="Bathroom">Bagno</span>
+            <span class="space-name">Bagno</span>
           </div>
           <div class="amenity-tags" id="st-bathroom-tags">
             <!-- populated by JS -->
@@ -1413,7 +1348,7 @@
         </div>
 
         <!-- Extra Services -->
-        <div class="card-title" style="margin-bottom:10px" data-it="✨ Servizi Extra" data-en="✨ Extra Services">✨ Servizi Extra</div>
+        <div class="card-title" style="margin-bottom:10px">✨ Servizi Extra</div>
         <div class="service-grid" id="st-extra-services" style="margin-bottom:20px">
           <!-- populated by JS -->
         </div>
@@ -1424,9 +1359,9 @@
     <!-- ── TAB: PLACES ── -->
     <div class="tab-section" id="tab-places">
       <div class="tab-header">
-        <div class="section-eyebrow" data-it="Scopri la Città" data-en="Discover the City">Scopri la Città</div>
-        <div class="section-title" data-it="Luoghi" data-en="Places">Luoghi</div>
-        <div class="section-sub" data-it="Le attrazioni più belle nei dintorni" data-en="The most beautiful attractions nearby">Le attrazioni più belle nei dintorni</div>
+        <div class="section-eyebrow">Scopri la Città</div>
+        <div class="section-title">Luoghi</div>
+        <div class="section-sub">Le attrazioni più belle nei dintorni</div>
       </div>
       <div class="section-pad" style="padding-top:0" id="places-container">
         <!-- populated by JS -->
@@ -1436,9 +1371,9 @@
     <!-- ── TAB: FOOD ── -->
     <div class="tab-section" id="tab-food">
       <div class="tab-header">
-        <div class="section-eyebrow" data-it="Dove Mangiare" data-en="Where to Eat">Dove Mangiare</div>
-        <div class="section-title" data-it="Mangiare" data-en="Food">Mangiare</div>
-        <div class="section-sub" data-it="I migliori locali consigliati dall'host" data-en="The best places recommended by your host">I migliori locali consigliati dall'host</div>
+        <div class="section-eyebrow">Dove Mangiare</div>
+        <div class="section-title">Mangiare</div>
+        <div class="section-sub">I migliori locali consigliati dall'host</div>
       </div>
       <div class="section-pad" style="padding-top:0" id="food-container">
         <!-- populated by JS -->
@@ -1448,9 +1383,9 @@
     <!-- ── TAB: TRANSPORT ── -->
     <div class="tab-section" id="tab-transport">
       <div class="tab-header">
-        <div class="section-eyebrow" data-it="In Città" data-en="Around the City">In Città</div>
-        <div class="section-title" data-it="Muoversi" data-en="Getting Around">Muoversi</div>
-        <div class="section-sub" data-it="Come spostarsi in città" data-en="How to get around">Come spostarsi in città</div>
+        <div class="section-eyebrow">In Città</div>
+        <div class="section-title">Muoversi</div>
+        <div class="section-sub">Come spostarsi in città</div>
       </div>
       <div class="section-pad" style="padding-top:0">
 
@@ -1460,7 +1395,7 @@
         <div class="transport-card">
           <div class="transport-header">
             <span class="transport-icon">🎫</span>
-            <span class="transport-title" data-it="Biglietti" data-en="Tickets">Biglietti</span>
+            <span class="transport-title">Biglietti</span>
           </div>
           <p class="transport-desc" id="tr-tickets-desc">
             Biglietto singolo: ~€1,50 (valido 90 minuti). Abbonamento giornaliero: ~€5,00.
@@ -1471,7 +1406,7 @@
         <div class="transport-card">
           <div class="transport-header">
             <span class="transport-icon">🚖</span>
-            <span class="transport-title" data-it="Taxi &amp; App" data-en="Taxi &amp; Apps">Taxi &amp; App</span>
+            <span class="transport-title">Taxi &amp; App</span>
           </div>
           <p class="transport-desc" id="tr-taxi-desc">
             Taxi ufficiali disponibili in piazza e in stazione. App: Uber, FREE NOW, Bolt.
@@ -1480,12 +1415,12 @@
 
         <!-- Emergencies -->
         <div class="sos-section" style="margin-top:24px">
-          <div class="sos-title">🆘 <span data-it="Emergenze" data-en="Emergencies">Emergenze</span></div>
+          <div class="sos-title">🆘 <span>Emergenze</span></div>
 
           <div class="sos-card">
             <div class="sos-icon">🏥</div>
             <div class="sos-body">
-              <div class="sos-name" data-it="Pronto Soccorso" data-en="Emergency Room">Pronto Soccorso</div>
+              <div class="sos-name">Pronto Soccorso</div>
               <div class="sos-number">📞 118</div>
             </div>
             <a class="call-btn" href="tel:118">📞 118</a>
@@ -1494,7 +1429,7 @@
           <div class="sos-card">
             <div class="sos-icon">👮</div>
             <div class="sos-body">
-              <div class="sos-name" data-it="Carabinieri" data-en="Police">Carabinieri</div>
+              <div class="sos-name">Carabinieri</div>
               <div class="sos-number">📞 112</div>
             </div>
             <a class="call-btn" href="tel:112">📞 112</a>
@@ -1503,7 +1438,7 @@
           <div class="sos-card">
             <div class="sos-icon">🔥</div>
             <div class="sos-body">
-              <div class="sos-name" data-it="Vigili del Fuoco" data-en="Fire Brigade">Vigili del Fuoco</div>
+              <div class="sos-name">Vigili del Fuoco</div>
               <div class="sos-number">📞 115</div>
             </div>
             <a class="call-btn" href="tel:115">📞 115</a>
@@ -1512,10 +1447,10 @@
           <div class="sos-card">
             <div class="sos-icon">👤</div>
             <div class="sos-body">
-              <div class="sos-name" data-it="Host" data-en="Host">Host: <span id="sos-host-name">Nome Host</span></div>
+              <div class="sos-name">Host: <span id="sos-host-name">Nome Host</span></div>
               <div class="sos-number" id="sos-host-phone">📞 +39 000 000 0000</div>
             </div>
-            <a class="call-btn host" id="sos-host-call" href="tel:+390000000000">📞 <span data-it="Chiama" data-en="Call">Chiama</span></a>
+            <a class="call-btn host" id="sos-host-call" href="tel:+390000000000">📞 <span>Chiama</span></a>
           </div>
 
           <div id="sos-extra-contacts"><!-- populated by JS --></div>
@@ -1527,20 +1462,20 @@
     <!-- ── TAB: DEPARTURE ── -->
     <div class="tab-section" id="tab-departure">
       <div class="tab-header">
-        <div class="section-eyebrow" data-it="È Ora di Partire" data-en="Time to Leave">È Ora di Partire</div>
-        <div class="section-title" data-it="Partenza" data-en="Checkout">Partenza</div>
-        <div class="section-sub" data-it="Tutto quello che c'è da sapere prima di andare" data-en="Everything you need to know before leaving">Tutto quello che c'è da sapere prima di andare</div>
+        <div class="section-eyebrow">È Ora di Partire</div>
+        <div class="section-title">Partenza</div>
+        <div class="section-sub">Tutto quello che c'è da sapere prima di andare</div>
       </div>
       <div class="section-pad" style="padding-top:0">
 
         <!-- Checkout steps -->
         <div class="checkout-steps">
-          <div class="checkout-title">🏁 <span data-it="Al Check-out" data-en="At Check-out">Al Check-out</span></div>
+          <div class="checkout-title">🏁 <span>Al Check-out</span></div>
           <div id="departure-steps-list">
             <!-- populated by JS -->
           </div>
           <div id="google-review-btn-container" style="display:none;margin-top:12px;padding:0 4px">
-            <a id="google-review-btn" href="#" target="_blank" rel="noopener" class="maps-btn review-btn"><span data-it="⭐ Lascia una Recensione su Google" data-en="⭐ Leave a Google Review">⭐ Lascia una Recensione su Google</span></a>
+            <a id="google-review-btn" href="#" target="_blank" rel="noopener" class="maps-btn review-btn"><span>⭐ Lascia una Recensione su Google</span></a>
           </div>
         </div>
 
@@ -1562,27 +1497,27 @@
   <nav class="bottom-nav" id="bottom-nav">
     <button class="nav-item active" data-tab="home" onclick="switchTab('home')">
       <span class="nav-icon">🏠</span>
-      <span class="nav-label" data-it="Home" data-en="Home">Home</span>
+      <span class="nav-label">Home</span>
     </button>
     <button class="nav-item" data-tab="stay" onclick="switchTab('stay')">
       <span class="nav-icon">🛋️</span>
-      <span class="nav-label" data-it="Soggiorno" data-en="Stay">Soggiorno</span>
+      <span class="nav-label">Soggiorno</span>
     </button>
     <button class="nav-item" data-tab="places" onclick="switchTab('places')">
       <span class="nav-icon">🗺️</span>
-      <span class="nav-label" data-it="Luoghi" data-en="Places">Luoghi</span>
+      <span class="nav-label">Luoghi</span>
     </button>
     <button class="nav-item" data-tab="food" onclick="switchTab('food')">
       <span class="nav-icon">🍽️</span>
-      <span class="nav-label" data-it="Mangiare" data-en="Food">Mangiare</span>
+      <span class="nav-label">Mangiare</span>
     </button>
     <button class="nav-item" data-tab="transport" onclick="switchTab('transport')">
       <span class="nav-icon">🚇</span>
-      <span class="nav-label" data-it="Muoversi" data-en="Around">Muoversi</span>
+      <span class="nav-label">Muoversi</span>
     </button>
     <button class="nav-item" data-tab="departure" onclick="switchTab('departure')">
       <span class="nav-icon">🧳</span>
-      <span class="nav-label" data-it="Partenza" data-en="Checkout">Partenza</span>
+      <span class="nav-label">Partenza</span>
     </button>
   </nav>
 </div><!-- /guide -->
@@ -1619,8 +1554,7 @@
         <div class="s-field"><label>Telefono Host</label><input type="tel" id="s-hostPhone" placeholder="+39 000 000 0000"></div>
         <div class="s-divider"></div>
         <div class="s-sub-title">💬 Messaggio di Benvenuto</div>
-        <div class="s-field"><label>Testo IT</label><textarea id="s-welcomeIt" placeholder="Siamo felici di avervi come ospiti..."></textarea></div>
-        <div class="s-field"><label>Testo EN</label><textarea id="s-welcomeEn" placeholder="We are delighted to have you..."></textarea></div>
+        <div class="s-field"><label>Testo di Benvenuto</label><textarea id="s-welcomeIt" placeholder="Siamo felici di avervi come ospiti..."></textarea></div>
       </div>
     </details>
 
@@ -1649,8 +1583,7 @@
       <div class="s-fields" style="margin-top:16px">
         <div class="s-divider"></div>
         <div class="s-sub-title">🛒 Supermercato</div>
-        <div class="s-field"><label>Descrizione IT</label><textarea id="s-supermarketIt" placeholder="Supermercato più vicino a ~300 metri..."></textarea></div>
-        <div class="s-field"><label>Descrizione EN</label><textarea id="s-supermarketEn" placeholder="Nearest supermarket ~300 meters away..."></textarea></div>
+        <div class="s-field"><label>Descrizione</label><textarea id="s-supermarketIt" placeholder="Supermercato più vicino a ~300 metri..."></textarea></div>
         <div class="s-field"><label>Link Google Maps</label><input type="url" id="s-supermarketMaps" placeholder="https://maps.google.com/..."></div>
       </div>
     </details>
@@ -1664,8 +1597,7 @@
           <label style="white-space:nowrap">Mostra sezione</label>
           <input type="checkbox" id="s-tr-airportEnabled" style="width:auto;accent-color:var(--teal)">
         </div>
-        <div class="s-field"><label>IT</label><textarea id="s-tr-airportIt" placeholder="All'uscita dell'aeroporto..."></textarea></div>
-        <div class="s-field"><label>EN</label><textarea id="s-tr-airportEn" placeholder="At the airport exit..."></textarea></div>
+        <div class="s-field"><label>Descrizione</label><textarea id="s-tr-airportIt" placeholder="All'uscita dell'aeroporto..."></textarea></div>
         <div class="s-field"><label>Link Maps</label><input type="url" id="s-tr-airportMaps" placeholder="https://maps.google.com/..."></div>
         <div class="s-divider"></div>
         <div class="s-sub-title">🚉 Stazione</div>
@@ -1673,8 +1605,7 @@
           <label style="white-space:nowrap">Mostra sezione</label>
           <input type="checkbox" id="s-tr-stationEnabled" style="width:auto;accent-color:var(--teal)">
         </div>
-        <div class="s-field"><label>IT</label><textarea id="s-tr-stationIt" placeholder="Dalla stazione..."></textarea></div>
-        <div class="s-field"><label>EN</label><textarea id="s-tr-stationEn" placeholder="From the station..."></textarea></div>
+        <div class="s-field"><label>Descrizione</label><textarea id="s-tr-stationIt" placeholder="Dalla stazione..."></textarea></div>
         <div class="s-field"><label>Link Maps</label><input type="url" id="s-tr-stationMaps" placeholder="https://maps.google.com/..."></div>
         <div class="s-divider"></div>
         <div class="s-sub-title">🚇 Metro</div>
@@ -1682,8 +1613,7 @@
           <label style="white-space:nowrap">Mostra sezione</label>
           <input type="checkbox" id="s-tr-metroEnabled" style="width:auto;accent-color:var(--teal)">
         </div>
-        <div class="s-field"><label>IT</label><input type="text" id="s-tr-metroIt" placeholder="Fermata più vicina..."></div>
-        <div class="s-field"><label>EN</label><input type="text" id="s-tr-metroEn" placeholder="Nearest stop..."></div>
+        <div class="s-field"><label>Descrizione</label><input type="text" id="s-tr-metroIt" placeholder="Fermata più vicina..."></div>
         <div class="s-field"><label>Link Maps</label><input type="url" id="s-tr-metroMaps" placeholder="https://maps.google.com/..."></div>
         <div class="s-divider"></div>
         <div class="s-sub-title">🚌 Bus</div>
@@ -1691,17 +1621,14 @@
           <label style="white-space:nowrap">Mostra sezione</label>
           <input type="checkbox" id="s-tr-busEnabled" style="width:auto;accent-color:var(--teal)">
         </div>
-        <div class="s-field"><label>IT</label><input type="text" id="s-tr-busIt" placeholder="Linee principali..."></div>
-        <div class="s-field"><label>EN</label><input type="text" id="s-tr-busEn" placeholder="Main lines..."></div>
+        <div class="s-field"><label>Descrizione</label><input type="text" id="s-tr-busIt" placeholder="Linee principali..."></div>
         <div class="s-field"><label>Link Maps</label><input type="url" id="s-tr-busMaps" placeholder="https://maps.google.com/..."></div>
         <div class="s-divider"></div>
         <div class="s-sub-title">🎫 Biglietti</div>
-        <div class="s-field"><label>IT</label><textarea id="s-tr-ticketsIt" placeholder="Biglietto singolo: ~€1,50..."></textarea></div>
-        <div class="s-field"><label>EN</label><textarea id="s-tr-ticketsEn" placeholder="Single ticket: ~€1.50..."></textarea></div>
+        <div class="s-field"><label>Descrizione</label><textarea id="s-tr-ticketsIt" placeholder="Biglietto singolo: ~€1,50..."></textarea></div>
         <div class="s-divider"></div>
         <div class="s-sub-title">🚖 Taxi &amp; App</div>
-        <div class="s-field"><label>IT</label><textarea id="s-tr-taxiIt" placeholder="Taxi ufficiali: trovate i posteggi..."></textarea></div>
-        <div class="s-field"><label>EN</label><textarea id="s-tr-taxiEn" placeholder="Official taxis: find stands..."></textarea></div>
+        <div class="s-field"><label>Descrizione</label><textarea id="s-tr-taxiIt" placeholder="Taxi ufficiali: trovate i posteggi..."></textarea></div>
       </div>
     </details>
 
@@ -1714,10 +1641,8 @@
         <button class="s-add-btn" style="margin-top:8px" onclick="addSettingsCheckoutStep()">➕ Aggiungi Passo</button>
         <div class="s-divider"></div>
         <div class="s-sub-title">🌟 Messaggio di Chiusura</div>
-        <div class="s-field"><label>Titolo IT</label><input type="text" id="s-closingTitleIt" placeholder="Grazie per aver scelto il nostro B&amp;B!"></div>
-        <div class="s-field"><label>Titolo EN</label><input type="text" id="s-closingTitleEn" placeholder="Thank you for choosing our B&amp;B!"></div>
-        <div class="s-field"><label>Testo IT</label><textarea id="s-closingTextIt" placeholder="È stato un piacere avervi come ospiti..."></textarea></div>
-        <div class="s-field"><label>Testo EN</label><textarea id="s-closingTextEn" placeholder="It was a pleasure having you as guests..."></textarea></div>
+        <div class="s-field"><label>Titolo</label><input type="text" id="s-closingTitleIt" placeholder="Grazie per aver scelto il nostro B&amp;B!"></div>
+        <div class="s-field"><label>Testo</label><textarea id="s-closingTextIt" placeholder="È stato un piacere avervi come ospiti..."></textarea></div>
         <div class="s-divider"></div>
         <div class="s-sub-title">⭐ Recensione Google</div>
         <div class="s-field"><label>Link recensione Google</label><input type="url" id="s-googleReviewUrl" placeholder="https://g.page/r/..."></div>
@@ -1733,60 +1658,44 @@
         <p style="font-size:11px;color:var(--text2);margin-bottom:12px;line-height:1.5">Personalizza le etichette visibili nella barra di navigazione.</p>
         <div class="s-divider"></div>
         <div class="s-sub-title" style="font-size:12px">🏠 Home</div>
-        <div class="s-field"><label>IT</label><input type="text" id="s-nl-homeIt" placeholder="Home"></div>
-        <div class="s-field"><label>EN</label><input type="text" id="s-nl-homeEn" placeholder="Home"></div>
+        <div class="s-field"><label>Etichetta</label><input type="text" id="s-nl-homeIt" placeholder="Home"></div>
         <div class="s-divider"></div>
         <div class="s-sub-title" style="font-size:12px">🛋️ Soggiorno</div>
-        <div class="s-field"><label>IT</label><input type="text" id="s-nl-stayIt" placeholder="Soggiorno"></div>
-        <div class="s-field"><label>EN</label><input type="text" id="s-nl-stayEn" placeholder="Stay"></div>
+        <div class="s-field"><label>Etichetta</label><input type="text" id="s-nl-stayIt" placeholder="Soggiorno"></div>
         <div class="s-divider"></div>
         <div class="s-sub-title" style="font-size:12px">🗺️ Luoghi</div>
-        <div class="s-field"><label>IT</label><input type="text" id="s-nl-placesIt" placeholder="Luoghi"></div>
-        <div class="s-field"><label>EN</label><input type="text" id="s-nl-placesEn" placeholder="Places"></div>
+        <div class="s-field"><label>Etichetta</label><input type="text" id="s-nl-placesIt" placeholder="Luoghi"></div>
         <div class="s-divider"></div>
         <div class="s-sub-title" style="font-size:12px">🍽️ Mangiare</div>
-        <div class="s-field"><label>IT</label><input type="text" id="s-nl-foodIt" placeholder="Mangiare"></div>
-        <div class="s-field"><label>EN</label><input type="text" id="s-nl-foodEn" placeholder="Food"></div>
+        <div class="s-field"><label>Etichetta</label><input type="text" id="s-nl-foodIt" placeholder="Mangiare"></div>
         <div class="s-divider"></div>
         <div class="s-sub-title" style="font-size:12px">🚇 Muoversi</div>
-        <div class="s-field"><label>IT</label><input type="text" id="s-nl-transportIt" placeholder="Muoversi"></div>
-        <div class="s-field"><label>EN</label><input type="text" id="s-nl-transportEn" placeholder="Getting Around"></div>
+        <div class="s-field"><label>Etichetta</label><input type="text" id="s-nl-transportIt" placeholder="Muoversi"></div>
         <div class="s-divider"></div>
         <div class="s-sub-title" style="font-size:12px">🧳 Partenza</div>
-        <div class="s-field"><label>IT</label><input type="text" id="s-nl-departureIt" placeholder="Partenza"></div>
-        <div class="s-field"><label>EN</label><input type="text" id="s-nl-departureEn" placeholder="Checkout"></div>
+        <div class="s-field"><label>Etichetta</label><input type="text" id="s-nl-departureIt" placeholder="Partenza"></div>
         <div class="s-divider"></div>
         <div class="s-sub-title">📄 Intestazioni Sezioni</div>
         <p style="font-size:11px;color:var(--text2);margin-bottom:12px;line-height:1.5">Personalizza i titoli delle sezioni all'interno della guida.</p>
         <div class="s-sub-title" style="font-size:12px">🛋️ Sezione Soggiorno</div>
-        <div class="s-field"><label>Eyebrow IT</label><input type="text" id="s-st-stayEyebrowIt" placeholder="Il Tuo Appartamento"></div>
-        <div class="s-field"><label>Eyebrow EN</label><input type="text" id="s-st-stayEyebrowEn" placeholder="Your Apartment"></div>
-        <div class="s-field"><label>Titolo IT</label><input type="text" id="s-st-stayTitleIt" placeholder="Soggiorno"></div>
-        <div class="s-field"><label>Titolo EN</label><input type="text" id="s-st-stayTitleEn" placeholder="Stay"></div>
+        <div class="s-field"><label>Eyebrow</label><input type="text" id="s-st-stayEyebrowIt" placeholder="Il Tuo Appartamento"></div>
+        <div class="s-field"><label>Titolo</label><input type="text" id="s-st-stayTitleIt" placeholder="Soggiorno"></div>
         <div class="s-divider"></div>
         <div class="s-sub-title" style="font-size:12px">🗺️ Sezione Luoghi</div>
-        <div class="s-field"><label>Eyebrow IT</label><input type="text" id="s-st-placesEyebrowIt" placeholder="Scopri la Città"></div>
-        <div class="s-field"><label>Eyebrow EN</label><input type="text" id="s-st-placesEyebrowEn" placeholder="Discover the City"></div>
-        <div class="s-field"><label>Titolo IT</label><input type="text" id="s-st-placesTitleIt" placeholder="Luoghi"></div>
-        <div class="s-field"><label>Titolo EN</label><input type="text" id="s-st-placesTitleEn" placeholder="Places"></div>
+        <div class="s-field"><label>Eyebrow</label><input type="text" id="s-st-placesEyebrowIt" placeholder="Scopri la Città"></div>
+        <div class="s-field"><label>Titolo</label><input type="text" id="s-st-placesTitleIt" placeholder="Luoghi"></div>
         <div class="s-divider"></div>
         <div class="s-sub-title" style="font-size:12px">🍽️ Sezione Mangiare</div>
-        <div class="s-field"><label>Eyebrow IT</label><input type="text" id="s-st-foodEyebrowIt" placeholder="Dove Mangiare"></div>
-        <div class="s-field"><label>Eyebrow EN</label><input type="text" id="s-st-foodEyebrowEn" placeholder="Where to Eat"></div>
-        <div class="s-field"><label>Titolo IT</label><input type="text" id="s-st-foodTitleIt" placeholder="Mangiare"></div>
-        <div class="s-field"><label>Titolo EN</label><input type="text" id="s-st-foodTitleEn" placeholder="Food"></div>
+        <div class="s-field"><label>Eyebrow</label><input type="text" id="s-st-foodEyebrowIt" placeholder="Dove Mangiare"></div>
+        <div class="s-field"><label>Titolo</label><input type="text" id="s-st-foodTitleIt" placeholder="Mangiare"></div>
         <div class="s-divider"></div>
         <div class="s-sub-title" style="font-size:12px">🚇 Sezione Muoversi</div>
-        <div class="s-field"><label>Eyebrow IT</label><input type="text" id="s-st-transportEyebrowIt" placeholder="In Città"></div>
-        <div class="s-field"><label>Eyebrow EN</label><input type="text" id="s-st-transportEyebrowEn" placeholder="Around the City"></div>
-        <div class="s-field"><label>Titolo IT</label><input type="text" id="s-st-transportTitleIt" placeholder="Muoversi"></div>
-        <div class="s-field"><label>Titolo EN</label><input type="text" id="s-st-transportTitleEn" placeholder="Getting Around"></div>
+        <div class="s-field"><label>Eyebrow</label><input type="text" id="s-st-transportEyebrowIt" placeholder="In Città"></div>
+        <div class="s-field"><label>Titolo</label><input type="text" id="s-st-transportTitleIt" placeholder="Muoversi"></div>
         <div class="s-divider"></div>
         <div class="s-sub-title" style="font-size:12px">🧳 Sezione Partenza</div>
-        <div class="s-field"><label>Eyebrow IT</label><input type="text" id="s-st-departureEyebrowIt" placeholder="È Ora di Partire"></div>
-        <div class="s-field"><label>Eyebrow EN</label><input type="text" id="s-st-departureEyebrowEn" placeholder="Time to Leave"></div>
-        <div class="s-field"><label>Titolo IT</label><input type="text" id="s-st-departureTitleIt" placeholder="Partenza"></div>
-        <div class="s-field"><label>Titolo EN</label><input type="text" id="s-st-departureTitleEn" placeholder="Checkout"></div>
+        <div class="s-field"><label>Eyebrow</label><input type="text" id="s-st-departureEyebrowIt" placeholder="È Ora di Partire"></div>
+        <div class="s-field"><label>Titolo</label><input type="text" id="s-st-departureTitleIt" placeholder="Partenza"></div>
       </div>
     </details>
 
@@ -1862,88 +1771,69 @@ const DEFAULT_DATA = {
   hostPhone: "+39 000 000 0000",
   googleReviewUrl: "",
   welcomeIt: "Siamo felici di avervi come ospiti! Questo appartamento è stato preparato con cura per rendere il vostro soggiorno indimenticabile. Siamo a vostra disposizione per qualsiasi necessità — non esitate a contattarci.",
-  welcomeEn: "We are delighted to have you as our guests! This apartment has been carefully prepared to make your stay unforgettable. We are at your disposal for any need — please do not hesitate to contact us.",
   closingTitleIt: "Grazie per aver scelto il nostro B&B!",
-  closingTitleEn: "Thank you for choosing our B&B!",
   closingTextIt: "È stato un piacere avervi come ospiti. Speriamo di rivedervi presto! Buon viaggio! ✈️",
-  closingTextEn: "It was a pleasure having you as guests. We hope to see you again soon! Safe travels! ✈️",
   extraContacts: [
     { name: "Secondo Contatto", phone: "+39 000 000 0001" }
   ],
   apts: [
     {
       name: "Appartamento 1",
-      nameEn: "Apartment 1",
       address: "Via Example 1, La Tua Città",
       addressShort: "Via Example 1",
       mapsLink: "#",
       maxGuests: "4 persone",
-      maxGuestsEn: "4 guests",
       bedroomTagsIt: "Letto matrimoniale,Armadio,Biancheria inclusa,Cuscini extra",
-      bedroomTagsEn: "Double bed,Wardrobe,Linen included,Extra pillows",
       wifi: "NomeRete",
       wifiPass: "password123",
       checkout: "10:00",
       howToReachIt: "Dalla stazione centrale: prendete la metro linea A fino alla fermata Centrale, poi 10 minuti a piedi. In taxi dal centro ~10€. Consigliamo di salvare l'indirizzo su Google Maps prima di partire.",
-      howToReachEn: "From the central station: take metro line A to the Centrale stop, then 10 minutes on foot. Taxi from the center ~€10. We recommend saving the address on Google Maps before you leave.",
       howToAccessIt: "Le chiavi vi verranno consegnate direttamente dall'host al vostro arrivo. In caso di check-in autonomo, troverete le istruzioni dettagliate via messaggio prima dell'arrivo.",
-      howToAccessEn: "The keys will be handed to you directly by the host upon arrival. In case of self-check-in, you will receive detailed instructions via message before arrival.",
       parkingIt: "Parcheggio pubblico disponibile nelle vicinanze (~200 metri). Strisce blu a pagamento nei giorni feriali 8:00–20:00 (~€1,50/h). Parcheggio gratuito nelle strisce bianche.",
-      parkingEn: "Public parking available nearby (~200 meters). Paid blue lines on weekdays 8:00–20:00 (~€1.50/h). Free parking on white lines.",
       houseRules: [
-        { icon: "🔇", titleIt: "Silenzio Notturno", titleEn: "Quiet Hours", descIt: "Dalle 22:00 alle 8:00 si prega di mantenere il silenzio per rispetto dei vicini.", descEn: "From 22:00 to 8:00 please keep quiet out of respect for neighbours." },
-        { icon: "🚭", titleIt: "Niente Fumo", titleEn: "No Smoking", descIt: "Vietato fumare all'interno dell'appartamento. È possibile farlo sul balcone.", descEn: "Smoking is forbidden inside the apartment. You may smoke on the balcony." },
-        { icon: "🐾", titleIt: "Animali Domestici", titleEn: "Pets", descIt: "Gli animali domestici non sono ammessi senza previo accordo con l'host.", descEn: "Pets are not allowed without prior agreement with the host." },
-        { icon: "👥", titleIt: "Ospiti Esterni", titleEn: "External Guests", descIt: "Non sono ammesse feste. Il numero di ospiti non deve superare la capienza massima indicata.", descEn: "Parties are not allowed. The number of guests must not exceed the stated maximum capacity." },
-        { icon: "♻️", titleIt: "Raccolta Rifiuti", titleEn: "Waste Sorting", descIt: "Si prega di rispettare la raccolta differenziata. Istruzioni in cucina.", descEn: "Please respect waste sorting. Instructions are in the kitchen." }
+        { icon: "🔇", titleIt: "Silenzio Notturno", descIt: "Dalle 22:00 alle 8:00 si prega di mantenere il silenzio per rispetto dei vicini." },
+        { icon: "🚭", titleIt: "Niente Fumo", descIt: "Vietato fumare all'interno dell'appartamento. È possibile farlo sul balcone." },
+        { icon: "🐾", titleIt: "Animali Domestici", descIt: "Gli animali domestici non sono ammessi senza previo accordo con l'host." },
+        { icon: "👥", titleIt: "Ospiti Esterni", descIt: "Non sono ammesse feste. Il numero di ospiti non deve superare la capienza massima indicata." },
+        { icon: "♻️", titleIt: "Raccolta Rifiuti", descIt: "Si prega di rispettare la raccolta differenziata. Istruzioni in cucina." }
       ],
       kitchenTagsIt: "Piano cottura,Forno,Frigorifero,Lavastoviglie,Caffettiera,Microonde",
-      kitchenTagsEn: "Stove,Oven,Fridge,Dishwasher,Coffee maker,Microwave",
       bathroomTagsIt: "Doccia,Asciugamani,Phon,Prodotti igiene",
-      bathroomTagsEn: "Shower,Towels,Hair dryer,Toiletries",
       extraServices: [
-        { icon: "🧺", nameIt: "Cambio Biancheria", nameEn: "Linen Change", descIt: "Ogni 4 giorni su richiesta", descEn: "Every 4 days on request" },
-        { icon: "🧹", nameIt: "Pulizie Aggiuntive", nameEn: "Extra Cleaning", descIt: "Disponibile su richiesta", descEn: "Available on request" },
-        { icon: "🚗", nameIt: "Transfer Aeroporto", nameEn: "Airport Transfer", descIt: "Prenotabile in anticipo", descEn: "Book in advance" },
-        { icon: "☕", nameIt: "Colazione", nameEn: "Breakfast", descIt: "Disponibile su richiesta", descEn: "Available on request" }
+        { icon: "🧺", nameIt: "Cambio Biancheria", descIt: "Ogni 4 giorni su richiesta" },
+        { icon: "🧹", nameIt: "Pulizie Aggiuntive", descIt: "Disponibile su richiesta" },
+        { icon: "🚗", nameIt: "Transfer Aeroporto", descIt: "Prenotabile in anticipo" },
+        { icon: "☕", nameIt: "Colazione", descIt: "Disponibile su richiesta" }
       ]
     },
     {
       name: "Appartamento 2",
-      nameEn: "Apartment 2",
       address: "Via Example 2, La Tua Città",
       addressShort: "Via Example 2",
       mapsLink: "#",
       maxGuests: "4 persone",
-      maxGuestsEn: "4 guests",
       bedroomTagsIt: "Letto matrimoniale,Armadio,Biancheria inclusa,Cuscini extra",
-      bedroomTagsEn: "Double bed,Wardrobe,Linen included,Extra pillows",
       wifi: "NomeRete2",
       wifiPass: "password456",
       checkin: "15:00",
       checkout: "10:00",
       howToReachIt: "Dalla stazione centrale: prendete la metro linea A fino alla fermata Centrale, poi 10 minuti a piedi. In taxi dal centro ~10€. Consigliamo di salvare l'indirizzo su Google Maps prima di partire.",
-      howToReachEn: "From the central station: take metro line A to the Centrale stop, then 10 minutes on foot. Taxi from the center ~€10. We recommend saving the address on Google Maps before you leave.",
       howToAccessIt: "Le chiavi vi verranno consegnate direttamente dall'host al vostro arrivo. In caso di check-in autonomo, troverete le istruzioni dettagliate via messaggio prima dell'arrivo.",
-      howToAccessEn: "The keys will be handed to you directly by the host upon arrival. In case of self-check-in, you will receive detailed instructions via message before arrival.",
       parkingIt: "Parcheggio pubblico disponibile nelle vicinanze (~200 metri). Strisce blu a pagamento nei giorni feriali 8:00–20:00 (~€1,50/h). Parcheggio gratuito nelle strisce bianche.",
-      parkingEn: "Public parking available nearby (~200 meters). Paid blue lines on weekdays 8:00–20:00 (~€1.50/h). Free parking on white lines.",
       houseRules: [
-        { icon: "🔇", titleIt: "Silenzio Notturno", titleEn: "Quiet Hours", descIt: "Dalle 22:00 alle 8:00 si prega di mantenere il silenzio per rispetto dei vicini.", descEn: "From 22:00 to 8:00 please keep quiet out of respect for neighbours." },
-        { icon: "🚭", titleIt: "Niente Fumo", titleEn: "No Smoking", descIt: "Vietato fumare all'interno dell'appartamento. È possibile farlo sul balcone.", descEn: "Smoking is forbidden inside the apartment. You may smoke on the balcony." },
-        { icon: "🐾", titleIt: "Animali Domestici", titleEn: "Pets", descIt: "Gli animali domestici non sono ammessi senza previo accordo con l'host.", descEn: "Pets are not allowed without prior agreement with the host." },
-        { icon: "👥", titleIt: "Ospiti Esterni", titleEn: "External Guests", descIt: "Non sono ammesse feste. Il numero di ospiti non deve superare la capienza massima indicata.", descEn: "Parties are not allowed. The number of guests must not exceed the stated maximum capacity." },
-        { icon: "♻️", titleIt: "Raccolta Rifiuti", titleEn: "Waste Sorting", descIt: "Si prega di rispettare la raccolta differenziata. Istruzioni in cucina.", descEn: "Please respect waste sorting. Instructions are in the kitchen." }
+        { icon: "🔇", titleIt: "Silenzio Notturno", descIt: "Dalle 22:00 alle 8:00 si prega di mantenere il silenzio per rispetto dei vicini." },
+        { icon: "🚭", titleIt: "Niente Fumo", descIt: "Vietato fumare all'interno dell'appartamento. È possibile farlo sul balcone." },
+        { icon: "🐾", titleIt: "Animali Domestici", descIt: "Gli animali domestici non sono ammessi senza previo accordo con l'host." },
+        { icon: "👥", titleIt: "Ospiti Esterni", descIt: "Non sono ammesse feste. Il numero di ospiti non deve superare la capienza massima indicata." },
+        { icon: "♻️", titleIt: "Raccolta Rifiuti", descIt: "Si prega di rispettare la raccolta differenziata. Istruzioni in cucina." }
       ],
       kitchenTagsIt: "Piano cottura,Forno,Frigorifero,Lavastoviglie,Caffettiera,Microonde",
-      kitchenTagsEn: "Stove,Oven,Fridge,Dishwasher,Coffee maker,Microwave",
       bathroomTagsIt: "Doccia,Asciugamani,Phon,Prodotti igiene",
-      bathroomTagsEn: "Shower,Towels,Hair dryer,Toiletries",
       extraServices: [
-        { icon: "🧺", nameIt: "Cambio Biancheria", nameEn: "Linen Change", descIt: "Ogni 4 giorni su richiesta", descEn: "Every 4 days on request" },
-        { icon: "🧹", nameIt: "Pulizie Aggiuntive", nameEn: "Extra Cleaning", descIt: "Disponibile su richiesta", descEn: "Available on request" },
-        { icon: "🚗", nameIt: "Transfer Aeroporto", nameEn: "Airport Transfer", descIt: "Prenotabile in anticipo", descEn: "Book in advance" },
-        { icon: "☕", nameIt: "Colazione", nameEn: "Breakfast", descIt: "Disponibile su richiesta", descEn: "Available on request" }
+        { icon: "🧺", nameIt: "Cambio Biancheria", descIt: "Ogni 4 giorni su richiesta" },
+        { icon: "🧹", nameIt: "Pulizie Aggiuntive", descIt: "Disponibile su richiesta" },
+        { icon: "🚗", nameIt: "Transfer Aeroporto", descIt: "Prenotabile in anticipo" },
+        { icon: "☕", nameIt: "Colazione", descIt: "Disponibile su richiesta" }
       ]
     }
   ],
@@ -1952,45 +1842,35 @@ const DEFAULT_DATA = {
       name: "Monumento Principale",
       emoji: "🏛",
       descIt: "Il monumento più famoso della città. Perfetto per chi ama la storia.",
-      descEn: "The most famous monument in the city. Perfect for history lovers.",
       howIt: "🚇 Metro linea A → fermata Centrale → 10 min a piedi.",
-      howEn: "🚇 Metro line A → Central stop → 10 min walk.",
       maps: "#"
     },
     {
       name: "Piazza Centrale",
       emoji: "⛲",
       descIt: "La piazza principale della città, cuore della vita sociale.",
-      descEn: "The main square of the city, heart of social life.",
       howIt: "🚌 Bus 10 o 20 → fermata Piazza Centrale.",
-      howEn: "🚌 Bus 10 or 20 → Piazza Centrale stop.",
       maps: "#"
     },
     {
       name: "Chiesa Storica",
       emoji: "🎭",
       descIt: "Un'importante chiesa storica con architettura medievale.",
-      descEn: "An important historic church with medieval architecture.",
       howIt: "🚶 A piedi ~15 minuti dal centro.",
-      howEn: "🚶 Walking ~15 minutes from the center.",
       maps: "#"
     },
     {
       name: "Parco Panoramico",
       emoji: "🍊",
       descIt: "Parco con vista panoramica sulla città. Accesso libero.",
-      descEn: "Park with panoramic views of the city. Free access.",
       howIt: "🚌 Bus 5 → fermata Parco.",
-      howEn: "🚌 Bus 5 → Park stop.",
       maps: "#"
     },
     {
       name: "Museo Locale",
       emoji: "🏺",
       descIt: "Il museo principale della zona con collezioni locali.",
-      descEn: "The main local museum with regional collections.",
       howIt: "🚇 Metro → fermata Museo.",
-      howEn: "🚇 Metro → Museum stop.",
       maps: "#"
     }
   ],
@@ -2000,7 +1880,6 @@ const DEFAULT_DATA = {
       emoji: "🍝",
       tipo: "Trattoria · Vicino a casa",
       descIt: "Cucina tipica italiana. Ottimi primi piatti. Prenotazione consigliata.",
-      descEn: "Typical Italian cuisine. Excellent pasta dishes. Reservation recommended.",
       price: "€€",
       maps: "#"
     },
@@ -2009,7 +1888,6 @@ const DEFAULT_DATA = {
       emoji: "🍕",
       tipo: "Pizzeria · Zona centro",
       descIt: "Ottima pizza napoletana cotta in forno a legna.",
-      descEn: "Excellent Neapolitan pizza cooked in a wood-fired oven.",
       price: "€",
       maps: "#"
     },
@@ -2018,7 +1896,6 @@ const DEFAULT_DATA = {
       emoji: "☕",
       tipo: "Bar · Colazione",
       descIt: "Il bar perfetto per la colazione: cappuccino e cornetto.",
-      descEn: "The perfect bar for breakfast: cappuccino and croissant.",
       price: "€",
       maps: "#"
     },
@@ -2027,61 +1904,53 @@ const DEFAULT_DATA = {
       emoji: "🍷",
       tipo: "Osteria · Cucina di pesce",
       descIt: "Specialità di pesce fresco. Atmosfera accogliente.",
-      descEn: "Fresh fish specialties. Cozy atmosphere.",
       price: "€€€",
       maps: "#"
     }
   ],
   supermarketIt: "Supermercato più vicino a ~300 metri. Orari: Lun–Sab 8:00–20:00, Dom 9:00–13:00.",
-  supermarketEn: "Nearest supermarket ~300 meters away. Hours: Mon–Sat 8:00–20:00, Sun 9:00–13:00.",
   supermarketMaps: "",
   checkoutSteps: [
-    { titleIt: "Raccogliete i vostri effetti personali", titleEn: "Gather your personal belongings", descIt: "Controllate tutti i cassetti, armadi e il bagno per non dimenticare nulla.", descEn: "Check all drawers, wardrobes and the bathroom so you don't forget anything." },
-    { titleIt: "Lasciate le chiavi", titleEn: "Leave the keys", descIt: "Depositate le chiavi nel luogo indicato dall'host al momento del check-in.", descEn: "Leave the keys in the place indicated by the host at check-in." },
-    { titleIt: "Rifiuti e raccolta differenziata", titleEn: "Waste and recycling", descIt: "Smaltite i rifiuti negli appositi contenitori seguendo le istruzioni in cucina.", descEn: "Dispose of waste in the appropriate containers following the instructions in the kitchen." },
-    { titleIt: "Lasciate una recensione", titleEn: "Leave a review", descIt: "Se avete apprezzato il soggiorno, la vostra recensione è un grande aiuto per noi!", descEn: "If you enjoyed your stay, your review is a huge help for us!" }
+    { titleIt: "Raccogliete i vostri effetti personali", descIt: "Controllate tutti i cassetti, armadi e il bagno per non dimenticare nulla." },
+    { titleIt: "Lasciate le chiavi", descIt: "Depositate le chiavi nel luogo indicato dall'host al momento del check-in." },
+    { titleIt: "Rifiuti e raccolta differenziata", descIt: "Smaltite i rifiuti negli appositi contenitori seguendo le istruzioni in cucina." },
+    { titleIt: "Lasciate una recensione", descIt: "Se avete apprezzato il soggiorno, la vostra recensione è un grande aiuto per noi!" }
   ],
   navLabels: {
-    homeIt: "Home", homeEn: "Home",
-    stayIt: "Soggiorno", stayEn: "Stay",
-    placesIt: "Luoghi", placesEn: "Places",
-    foodIt: "Mangiare", foodEn: "Food",
-    transportIt: "Muoversi", transportEn: "Getting Around",
-    departureIt: "Partenza", departureEn: "Checkout"
+    homeIt: "Home",
+    stayIt: "Soggiorno",
+    placesIt: "Luoghi",
+    foodIt: "Mangiare",
+    transportIt: "Muoversi",
+    departureIt: "Partenza"
   },
   sectionTitles: {
-    stayEyebrowIt: "Il Tuo Appartamento", stayEyebrowEn: "Your Apartment",
-    stayTitleIt: "Soggiorno", stayTitleEn: "Stay",
-    placesEyebrowIt: "Scopri la Città", placesEyebrowEn: "Discover the City",
-    placesTitleIt: "Luoghi", placesTitleEn: "Places",
-    foodEyebrowIt: "Dove Mangiare", foodEyebrowEn: "Where to Eat",
-    foodTitleIt: "Mangiare", foodTitleEn: "Food",
-    transportEyebrowIt: "In Città", transportEyebrowEn: "Around the City",
-    transportTitleIt: "Muoversi", transportTitleEn: "Getting Around",
-    departureEyebrowIt: "È Ora di Partire", departureEyebrowEn: "Time to Leave",
-    departureTitleIt: "Partenza", departureTitleEn: "Checkout"
+    stayEyebrowIt: "Il Tuo Appartamento",
+    stayTitleIt: "Soggiorno",
+    placesEyebrowIt: "Scopri la Città",
+    placesTitleIt: "Luoghi",
+    foodEyebrowIt: "Dove Mangiare",
+    foodTitleIt: "Mangiare",
+    transportEyebrowIt: "In Città",
+    transportTitleIt: "Muoversi",
+    departureEyebrowIt: "È Ora di Partire",
+    departureTitleIt: "Partenza"
   },
   transport: {
     airportEnabled: true,
     airportIt: "All'uscita dell'aeroporto trovi i taxi ufficiali. Tariffa fissa ~50–60€ per il centro. In alternativa, treno diretto per la stazione centrale ogni 30 min (~14€).",
-    airportEn: "At the airport exit you'll find official taxis. Fixed rate ~€50–60 to the center. Alternatively, direct train to central station every 30 min (~€14).",
     airportMaps: "",
     stationEnabled: true,
     stationIt: "Dalla stazione puoi prendere metro, autobus o taxi per raggiungere l'appartamento. La fermata metro è a 5 min a piedi.",
-    stationEn: "From the station you can take metro, bus or taxi to reach the apartment. The metro stop is 5 min walk.",
     stationMaps: "",
     metroEnabled: true,
     metroIt: "Fermata più vicina: Centrale (Linea A) a 800 metri dall'appartamento.",
-    metroEn: "Nearest stop: Centrale (Line A), 800 meters from the apartment.",
     metroMaps: "",
     busEnabled: true,
     busIt: "Linee principali: Bus 10, 20, 30 verso il centro. Fermata a 200 metri dall'appartamento.",
-    busEn: "Main lines: Bus 10, 20, 30 toward the center. Stop 200 meters from the apartment.",
     busMaps: "",
     ticketsIt: "Biglietto singolo: ~€1,50 (valido 90 minuti). Abbonamento giornaliero: ~€5,00. Acquisto alle macchinette in stazione o tramite app.",
-    ticketsEn: "Single ticket: ~€1.50 (valid 90 minutes). Day pass: ~€5.00. Purchase at station machines or via app.",
     taxiIt: "Taxi ufficiali: trovate i posteggi in piazza principale e in stazione. App consigliate: Uber, FREE NOW, Bolt. Tariffa minima ~€5.",
-    taxiEn: "Official taxis: find stands in the main square and at the station. Recommended apps: Uber, FREE NOW, Bolt. Minimum fare ~€5."
   }
 };
 
@@ -2090,8 +1959,6 @@ const DEFAULT_DATA = {
 // ════════════════════════════════════════════
 let currentData = null;
 let currentAptIndex = 0;
-let currentLang = 'it';
-let landingLang = 'it';
 
 // PIN state
 let pinBuffer = '';
@@ -2155,7 +2022,6 @@ function saveData(data) {
 // ════════════════════════════════════════════
 function renderLanding() {
   const d = currentData;
-  const lang = landingLang;
 
   document.getElementById('l-cityzone').textContent = d.cityZone;
   const nameParts = d.bbName.split(' ');
@@ -2168,9 +2034,7 @@ function renderLanding() {
   }
   document.getElementById('l-subtitle').textContent = d.subtitle;
 
-  document.getElementById('l-intro').innerHTML = lang === 'it'
-    ? 'Benvenuti! Selezionate il vostro appartamento per accedere alla guida completa.'
-    : 'Welcome! Select your apartment to access the complete guide.';
+  document.getElementById('l-intro').textContent = 'Benvenuti! Selezionate il vostro appartamento per accedere alla guida completa.';
 
   // Apt cards
   const container = document.getElementById('apt-cards-container');
@@ -2179,7 +2043,7 @@ function renderLanding() {
     const card = document.createElement('div');
     card.className = 'apt-card';
     card.onclick = () => openGuide(i);
-    const aptName = lang === 'it' ? apt.name : (apt.nameEn || apt.name);
+    const aptName = apt.name;
     card.innerHTML = `
       <div class="apt-card-icon">🏠</div>
       <div class="apt-card-body">
@@ -2192,17 +2056,7 @@ function renderLanding() {
     container.appendChild(card);
   });
 
-  // Lang buttons
-  document.getElementById('landing-it').classList.toggle('active', lang === 'it');
-  document.getElementById('landing-en').classList.toggle('active', lang === 'en');
-
   document.title = `${d.bbName} — ${d.subtitle}`;
-}
-
-function setLandingLang(lang) {
-  landingLang = lang;
-  currentLang = lang;
-  renderLanding();
 }
 
 // ════════════════════════════════════════════
@@ -2214,7 +2068,7 @@ function openGuide(aptIndex) {
   document.getElementById('gear-btn').classList.add('hidden');
   const guide = document.getElementById('guide');
   guide.classList.add('active');
-  renderApp(aptIndex, currentLang);
+  renderApp(aptIndex);
   guide.scrollTop = 0;
   switchTab('home');
 }
@@ -2226,43 +2080,35 @@ function goBack() {
 }
 
 // ════════════════════════════════════════════
-//  RENDER APP (guide for an apt + lang)
+//  RENDER APP (guide for an apt)
 // ════════════════════════════════════════════
-function renderApp(aptIndex, lang) {
+function renderApp(aptIndex) {
   const d = currentData;
   const apt = d.apts[aptIndex] || d.apts[0];
 
-  const aptName = lang === 'it' ? apt.name : (apt.nameEn || apt.name);
-
   // Header
-  document.getElementById('guide-apt-name').textContent = aptName;
-  document.getElementById('guide-it').classList.toggle('active', lang === 'it');
-  document.getElementById('guide-en').classList.toggle('active', lang === 'en');
+  document.getElementById('guide-apt-name').textContent = apt.name;
 
   // Home tab
   document.getElementById('h-eyebrow').textContent = '✦ ' + d.cityZone.toUpperCase();
-  document.getElementById('h-apt-title').textContent = aptName;
+  document.getElementById('h-apt-title').textContent = apt.name;
   document.getElementById('h-address').textContent = apt.addressShort || apt.address;
   document.getElementById('s-checkin').textContent = apt.checkin;
   document.getElementById('s-checkout').textContent = apt.checkout;
   document.getElementById('s-wifi').textContent = apt.wifi;
   const sMaps = document.getElementById('s-maps');
   sMaps.href = apt.mapsLink || '#';
-  sMaps.textContent = lang === 'it' ? 'Apri Maps' : 'Open Maps';
+  sMaps.textContent = 'Apri Maps';
 
-  document.getElementById('w-title').textContent = lang === 'it' ? 'Benvenuti! 👋' : 'Welcome! 👋';
+  document.getElementById('w-title').textContent = 'Benvenuti! ��';
   const wItEl = document.getElementById('w-text-it');
-  const wEnEl = document.getElementById('w-text-en');
   wItEl.innerHTML = renderRichText(d.welcomeIt || '');
-  wEnEl.innerHTML = renderRichText(d.welcomeEn || '');
-  wItEl.style.display = lang === 'it' ? '' : 'none';
-  wEnEl.style.display = lang === 'en' ? '' : 'none';
   document.getElementById('w-sign').textContent = '★ ' + d.hostName;
 
   // Stay tab
   document.getElementById('st-checkin').textContent = apt.checkin;
   document.getElementById('st-checkout').textContent = apt.checkout;
-  document.getElementById('st-guests').textContent = lang === 'it' ? apt.maxGuests : (apt.maxGuestsEn || apt.maxGuests);
+  document.getElementById('st-guests').textContent = apt.maxGuests;
   document.getElementById('st-wifi-name').textContent = apt.wifi;
   document.getElementById('st-wifi-pass').textContent = apt.wifiPass;
 
@@ -2270,9 +2116,9 @@ function renderApp(aptIndex, lang) {
   stMaps.href = apt.mapsLink || '#';
 
   // Stay tab - soggiorno extended fields
-  document.getElementById('st-how-reach').innerHTML = renderRichText(lang === 'it' ? (apt.howToReachIt || '') : (apt.howToReachEn || apt.howToReachIt || ''));
-  document.getElementById('st-how-access').innerHTML = renderRichText(lang === 'it' ? (apt.howToAccessIt || '') : (apt.howToAccessEn || apt.howToAccessIt || ''));
-  document.getElementById('st-parking').innerHTML = renderRichText(lang === 'it' ? (apt.parkingIt || '') : (apt.parkingEn || apt.parkingIt || ''));
+  document.getElementById('st-how-reach').innerHTML = renderRichText(apt.howToReachIt || '');
+  document.getElementById('st-how-access').innerHTML = renderRichText(apt.howToAccessIt || '');
+  document.getElementById('st-parking').innerHTML = renderRichText(apt.parkingIt || '');
 
   // House Rules
   const rulesList = document.getElementById('st-rules-list');
@@ -2280,8 +2126,8 @@ function renderApp(aptIndex, lang) {
   (apt.houseRules || []).forEach(r => {
     const li = document.createElement('li');
     li.className = 'rule-item';
-    const title = lang === 'it' ? r.titleIt : (r.titleEn || r.titleIt);
-    const desc = lang === 'it' ? r.descIt : (r.descEn || r.descIt);
+    const title = r.titleIt;
+    const desc = r.descIt;
     li.innerHTML = `<span class="rule-icon">${escHtml(r.icon || '')}</span><div><div class="rule-title">${escHtml(title || '')}</div><div class="rule-desc">${renderRichText(desc || '')}</div></div>`;
     rulesList.appendChild(li);
   });
@@ -2289,7 +2135,7 @@ function renderApp(aptIndex, lang) {
   // Bedroom tags
   const bedroomTagsEl = document.getElementById('st-bedroom-tags');
   if (bedroomTagsEl) {
-    const bedroomRaw = lang === 'it' ? (apt.bedroomTagsIt || '') : (apt.bedroomTagsEn || apt.bedroomTagsIt || '');
+    const bedroomRaw = apt.bedroomTagsIt || '';
     bedroomTagsEl.innerHTML = bedroomRaw
       ? bedroomRaw.split(',').map(t => t.trim()).filter(Boolean).map(t => `<span class="tag">${escHtml(t)}</span>`).join('')
       : '';
@@ -2298,7 +2144,7 @@ function renderApp(aptIndex, lang) {
   // Kitchen tags
   const kitchenTagsEl = document.getElementById('st-kitchen-tags');
   if (kitchenTagsEl) {
-    const kitchenRaw = lang === 'it' ? (apt.kitchenTagsIt || '') : (apt.kitchenTagsEn || apt.kitchenTagsIt || '');
+    const kitchenRaw = apt.kitchenTagsIt || '';
     kitchenTagsEl.innerHTML = kitchenRaw
       ? kitchenRaw.split(',').map(t => t.trim()).filter(Boolean).map(t => `<span class="tag">${escHtml(t)}</span>`).join('')
       : '';
@@ -2307,7 +2153,7 @@ function renderApp(aptIndex, lang) {
   // Bathroom tags
   const bathroomTagsEl = document.getElementById('st-bathroom-tags');
   if (bathroomTagsEl) {
-    const bathroomRaw = lang === 'it' ? (apt.bathroomTagsIt || '') : (apt.bathroomTagsEn || apt.bathroomTagsIt || '');
+    const bathroomRaw = apt.bathroomTagsIt || '';
     bathroomTagsEl.innerHTML = bathroomRaw
       ? bathroomRaw.split(',').map(t => t.trim()).filter(Boolean).map(t => `<span class="tag">${escHtml(t)}</span>`).join('')
       : '';
@@ -2317,18 +2163,16 @@ function renderApp(aptIndex, lang) {
   const servicesEl = document.getElementById('st-extra-services');
   if (servicesEl) {
     servicesEl.innerHTML = '';
-    const waHint = lang === 'it' ? '💬 Richiedi su WhatsApp' : '💬 Request on WhatsApp';
+    const waHint = '💬 Richiedi su WhatsApp';
     (apt.extraServices || []).forEach(svc => {
-      const name = lang === 'it' ? (svc.nameIt || '') : (svc.nameEn || svc.nameIt || '');
-      const desc = lang === 'it' ? (svc.descIt || '') : (svc.descEn || svc.descIt || '');
+      const name = svc.nameIt || '';
+      const desc = svc.descIt || '';
       const a = document.createElement('a');
       a.className = 'service-item';
       a.href = '#';
-      const nameIt = svc.nameIt || '';
-      const nameEn = svc.nameEn || '';
       a.addEventListener('click', function(e) {
         e.preventDefault();
-        requestService(nameIt, nameEn);
+        requestService(svc.nameIt || '');
       });
       a.innerHTML = `
         <div class="service-icon">${escHtml(svc.icon || '✨')}</div>
@@ -2340,22 +2184,22 @@ function renderApp(aptIndex, lang) {
   }
 
   // Places
-  renderPlaces(d.places, lang);
+  renderPlaces(d.places);
 
   // Food
-  renderFood(d.restaurants, lang);
+  renderFood(d.restaurants);
 
   // Transport
-  renderTransport(d.transport, lang);
+  renderTransport(d.transport);
 
   // Departure
-  renderDeparture(d, lang);
+  renderDeparture(d);
 
   // SOS
   document.getElementById('sos-host-name').textContent = d.hostName;
   document.getElementById('sos-host-phone').textContent = '📞 ' + (d.hostPhone || '');
   document.getElementById('sos-host-call').href = 'tel:' + (d.hostPhone || '').replace(/\s/g, '');
-  renderExtraContacts(d.extraContacts || [], lang);
+  renderExtraContacts(d.extraContacts || []);
 
   // Google Review Button
   const reviewUrl = d.googleReviewUrl || '';
@@ -2371,68 +2215,58 @@ function renderApp(aptIndex, lang) {
     homeReviewSection.style.display = 'none';
   }
 
-  // Update nav labels and section titles from data (before applyLangAttrs)
+  // Update nav labels from data
   const nl = d.navLabels || DEFAULT_DATA.navLabels;
   const navLabelMap = {
-    home: [nl.homeIt, nl.homeEn],
-    stay: [nl.stayIt, nl.stayEn],
-    places: [nl.placesIt, nl.placesEn],
-    food: [nl.foodIt, nl.foodEn],
-    transport: [nl.transportIt, nl.transportEn],
-    departure: [nl.departureIt, nl.departureEn]
+    home: nl.homeIt,
+    stay: nl.stayIt,
+    places: nl.placesIt,
+    food: nl.foodIt,
+    transport: nl.transportIt,
+    departure: nl.departureIt
   };
   document.querySelectorAll('.nav-item[data-tab]').forEach(btn => {
     const tab = btn.getAttribute('data-tab');
     const label = btn.querySelector('.nav-label');
-    if (label && navLabelMap[tab]) {
-      label.setAttribute('data-it', navLabelMap[tab][0]);
-      label.setAttribute('data-en', navLabelMap[tab][1]);
-    }
+    if (label && navLabelMap[tab]) label.textContent = navLabelMap[tab];
   });
-  // Also sync quick-nav labels on home tab
   document.querySelectorAll('.quick-nav-card').forEach(card => {
     const onclick = card.getAttribute('onclick') || '';
     const match = onclick.match(/switchTab\('([^']+)'\)/);
     if (match) {
       const tab = match[1];
       const label = card.querySelector('.quick-nav-label');
-      if (label && navLabelMap[tab]) {
-        label.setAttribute('data-it', navLabelMap[tab][0]);
-        label.setAttribute('data-en', navLabelMap[tab][1]);
-      }
+      if (label && navLabelMap[tab]) label.textContent = navLabelMap[tab];
     }
   });
 
   // Update section headers from data
   const st = d.sectionTitles || DEFAULT_DATA.sectionTitles;
   const sectionHeaderMap = [
-    { tab: 'stay',      eyebrowIt: st.stayEyebrowIt,      eyebrowEn: st.stayEyebrowEn,      titleIt: st.stayTitleIt,      titleEn: st.stayTitleEn },
-    { tab: 'places',    eyebrowIt: st.placesEyebrowIt,    eyebrowEn: st.placesEyebrowEn,    titleIt: st.placesTitleIt,    titleEn: st.placesTitleEn },
-    { tab: 'food',      eyebrowIt: st.foodEyebrowIt,      eyebrowEn: st.foodEyebrowEn,      titleIt: st.foodTitleIt,      titleEn: st.foodTitleEn },
-    { tab: 'transport', eyebrowIt: st.transportEyebrowIt, eyebrowEn: st.transportEyebrowEn, titleIt: st.transportTitleIt, titleEn: st.transportTitleEn },
-    { tab: 'departure', eyebrowIt: st.departureEyebrowIt, eyebrowEn: st.departureEyebrowEn, titleIt: st.departureTitleIt, titleEn: st.departureTitleEn }
+    { tab: 'stay',      eyebrow: st.stayEyebrowIt,      title: st.stayTitleIt },
+    { tab: 'places',    eyebrow: st.placesEyebrowIt,    title: st.placesTitleIt },
+    { tab: 'food',      eyebrow: st.foodEyebrowIt,      title: st.foodTitleIt },
+    { tab: 'transport', eyebrow: st.transportEyebrowIt, title: st.transportTitleIt },
+    { tab: 'departure', eyebrow: st.departureEyebrowIt, title: st.departureTitleIt }
   ];
-  sectionHeaderMap.forEach(({ tab, eyebrowIt, eyebrowEn, titleIt, titleEn }) => {
+  sectionHeaderMap.forEach(({ tab, eyebrow, title }) => {
     const tabEl = document.getElementById('tab-' + tab);
     if (!tabEl) return;
-    const eyebrow = tabEl.querySelector('.section-eyebrow');
-    const title = tabEl.querySelector('.section-title');
-    if (eyebrow) { eyebrow.setAttribute('data-it', eyebrowIt); eyebrow.setAttribute('data-en', eyebrowEn); }
-    if (title) { title.setAttribute('data-it', titleIt); title.setAttribute('data-en', titleEn); }
+    const eyebrowEl = tabEl.querySelector('.section-eyebrow');
+    const titleEl = tabEl.querySelector('.section-title');
+    if (eyebrowEl) eyebrowEl.textContent = eyebrow;
+    if (titleEl) titleEl.textContent = title;
   });
-
-  // Translate data-it / data-en elements
-  applyLangAttrs(lang);
 }
 
-function renderPlaces(places, lang) {
+function renderPlaces(places) {
   const container = document.getElementById('places-container');
   container.innerHTML = '';
   places.forEach(p => {
-    const desc = lang === 'it' ? p.descIt : p.descEn;
-    const how = lang === 'it' ? p.howIt : p.howEn;
-    const howLabel = lang === 'it' ? 'Come arrivarci' : 'How to get there';
-    const mapsLabel = lang === 'it' ? '🧭 Guidami qui' : '🧭 Guide me here';
+    const desc = p.descIt;
+    const how = p.howIt;
+    const howLabel = 'Come arrivarci';
+    const mapsLabel = '🧭 Guidami qui';
     const card = document.createElement('div');
     card.className = 'place-card';
     card.innerHTML = `
@@ -2451,12 +2285,12 @@ function renderPlaces(places, lang) {
   });
 }
 
-function renderFood(restaurants, lang) {
+function renderFood(restaurants) {
   const container = document.getElementById('food-container');
   container.innerHTML = '';
   restaurants.forEach(r => {
-    const desc = lang === 'it' ? r.descIt : r.descEn;
-    const mapsLabel = lang === 'it' ? '🧭 Vedi su Maps' : '🧭 View on Maps';
+    const desc = r.descIt;
+    const mapsLabel = '🧭 Vedi su Maps';
     const card = document.createElement('div');
     card.className = 'restaurant-card';
     card.innerHTML = `
@@ -2475,12 +2309,10 @@ function renderFood(restaurants, lang) {
   });
 
   // Supermercato
-  const superLabel = lang === 'it' ? 'Supermercato' : 'Supermarket';
-  const superDesc = lang === 'it'
-    ? (currentData.supermarketIt || 'Supermercato più vicino a ~300 metri. Orari: Lun–Sab 8:00–20:00, Dom 9:00–13:00.')
-    : (currentData.supermarketEn || 'Nearest supermarket ~300 meters away. Hours: Mon–Sat 8:00–20:00, Sun 9:00–13:00.');
+  const superLabel = 'Supermercato';
+  const superDesc = currentData.supermarketIt || 'Supermercato più vicino a ~300 metri. Orari: Lun–Sab 8:00–20:00, Dom 9:00–13:00.';
   const superMaps = currentData.supermarketMaps || '';
-  const superMapsLabel = lang === 'it' ? '🧭 Vedi su Maps' : '🧭 View on Maps';
+  const superMapsLabel = '🧭 Vedi su Maps';
   const superMapsBtn = superMaps ? `<a class="maps-btn" href="${escAttr(superMaps)}" target="_blank" rel="noopener">${superMapsLabel}</a>` : '';
   const superCard = document.createElement('div');
   superCard.className = 'supermercato-card';
@@ -2497,20 +2329,20 @@ function renderFood(restaurants, lang) {
   container.appendChild(superCard);
 }
 
-function renderTransport(transport, lang) {
+function renderTransport(transport) {
   const container = document.getElementById('transport-container');
   container.innerHTML = '';
   const items = [
-    { key: 'airport', icon: '✈️', labelIt: "Dall'Aeroporto", labelEn: 'From the Airport', textIt: transport.airportIt, textEn: transport.airportEn, maps: transport.airportMaps, enabled: transport.airportEnabled !== false },
-    { key: 'station', icon: '🚉', labelIt: 'Dalla Stazione', labelEn: 'From the Station', textIt: transport.stationIt, textEn: transport.stationEn, maps: transport.stationMaps, enabled: transport.stationEnabled !== false },
-    { key: 'metro', icon: '🚇', labelIt: 'Metro', labelEn: 'Metro', textIt: transport.metroIt, textEn: transport.metroEn, maps: transport.metroMaps, enabled: transport.metroEnabled !== false },
-    { key: 'bus', icon: '🚌', labelIt: 'Bus', labelEn: 'Bus', textIt: transport.busIt, textEn: transport.busEn, maps: transport.busMaps, enabled: transport.busEnabled !== false }
+    { key: 'airport', icon: '✈️', label: "Dall'Aeroporto", text: transport.airportIt, maps: transport.airportMaps, enabled: transport.airportEnabled !== false },
+    { key: 'station', icon: '🚉', label: 'Dalla Stazione', text: transport.stationIt, maps: transport.stationMaps, enabled: transport.stationEnabled !== false },
+    { key: 'metro', icon: '🚇', label: 'Metro', text: transport.metroIt, maps: transport.metroMaps, enabled: transport.metroEnabled !== false },
+    { key: 'bus', icon: '🚌', label: 'Bus', text: transport.busIt, maps: transport.busMaps, enabled: transport.busEnabled !== false }
   ];
-  const mapsLabel = lang === 'it' ? '🧭 Vedi su Maps' : '🧭 View on Maps';
+  const mapsLabel = '🧭 Vedi su Maps';
   items.forEach(item => {
     if (!item.enabled) return;
-    const title = lang === 'it' ? item.labelIt : item.labelEn;
-    const text = lang === 'it' ? item.textIt : item.textEn;
+    const title = item.label;
+    const text = item.text;
     const card = document.createElement('div');
     card.className = 'transport-card';
     const mapsBtn = item.maps ? `<a class="maps-btn" href="${escAttr(item.maps)}" target="_blank" rel="noopener">${mapsLabel}</a>` : '';
@@ -2527,20 +2359,20 @@ function renderTransport(transport, lang) {
 
   // Biglietti
   const ticketsEl = document.getElementById('tr-tickets-desc');
-  if (ticketsEl) ticketsEl.innerHTML = renderRichText(lang === 'it' ? (transport.ticketsIt || '') : (transport.ticketsEn || transport.ticketsIt || ''));
+  if (ticketsEl) ticketsEl.innerHTML = renderRichText(transport.ticketsIt || '');
 
   // Taxi & App
   const taxiEl = document.getElementById('tr-taxi-desc');
-  if (taxiEl) taxiEl.innerHTML = renderRichText(lang === 'it' ? (transport.taxiIt || '') : (transport.taxiEn || transport.taxiIt || ''));
+  if (taxiEl) taxiEl.innerHTML = renderRichText(transport.taxiIt || '');
 }
 
 // ════════════════════════════════════════════
 //  EXTRA CONTACTS RENDER
 // ════════════════════════════════════════════
-function renderExtraContacts(contacts, lang) {
+function renderExtraContacts(contacts) {
   const container = document.getElementById('sos-extra-contacts');
   container.innerHTML = '';
-  const callLabel = lang === 'it' ? 'Chiama' : 'Call';
+  const callLabel = 'Chiama';
   (contacts || []).forEach(c => {
     if (!c.name && !c.phone) return;
     const card = document.createElement('div');
@@ -2560,19 +2392,19 @@ function renderExtraContacts(contacts, lang) {
 // ════════════════════════════════════════════
 //  DEPARTURE TAB RENDER
 // ════════════════════════════════════════════
-function renderDeparture(d, lang) {
+function renderDeparture(d) {
   const titleEl = document.getElementById('closing-title');
   const textEl = document.getElementById('closing-text');
-  if (titleEl) titleEl.textContent = lang === 'it' ? (d.closingTitleIt || '') : (d.closingTitleEn || '');
-  if (textEl) textEl.innerHTML = renderRichText(lang === 'it' ? (d.closingTextIt || '') : (d.closingTextEn || ''));
+  if (titleEl) titleEl.textContent = d.closingTitleIt || '';
+  if (textEl) textEl.innerHTML = renderRichText(d.closingTextIt || '');
 
   // Checkout steps
   const stepsContainer = document.getElementById('departure-steps-list');
   if (stepsContainer) {
     stepsContainer.innerHTML = '';
     (d.checkoutSteps || []).forEach((step, i) => {
-      const title = lang === 'it' ? (step.titleIt || '') : (step.titleEn || step.titleIt || '');
-      const desc = lang === 'it' ? (step.descIt || '') : (step.descEn || step.descIt || '');
+      const title = step.titleIt || '';
+      const desc = step.descIt || '';
       const item = document.createElement('div');
       item.className = 'step-item';
       item.innerHTML = `
@@ -2589,32 +2421,13 @@ function renderDeparture(d, lang) {
 // ════════════════════════════════════════════
 //  WHATSAPP SERVICE REQUEST
 // ════════════════════════════════════════════
-function requestService(nameIt, nameEn) {
-  const lang = currentLang;
-  const name = lang === 'it' ? nameIt : nameEn;
+function requestService(nameIt) {
   const phone = ((currentData && currentData.hostPhone) || '').replace(/[\s\-\(\)]/g, '').replace(/^\+/, '');
-  const msg = lang === 'it'
-    ? `Ciao! Vorrei richiedere il servizio: ${nameIt}`
-    : `Hi! I would like to request the service: ${nameEn}`;
+  const msg = `Ciao! Vorrei richiedere il servizio: ${nameIt}`;
   const url = phone
     ? `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`
     : `https://wa.me/?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank', 'noopener,noreferrer');
-}
-
-// ════════════════════════════════════════════
-//  LANGUAGE HELPERS
-// ════════════════════════════════════════════
-function applyLangAttrs(lang) {
-  document.querySelectorAll('[data-it][data-en]').forEach(el => {
-    const val = lang === 'it' ? el.getAttribute('data-it') : el.getAttribute('data-en');
-    if (val !== null) el.textContent = val;
-  });
-}
-
-function setGuideLang(lang) {
-  currentLang = lang;
-  renderApp(currentAptIndex, lang);
 }
 
 // ════════════════════════════════════════════
@@ -2765,44 +2578,36 @@ function renderSettingsApts(apts) {
       <summary class="s-section-title"><span class="s-section-title-inner">🏠 Appartamento ${i + 1}${delBtn}</span></summary>
       <div class="s-fields">
         <div class="s-field"><label>Nome (IT)</label><input type="text" id="s-a${i}-name" value="${escAttr(apt.name || '')}" placeholder="Appartamento ${i + 1}"></div>
-        <div class="s-field"><label>Nome (EN)</label><input type="text" id="s-a${i}-nameEn" value="${escAttr(apt.nameEn || '')}" placeholder="Apartment ${i + 1}"></div>
         <div class="s-field"><label>Indirizzo completo</label><input type="text" id="s-a${i}-address" value="${escAttr(apt.address || '')}"></div>
         <div class="s-field"><label>Indirizzo breve</label><input type="text" id="s-a${i}-addressShort" value="${escAttr(apt.addressShort || '')}"></div>
         <div class="s-field"><label>Link Google Maps</label><input type="url" id="s-a${i}-mapsLink" value="${escAttr(apt.mapsLink || '')}"></div>
         <div class="s-field"><label>Max ospiti (IT)</label><input type="text" id="s-a${i}-maxGuests" value="${escAttr(apt.maxGuests || '')}"></div>
-        <div class="s-field"><label>Max ospiti (EN)</label><input type="text" id="s-a${i}-maxGuestsEn" value="${escAttr(apt.maxGuestsEn || '')}"></div>
         <div class="s-field"><label>WiFi — Nome rete</label><input type="text" id="s-a${i}-wifi" value="${escAttr(apt.wifi || '')}"></div>
         <div class="s-field"><label>WiFi — Password</label><input type="text" id="s-a${i}-wifiPass" value="${escAttr(apt.wifiPass || '')}"></div>
         <div class="s-field"><label>Check-in (orario)</label><input type="text" id="s-a${i}-checkin" value="${escAttr(apt.checkin || '')}" placeholder="15:00"></div>
         <div class="s-field"><label>Check-out (orario)</label><input type="text" id="s-a${i}-checkout" value="${escAttr(apt.checkout || '')}" placeholder="10:00"></div>
         <div class="s-divider"></div>
         <div class="s-sub-title">📍 Come raggiungerci</div>
-        <div class="s-field"><label>IT</label><textarea id="s-a${i}-howToReachIt" placeholder="Dalla stazione centrale...">${escHtml(apt.howToReachIt || '')}</textarea></div>
-        <div class="s-field"><label>EN</label><textarea id="s-a${i}-howToReachEn" placeholder="From the central station...">${escHtml(apt.howToReachEn || '')}</textarea></div>
+        <div class="s-field"><label>Come raggiungerci</label><textarea id="s-a${i}-howToReachIt" placeholder="Dalla stazione centrale...">${escHtml(apt.howToReachIt || '')}</textarea></div>
         <div class="s-divider"></div>
         <div class="s-sub-title">🗝️ Come accedere</div>
-        <div class="s-field"><label>IT</label><textarea id="s-a${i}-howToAccessIt" placeholder="Le chiavi vi verranno consegnate...">${escHtml(apt.howToAccessIt || '')}</textarea></div>
-        <div class="s-field"><label>EN</label><textarea id="s-a${i}-howToAccessEn" placeholder="The keys will be handed to you...">${escHtml(apt.howToAccessEn || '')}</textarea></div>
+        <div class="s-field"><label>Come accedere</label><textarea id="s-a${i}-howToAccessIt" placeholder="Le chiavi vi verranno consegnate...">${escHtml(apt.howToAccessIt || '')}</textarea></div>
         <div class="s-divider"></div>
         <div class="s-sub-title">🚗 Parcheggio</div>
-        <div class="s-field"><label>IT</label><textarea id="s-a${i}-parkingIt" placeholder="Parcheggio pubblico disponibile...">${escHtml(apt.parkingIt || '')}</textarea></div>
-        <div class="s-field"><label>EN</label><textarea id="s-a${i}-parkingEn" placeholder="Public parking available...">${escHtml(apt.parkingEn || '')}</textarea></div>
+        <div class="s-field"><label>Parcheggio</label><textarea id="s-a${i}-parkingIt" placeholder="Parcheggio pubblico disponibile...">${escHtml(apt.parkingIt || '')}</textarea></div>
         <div class="s-divider"></div>
         <div class="s-sub-title">🏠 Regole della casa</div>
         <div id="s-a${i}-rules" data-count="0"></div>
         <button class="s-add-btn" style="margin-top:8px" onclick="addAptHouseRule(${i})">➕ Aggiungi Regola</button>
         <div class="s-divider"></div>
         <div class="s-sub-title">🛌 Camera da Letto — Dotazioni (comma-separato)</div>
-        <div class="s-field"><label>IT</label><input type="text" id="s-a${i}-bedroomTagsIt" value="${escAttr(apt.bedroomTagsIt || '')}" placeholder="Letto matrimoniale,Armadio,Biancheria..."></div>
-        <div class="s-field"><label>EN</label><input type="text" id="s-a${i}-bedroomTagsEn" value="${escAttr(apt.bedroomTagsEn || '')}" placeholder="Double bed,Wardrobe,Linen..."></div>
+        <div class="s-field"><label>Dotazioni camera</label><input type="text" id="s-a${i}-bedroomTagsIt" value="${escAttr(apt.bedroomTagsIt || '')}" placeholder="Letto matrimoniale,Armadio,Biancheria..."></div>
         <div class="s-divider"></div>
         <div class="s-sub-title">🍳 Cucina — Dotazioni (comma-separato)</div>
-        <div class="s-field"><label>IT</label><input type="text" id="s-a${i}-kitchenTagsIt" value="${escAttr(apt.kitchenTagsIt || '')}" placeholder="Piano cottura,Forno,Frigorifero..."></div>
-        <div class="s-field"><label>EN</label><input type="text" id="s-a${i}-kitchenTagsEn" value="${escAttr(apt.kitchenTagsEn || '')}" placeholder="Stove,Oven,Fridge..."></div>
+        <div class="s-field"><label>Dotazioni cucina</label><input type="text" id="s-a${i}-kitchenTagsIt" value="${escAttr(apt.kitchenTagsIt || '')}" placeholder="Piano cottura,Forno,Frigorifero..."></div>
         <div class="s-divider"></div>
         <div class="s-sub-title">🚿 Bagno — Dotazioni (comma-separato)</div>
-        <div class="s-field"><label>IT</label><input type="text" id="s-a${i}-bathroomTagsIt" value="${escAttr(apt.bathroomTagsIt || '')}" placeholder="Doccia,Asciugamani,Phon..."></div>
-        <div class="s-field"><label>EN</label><input type="text" id="s-a${i}-bathroomTagsEn" value="${escAttr(apt.bathroomTagsEn || '')}" placeholder="Shower,Towels,Hair dryer..."></div>
+        <div class="s-field"><label>Dotazioni bagno</label><input type="text" id="s-a${i}-bathroomTagsIt" value="${escAttr(apt.bathroomTagsIt || '')}" placeholder="Doccia,Asciugamani,Phon..."></div>
         <div class="s-divider"></div>
         <div class="s-sub-title">✨ Servizi Extra</div>
         <div id="s-a${i}-services" data-count="0"></div>
@@ -2820,7 +2625,7 @@ function collectSettingsApts() {
   const apts = [];
   for (let i = 0; i < count; i++) {
     const apt = {};
-    ['name','nameEn','address','addressShort','mapsLink','maxGuests','maxGuestsEn','wifi','wifiPass','checkin','checkout','howToReachIt','howToReachEn','howToAccessIt','howToAccessEn','parkingIt','parkingEn','bedroomTagsIt','bedroomTagsEn','kitchenTagsIt','kitchenTagsEn','bathroomTagsIt','bathroomTagsEn'].forEach(k => {
+    ['name','address','addressShort','mapsLink','maxGuests','wifi','wifiPass','checkin','checkout','howToReachIt','howToAccessIt','parkingIt','bedroomTagsIt','kitchenTagsIt','bathroomTagsIt'].forEach(k => {
       const el = document.getElementById(`s-a${i}-${k}`);
       if (el) apt[k] = el.value;
     });
@@ -2834,7 +2639,7 @@ function collectSettingsApts() {
 function addSettingsApt() {
   const current = collectSettingsApts();
   const n = current.length + 1;
-  current.push({ name: `Appartamento ${n}`, nameEn: `Apartment ${n}`, address: '', addressShort: '', mapsLink: '', maxGuests: '4 persone', maxGuestsEn: '4 guests', wifi: '', wifiPass: '', checkin: '15:00', checkout: '10:00', howToReachIt: '', howToReachEn: '', howToAccessIt: '', howToAccessEn: '', parkingIt: '', parkingEn: '', houseRules: [], bedroomTagsIt: '', bedroomTagsEn: '', kitchenTagsIt: '', kitchenTagsEn: '', bathroomTagsIt: '', bathroomTagsEn: '', extraServices: [] });
+  current.push({ name: `Appartamento ${n}`, address: '', addressShort: '', mapsLink: '', maxGuests: '4 persone', wifi: '', wifiPass: '', checkin: '15:00', checkout: '10:00', howToReachIt: '', howToAccessIt: '', parkingIt: '', houseRules: [], bedroomTagsIt: '', kitchenTagsIt: '', bathroomTagsIt: '', extraServices: [] });
   renderSettingsApts(current);
   const last = document.getElementById('s-apts-container').lastElementChild;
   if (last) { last.open = true; last.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
@@ -2863,10 +2668,8 @@ function renderAptHouseRules(aptIndex, rules) {
         <button class="s-remove-btn" onclick="removeAptHouseRule(${aptIndex}, ${j})">🗑️ Rimuovi</button>
       </div>
       <div class="s-field"><label>Icona (emoji)</label><input type="text" id="s-a${aptIndex}-r${j}-icon" value="${escAttr(r.icon || '')}" placeholder="🔇"></div>
-      <div class="s-field"><label>Titolo IT</label><input type="text" id="s-a${aptIndex}-r${j}-titleIt" value="${escAttr(r.titleIt || '')}"></div>
-      <div class="s-field"><label>Titolo EN</label><input type="text" id="s-a${aptIndex}-r${j}-titleEn" value="${escAttr(r.titleEn || '')}"></div>
-      <div class="s-field"><label>Descrizione IT</label><textarea id="s-a${aptIndex}-r${j}-descIt">${escHtml(r.descIt || '')}</textarea></div>
-      <div class="s-field"><label>Descrizione EN</label><textarea id="s-a${aptIndex}-r${j}-descEn">${escHtml(r.descEn || '')}</textarea></div>`;
+      <div class="s-field"><label>Titolo</label><input type="text" id="s-a${aptIndex}-r${j}-titleIt" value="${escAttr(r.titleIt || '')}"></div>
+      <div class="s-field"><label>Descrizione</label><textarea id="s-a${aptIndex}-r${j}-descIt">${escHtml(r.descIt || '')}</textarea></div>`;
   });
   container.innerHTML = html;
 }
@@ -2878,7 +2681,7 @@ function collectAptHouseRules(aptIndex) {
   const rules = [];
   for (let j = 0; j < count; j++) {
     const rule = {};
-    ['icon', 'titleIt', 'titleEn', 'descIt', 'descEn'].forEach(k => {
+    ['icon', 'titleIt', 'descIt'].forEach(k => {
       const el = document.getElementById(`s-a${aptIndex}-r${j}-${k}`);
       if (el) rule[k] = el.value;
     });
@@ -2889,7 +2692,7 @@ function collectAptHouseRules(aptIndex) {
 
 function addAptHouseRule(aptIndex) {
   const current = collectAptHouseRules(aptIndex);
-  current.push({ icon: '🏠', titleIt: '', titleEn: '', descIt: '', descEn: '' });
+  current.push({ icon: '🏠', titleIt: '', descIt: '' });
   renderAptHouseRules(aptIndex, current);
 }
 
@@ -2915,10 +2718,9 @@ function renderAptExtraServices(aptIndex, services) {
         <button class="s-remove-btn" onclick="removeAptExtraService(${aptIndex}, ${j})">🗑️ Rimuovi</button>
       </div>
       <div class="s-field"><label>Icona (emoji)</label><input type="text" id="s-a${aptIndex}-svc${j}-icon" value="${escAttr(svc.icon || '')}" placeholder="✨"></div>
-      <div class="s-field"><label>Nome IT</label><input type="text" id="s-a${aptIndex}-svc${j}-nameIt" value="${escAttr(svc.nameIt || '')}"></div>
-      <div class="s-field"><label>Nome EN</label><input type="text" id="s-a${aptIndex}-svc${j}-nameEn" value="${escAttr(svc.nameEn || '')}"></div>
-      <div class="s-field"><label>Descrizione IT</label><input type="text" id="s-a${aptIndex}-svc${j}-descIt" value="${escAttr(svc.descIt || '')}"></div>
-      <div class="s-field"><label>Descrizione EN</label><input type="text" id="s-a${aptIndex}-svc${j}-descEn" value="${escAttr(svc.descEn || '')}"></div>`;
+      <div class="s-field"><label>Nome</label><input type="text" id="s-a${aptIndex}-svc${j}-nameIt" value="${escAttr(svc.nameIt || '')}"></div>
+      <div class="s-field"><label>Descrizione</label><input type="text" id="s-a${aptIndex}-svc${j}-descIt" value="${escAttr(svc.descIt || '')}"></div>
+`;
   });
   container.innerHTML = html;
 }
@@ -2930,7 +2732,7 @@ function collectAptExtraServices(aptIndex) {
   const services = [];
   for (let j = 0; j < count; j++) {
     const svc = {};
-    ['icon', 'nameIt', 'nameEn', 'descIt', 'descEn'].forEach(k => {
+    ['icon', 'nameIt', 'descIt'].forEach(k => {
       const el = document.getElementById(`s-a${aptIndex}-svc${j}-${k}`);
       if (el) svc[k] = el.value;
     });
@@ -2941,7 +2743,7 @@ function collectAptExtraServices(aptIndex) {
 
 function addAptExtraService(aptIndex) {
   const current = collectAptExtraServices(aptIndex);
-  current.push({ icon: '✨', nameIt: '', nameEn: '', descIt: '', descEn: '' });
+  current.push({ icon: '✨', nameIt: '', descIt: '' });
   renderAptExtraServices(aptIndex, current);
 }
 
@@ -2966,10 +2768,9 @@ function renderSettingsCheckoutSteps(steps) {
         <span>Passo ${j + 1}</span>
         <button class="s-remove-btn" onclick="removeSettingsCheckoutStep(${j})">🗑️ Rimuovi</button>
       </div>
-      <div class="s-field"><label>Titolo IT</label><input type="text" id="s-cs${j}-titleIt" value="${escAttr(step.titleIt || '')}"></div>
-      <div class="s-field"><label>Titolo EN</label><input type="text" id="s-cs${j}-titleEn" value="${escAttr(step.titleEn || '')}"></div>
-      <div class="s-field"><label>Descrizione IT</label><textarea id="s-cs${j}-descIt">${escHtml(step.descIt || '')}</textarea></div>
-      <div class="s-field"><label>Descrizione EN</label><textarea id="s-cs${j}-descEn">${escHtml(step.descEn || '')}</textarea></div>`;
+      <div class="s-field"><label>Titolo</label><input type="text" id="s-cs${j}-titleIt" value="${escAttr(step.titleIt || '')}"></div>
+      <div class="s-field"><label>Descrizione</label><textarea id="s-cs${j}-descIt">${escHtml(step.descIt || '')}</textarea></div>
+`;
   });
   container.innerHTML = html;
 }
@@ -2981,7 +2782,7 @@ function collectSettingsCheckoutSteps() {
   const steps = [];
   for (let j = 0; j < count; j++) {
     const step = {};
-    ['titleIt', 'titleEn', 'descIt', 'descEn'].forEach(k => {
+    ['titleIt', 'descIt'].forEach(k => {
       const el = document.getElementById(`s-cs${j}-${k}`);
       if (el) step[k] = el.value;
     });
@@ -2992,7 +2793,7 @@ function collectSettingsCheckoutSteps() {
 
 function addSettingsCheckoutStep() {
   const current = collectSettingsCheckoutSteps();
-  current.push({ titleIt: '', titleEn: '', descIt: '', descEn: '' });
+  current.push({ titleIt: '', descIt: '' });
   renderSettingsCheckoutSteps(current);
 }
 
@@ -3018,10 +2819,8 @@ function renderSettingsPlaces(places) {
       </div>
       <input type="hidden" id="s-p${i}-emoji" value="${escAttr(p.emoji || '📍')}">
       <div class="s-field"><label>Nome</label><input type="text" id="s-p${i}-name" value="${escAttr(p.name || '')}"></div>
-      <div class="s-field"><label>Descrizione IT</label><textarea id="s-p${i}-descIt">${escHtml(p.descIt || '')}</textarea></div>
-      <div class="s-field"><label>Descrizione EN</label><textarea id="s-p${i}-descEn">${escHtml(p.descEn || '')}</textarea></div>
-      <div class="s-field"><label>Come arrivarci IT</label><textarea id="s-p${i}-howIt">${escHtml(p.howIt || '')}</textarea></div>
-      <div class="s-field"><label>Come arrivarci EN</label><textarea id="s-p${i}-howEn">${escHtml(p.howEn || '')}</textarea></div>
+      <div class="s-field"><label>Descrizione</label><textarea id="s-p${i}-descIt">${escHtml(p.descIt || '')}</textarea></div>
+      <div class="s-field"><label>Come arrivarci</label><textarea id="s-p${i}-howIt">${escHtml(p.howIt || '')}</textarea></div>
       <div class="s-field"><label>Link Maps</label><input type="url" id="s-p${i}-maps" value="${escAttr(p.maps || '')}"></div>
       ${i < places.length - 1 ? '<div class="s-divider"></div>' : ''}`;
   });
@@ -3034,7 +2833,7 @@ function collectSettingsPlaces() {
   for (let i = 0; i < count; i++) {
     const emojiEl = document.getElementById(`s-p${i}-emoji`);
     const p = { emoji: emojiEl ? emojiEl.value : '📍' };
-    ['name','descIt','descEn','howIt','howEn','maps'].forEach(k => {
+    ['name','descIt','howIt','maps'].forEach(k => {
       const el = document.getElementById(`s-p${i}-${k}`);
       if (el) p[k] = el.value.trim();
     });
@@ -3045,7 +2844,7 @@ function collectSettingsPlaces() {
 
 function addSettingsPlace() {
   const current = collectSettingsPlaces();
-  current.push({ name: '', emoji: '📍', descIt: '', descEn: '', howIt: '', howEn: '', maps: '#' });
+  current.push({ name: '', emoji: '📍', descIt: '', howIt: '', maps: '#' });
   renderSettingsPlaces(current);
   const container = document.getElementById('s-places-fields');
   container.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -3074,8 +2873,7 @@ function renderSettingsRests(rests) {
       <input type="hidden" id="s-r${i}-emoji" value="${escAttr(r.emoji || '🍽️')}">
       <div class="s-field"><label>Nome</label><input type="text" id="s-r${i}-name" value="${escAttr(r.name || '')}"></div>
       <div class="s-field"><label>Tipo</label><input type="text" id="s-r${i}-tipo" value="${escAttr(r.tipo || '')}"></div>
-      <div class="s-field"><label>Descrizione IT</label><textarea id="s-r${i}-descIt">${escHtml(r.descIt || '')}</textarea></div>
-      <div class="s-field"><label>Descrizione EN</label><textarea id="s-r${i}-descEn">${escHtml(r.descEn || '')}</textarea></div>
+      <div class="s-field"><label>Descrizione</label><textarea id="s-r${i}-descIt">${escHtml(r.descIt || '')}</textarea></div>
       <div class="s-field"><label>Fascia prezzo</label><input type="text" id="s-r${i}-price" value="${escAttr(r.price || '')}" placeholder="€ / €€ / €€€"></div>
       <div class="s-field"><label>Link Maps</label><input type="url" id="s-r${i}-maps" value="${escAttr(r.maps || '')}"></div>
       ${i < rests.length - 1 ? '<div class="s-divider"></div>' : ''}`;
@@ -3089,7 +2887,7 @@ function collectSettingsRests() {
   for (let i = 0; i < count; i++) {
     const emojiEl = document.getElementById(`s-r${i}-emoji`);
     const r = { emoji: emojiEl ? emojiEl.value : '🍽️' };
-    ['name','tipo','descIt','descEn','price','maps'].forEach(k => {
+    ['name','tipo','descIt','price','maps'].forEach(k => {
       const el = document.getElementById(`s-r${i}-${k}`);
       if (el) r[k] = el.value.trim();
     });
@@ -3100,7 +2898,7 @@ function collectSettingsRests() {
 
 function addSettingsRest() {
   const current = collectSettingsRests();
-  current.push({ name: '', emoji: '🍽️', tipo: '', descIt: '', descEn: '', price: '€€', maps: '#' });
+  current.push({ name: '', emoji: '��️', tipo: '', descIt: '', price: '€€', maps: '#' });
   renderSettingsRests(current);
   const container = document.getElementById('s-restaurants-fields');
   container.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -3179,12 +2977,9 @@ function populateSettingsForms() {
   document.getElementById('s-hostName').value = d.hostName;
   document.getElementById('s-hostPhone').value = d.hostPhone;
   document.getElementById('s-welcomeIt').value = d.welcomeIt || '';
-  document.getElementById('s-welcomeEn').value = d.welcomeEn || '';
   document.getElementById('s-googleReviewUrl').value = d.googleReviewUrl || '';
   document.getElementById('s-closingTitleIt').value = d.closingTitleIt || '';
-  document.getElementById('s-closingTitleEn').value = d.closingTitleEn || '';
   document.getElementById('s-closingTextIt').value = d.closingTextIt || '';
-  document.getElementById('s-closingTextEn').value = d.closingTextEn || '';
 
   // Checkout steps (dynamic)
   renderSettingsCheckoutSteps(d.checkoutSteps || []);
@@ -3200,31 +2995,24 @@ function populateSettingsForms() {
 
   // Supermarket
   document.getElementById('s-supermarketIt').value = d.supermarketIt || '';
-  document.getElementById('s-supermarketEn').value = d.supermarketEn || '';
   document.getElementById('s-supermarketMaps').value = d.supermarketMaps || '';
 
   // Transport
   const tr = d.transport;
   document.getElementById('s-tr-airportEnabled').checked = tr.airportEnabled !== false;
   document.getElementById('s-tr-airportIt').value = tr.airportIt || '';
-  document.getElementById('s-tr-airportEn').value = tr.airportEn || '';
   document.getElementById('s-tr-airportMaps').value = tr.airportMaps || '';
   document.getElementById('s-tr-stationEnabled').checked = tr.stationEnabled !== false;
   document.getElementById('s-tr-stationIt').value = tr.stationIt || '';
-  document.getElementById('s-tr-stationEn').value = tr.stationEn || '';
   document.getElementById('s-tr-stationMaps').value = tr.stationMaps || '';
   document.getElementById('s-tr-metroEnabled').checked = tr.metroEnabled !== false;
   document.getElementById('s-tr-metroIt').value = tr.metroIt || '';
-  document.getElementById('s-tr-metroEn').value = tr.metroEn || '';
   document.getElementById('s-tr-metroMaps').value = tr.metroMaps || '';
   document.getElementById('s-tr-busEnabled').checked = tr.busEnabled !== false;
   document.getElementById('s-tr-busIt').value = tr.busIt || '';
-  document.getElementById('s-tr-busEn').value = tr.busEn || '';
   document.getElementById('s-tr-busMaps').value = tr.busMaps || '';
   document.getElementById('s-tr-ticketsIt').value = tr.ticketsIt || '';
-  document.getElementById('s-tr-ticketsEn').value = tr.ticketsEn || '';
   document.getElementById('s-tr-taxiIt').value = tr.taxiIt || '';
-  document.getElementById('s-tr-taxiEn').value = tr.taxiEn || '';
 
   // Dynamic contacts
   renderSettingsContacts(d.extraContacts || []);
@@ -3232,40 +3020,24 @@ function populateSettingsForms() {
   // Nav Labels
   const nl = d.navLabels || {};
   document.getElementById('s-nl-homeIt').value = nl.homeIt || '';
-  document.getElementById('s-nl-homeEn').value = nl.homeEn || '';
   document.getElementById('s-nl-stayIt').value = nl.stayIt || '';
-  document.getElementById('s-nl-stayEn').value = nl.stayEn || '';
   document.getElementById('s-nl-placesIt').value = nl.placesIt || '';
-  document.getElementById('s-nl-placesEn').value = nl.placesEn || '';
   document.getElementById('s-nl-foodIt').value = nl.foodIt || '';
-  document.getElementById('s-nl-foodEn').value = nl.foodEn || '';
   document.getElementById('s-nl-transportIt').value = nl.transportIt || '';
-  document.getElementById('s-nl-transportEn').value = nl.transportEn || '';
   document.getElementById('s-nl-departureIt').value = nl.departureIt || '';
-  document.getElementById('s-nl-departureEn').value = nl.departureEn || '';
 
   // Section Titles
   const st = d.sectionTitles || {};
   document.getElementById('s-st-stayEyebrowIt').value = st.stayEyebrowIt || '';
-  document.getElementById('s-st-stayEyebrowEn').value = st.stayEyebrowEn || '';
   document.getElementById('s-st-stayTitleIt').value = st.stayTitleIt || '';
-  document.getElementById('s-st-stayTitleEn').value = st.stayTitleEn || '';
   document.getElementById('s-st-placesEyebrowIt').value = st.placesEyebrowIt || '';
-  document.getElementById('s-st-placesEyebrowEn').value = st.placesEyebrowEn || '';
   document.getElementById('s-st-placesTitleIt').value = st.placesTitleIt || '';
-  document.getElementById('s-st-placesTitleEn').value = st.placesTitleEn || '';
   document.getElementById('s-st-foodEyebrowIt').value = st.foodEyebrowIt || '';
-  document.getElementById('s-st-foodEyebrowEn').value = st.foodEyebrowEn || '';
   document.getElementById('s-st-foodTitleIt').value = st.foodTitleIt || '';
-  document.getElementById('s-st-foodTitleEn').value = st.foodTitleEn || '';
   document.getElementById('s-st-transportEyebrowIt').value = st.transportEyebrowIt || '';
-  document.getElementById('s-st-transportEyebrowEn').value = st.transportEyebrowEn || '';
   document.getElementById('s-st-transportTitleIt').value = st.transportTitleIt || '';
-  document.getElementById('s-st-transportTitleEn').value = st.transportTitleEn || '';
   document.getElementById('s-st-departureEyebrowIt').value = st.departureEyebrowIt || '';
-  document.getElementById('s-st-departureEyebrowEn').value = st.departureEyebrowEn || '';
   document.getElementById('s-st-departureTitleIt').value = st.departureTitleIt || '';
-  document.getElementById('s-st-departureTitleEn').value = st.departureTitleEn || '';
 }
 
 function collectFormData() {
@@ -3277,12 +3049,9 @@ function collectFormData() {
   d.hostName = document.getElementById('s-hostName').value.trim() || d.hostName;
   d.hostPhone = document.getElementById('s-hostPhone').value.trim() || d.hostPhone;
   d.welcomeIt = document.getElementById('s-welcomeIt').value;
-  d.welcomeEn = document.getElementById('s-welcomeEn').value;
   d.googleReviewUrl = document.getElementById('s-googleReviewUrl').value.trim();
   d.closingTitleIt = document.getElementById('s-closingTitleIt').value.trim();
-  d.closingTitleEn = document.getElementById('s-closingTitleEn').value.trim();
   d.closingTextIt = document.getElementById('s-closingTextIt').value.trim();
-  d.closingTextEn = document.getElementById('s-closingTextEn').value.trim();
 
   // Checkout steps
   d.checkoutSteps = collectSettingsCheckoutSteps();
@@ -3298,71 +3067,48 @@ function collectFormData() {
 
   // Supermarket
   d.supermarketIt = document.getElementById('s-supermarketIt').value.trim();
-  d.supermarketEn = document.getElementById('s-supermarketEn').value.trim();
   d.supermarketMaps = document.getElementById('s-supermarketMaps').value.trim();
 
   d.transport.airportEnabled = document.getElementById('s-tr-airportEnabled').checked;
   d.transport.airportIt = document.getElementById('s-tr-airportIt').value.trim();
-  d.transport.airportEn = document.getElementById('s-tr-airportEn').value.trim();
   d.transport.airportMaps = document.getElementById('s-tr-airportMaps').value.trim();
   d.transport.stationEnabled = document.getElementById('s-tr-stationEnabled').checked;
   d.transport.stationIt = document.getElementById('s-tr-stationIt').value.trim();
-  d.transport.stationEn = document.getElementById('s-tr-stationEn').value.trim();
   d.transport.stationMaps = document.getElementById('s-tr-stationMaps').value.trim();
   d.transport.metroEnabled = document.getElementById('s-tr-metroEnabled').checked;
   d.transport.metroIt = document.getElementById('s-tr-metroIt').value.trim();
-  d.transport.metroEn = document.getElementById('s-tr-metroEn').value.trim();
   d.transport.metroMaps = document.getElementById('s-tr-metroMaps').value.trim();
   d.transport.busEnabled = document.getElementById('s-tr-busEnabled').checked;
   d.transport.busIt = document.getElementById('s-tr-busIt').value.trim();
-  d.transport.busEn = document.getElementById('s-tr-busEn').value.trim();
   d.transport.busMaps = document.getElementById('s-tr-busMaps').value.trim();
   d.transport.ticketsIt = document.getElementById('s-tr-ticketsIt').value.trim();
-  d.transport.ticketsEn = document.getElementById('s-tr-ticketsEn').value.trim();
   d.transport.taxiIt = document.getElementById('s-tr-taxiIt').value.trim();
-  d.transport.taxiEn = document.getElementById('s-tr-taxiEn').value.trim();
 
   // Dynamic contacts
   d.extraContacts = collectSettingsContacts();
 
   // Nav Labels
   d.navLabels = {
-    homeIt:       document.getElementById('s-nl-homeIt').value.trim() || 'Home',
-    homeEn:       document.getElementById('s-nl-homeEn').value.trim() || 'Home',
-    stayIt:       document.getElementById('s-nl-stayIt').value.trim() || 'Soggiorno',
-    stayEn:       document.getElementById('s-nl-stayEn').value.trim() || 'Stay',
-    placesIt:     document.getElementById('s-nl-placesIt').value.trim() || 'Luoghi',
-    placesEn:     document.getElementById('s-nl-placesEn').value.trim() || 'Places',
-    foodIt:       document.getElementById('s-nl-foodIt').value.trim() || 'Mangiare',
-    foodEn:       document.getElementById('s-nl-foodEn').value.trim() || 'Food',
-    transportIt:  document.getElementById('s-nl-transportIt').value.trim() || 'Muoversi',
-    transportEn:  document.getElementById('s-nl-transportEn').value.trim() || 'Getting Around',
-    departureIt:  document.getElementById('s-nl-departureIt').value.trim() || 'Partenza',
-    departureEn:  document.getElementById('s-nl-departureEn').value.trim() || 'Checkout'
+    homeIt:      document.getElementById('s-nl-homeIt').value.trim() || 'Home',
+    stayIt:      document.getElementById('s-nl-stayIt').value.trim() || 'Soggiorno',
+    placesIt:    document.getElementById('s-nl-placesIt').value.trim() || 'Luoghi',
+    foodIt:      document.getElementById('s-nl-foodIt').value.trim() || 'Mangiare',
+    transportIt: document.getElementById('s-nl-transportIt').value.trim() || 'Muoversi',
+    departureIt: document.getElementById('s-nl-departureIt').value.trim() || 'Partenza'
   };
 
   // Section Titles
   d.sectionTitles = {
     stayEyebrowIt:      document.getElementById('s-st-stayEyebrowIt').value.trim() || 'Il Tuo Appartamento',
-    stayEyebrowEn:      document.getElementById('s-st-stayEyebrowEn').value.trim() || 'Your Apartment',
     stayTitleIt:        document.getElementById('s-st-stayTitleIt').value.trim() || 'Soggiorno',
-    stayTitleEn:        document.getElementById('s-st-stayTitleEn').value.trim() || 'Stay',
     placesEyebrowIt:    document.getElementById('s-st-placesEyebrowIt').value.trim() || 'Scopri la Città',
-    placesEyebrowEn:    document.getElementById('s-st-placesEyebrowEn').value.trim() || 'Discover the City',
     placesTitleIt:      document.getElementById('s-st-placesTitleIt').value.trim() || 'Luoghi',
-    placesTitleEn:      document.getElementById('s-st-placesTitleEn').value.trim() || 'Places',
     foodEyebrowIt:      document.getElementById('s-st-foodEyebrowIt').value.trim() || 'Dove Mangiare',
-    foodEyebrowEn:      document.getElementById('s-st-foodEyebrowEn').value.trim() || 'Where to Eat',
     foodTitleIt:        document.getElementById('s-st-foodTitleIt').value.trim() || 'Mangiare',
-    foodTitleEn:        document.getElementById('s-st-foodTitleEn').value.trim() || 'Food',
     transportEyebrowIt: document.getElementById('s-st-transportEyebrowIt').value.trim() || 'In Città',
-    transportEyebrowEn: document.getElementById('s-st-transportEyebrowEn').value.trim() || 'Around the City',
     transportTitleIt:   document.getElementById('s-st-transportTitleIt').value.trim() || 'Muoversi',
-    transportTitleEn:   document.getElementById('s-st-transportTitleEn').value.trim() || 'Getting Around',
     departureEyebrowIt: document.getElementById('s-st-departureEyebrowIt').value.trim() || 'È Ora di Partire',
-    departureEyebrowEn: document.getElementById('s-st-departureEyebrowEn').value.trim() || 'Time to Leave',
-    departureTitleIt:   document.getElementById('s-st-departureTitleIt').value.trim() || 'Partenza',
-    departureTitleEn:   document.getElementById('s-st-departureTitleEn').value.trim() || 'Checkout'
+    departureTitleIt:   document.getElementById('s-st-departureTitleIt').value.trim() || 'Partenza'
   };
 
   return d;
@@ -3377,10 +3123,7 @@ function saveAndApply() {
 }
 
 function resetData() {
-  const msg = landingLang === 'it'
-    ? 'Ripristinare i dati predefiniti? Tutte le modifiche verranno perse.'
-    : 'Reset to default data? All changes will be lost.';
-  if (!confirm(msg)) return;
+  if (!confirm('Ripristinare i dati predefiniti? Tutte le modifiche verranno perse.')) return;
   currentData = deepClone(DEFAULT_DATA);
   saveData(currentData);
   renderLanding();
@@ -3412,9 +3155,9 @@ function importJSON(event) {
       saveData(currentData);
       renderLanding();
       populateSettingsForms();
-      alert(landingLang === 'it' ? 'Dati importati con successo!' : 'Data imported successfully!');
+      alert('Dati importati con successo!');
     } catch(err) {
-      alert(landingLang === 'it' ? 'Errore nel file JSON. Verificare il formato.' : 'JSON file error. Please check the format.');
+      alert('Errore nel file JSON. Verificare il formato.');
     }
   };
   reader.readAsText(file);
@@ -3455,13 +3198,6 @@ function renderRichText(text) {
 // ════════════════════════════════════════════
 (function init() {
   currentData = loadData();
-
-  // Auto-detect browser language: default to English for non-Italian browsers
-  const browserLang = (navigator.language || navigator.userLanguage || 'it').toLowerCase();
-  if (!browserLang.startsWith('it')) {
-    currentLang = 'en';
-    landingLang = 'en';
-  }
 
   renderLanding();
 
