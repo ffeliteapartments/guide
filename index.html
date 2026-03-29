@@ -1387,10 +1387,9 @@
             <span class="space-icon">🛌</span>
             <span class="space-name" data-it="Camera da Letto" data-en="Bedroom">Camera da Letto</span>
           </div>
-          <div class="amenity-tags" id="st-rooms-tags">
-            <!-- populated by JS based on roomsIt/roomsEn -->
+          <div class="amenity-tags" id="st-bedroom-tags">
+            <!-- populated by JS -->
           </div>
-          <p style="font-size:13px;color:var(--text2);margin-top:10px;line-height:1.6" id="st-rooms-desc"></p>
         </div>
 
         <div class="space-card">
@@ -1810,11 +1809,10 @@ const DEFAULT_DATA = {
       mapsLink: "#",
       maxGuests: "4 persone",
       maxGuestsEn: "4 guests",
-      roomsIt: "2 camere con letto matrimoniale. Biancheria inclusa.",
-      roomsEn: "2 double bedrooms. Linen included.",
+      bedroomTagsIt: "Letto matrimoniale,Armadio,Biancheria inclusa,Cuscini extra",
+      bedroomTagsEn: "Double bed,Wardrobe,Linen included,Extra pillows",
       wifi: "NomeRete",
       wifiPass: "password123",
-      checkin: "15:00",
       checkout: "10:00",
       howToReachIt: "Dalla stazione centrale: prendete la metro linea A fino alla fermata Centrale, poi 10 minuti a piedi. In taxi dal centro ~10€. Consigliamo di salvare l'indirizzo su Google Maps prima di partire.",
       howToReachEn: "From the central station: take metro line A to the Centrale stop, then 10 minutes on foot. Taxi from the center ~€10. We recommend saving the address on Google Maps before you leave.",
@@ -1848,8 +1846,8 @@ const DEFAULT_DATA = {
       mapsLink: "#",
       maxGuests: "4 persone",
       maxGuestsEn: "4 guests",
-      roomsIt: "2 camere con letto matrimoniale. Biancheria inclusa.",
-      roomsEn: "2 double bedrooms. Linen included.",
+      bedroomTagsIt: "Letto matrimoniale,Armadio,Biancheria inclusa,Cuscini extra",
+      bedroomTagsEn: "Double bed,Wardrobe,Linen included,Extra pillows",
       wifi: "NomeRete2",
       wifiPass: "password456",
       checkin: "15:00",
@@ -2198,12 +2196,14 @@ function renderApp(aptIndex, lang) {
     rulesList.appendChild(li);
   });
 
-  // Rooms description
-  const roomsDesc = lang === 'it' ? apt.roomsIt : apt.roomsEn;
-  document.getElementById('st-rooms-desc').textContent = roomsDesc;
-  document.getElementById('st-rooms-tags').innerHTML = roomsDesc
-    ? roomsDesc.split('.').filter(s => s.trim()).map(s => `<span class="tag">${escHtml(s.trim())}</span>`).join('')
-    : '';
+  // Bedroom tags
+  const bedroomTagsEl = document.getElementById('st-bedroom-tags');
+  if (bedroomTagsEl) {
+    const bedroomRaw = lang === 'it' ? (apt.bedroomTagsIt || '') : (apt.bedroomTagsEn || apt.bedroomTagsIt || '');
+    bedroomTagsEl.innerHTML = bedroomRaw
+      ? bedroomRaw.split(',').map(t => t.trim()).filter(Boolean).map(t => `<span class="tag">${escHtml(t)}</span>`).join('')
+      : '';
+  }
 
   // Kitchen tags
   const kitchenTagsEl = document.getElementById('st-kitchen-tags');
@@ -2631,8 +2631,6 @@ function renderSettingsApts(apts) {
         <div class="s-field"><label>Link Google Maps</label><input type="url" id="s-a${i}-mapsLink" value="${escAttr(apt.mapsLink || '')}"></div>
         <div class="s-field"><label>Max ospiti (IT)</label><input type="text" id="s-a${i}-maxGuests" value="${escAttr(apt.maxGuests || '')}"></div>
         <div class="s-field"><label>Max ospiti (EN)</label><input type="text" id="s-a${i}-maxGuestsEn" value="${escAttr(apt.maxGuestsEn || '')}"></div>
-        <div class="s-field"><label>Descrizione camere (IT)</label><textarea id="s-a${i}-roomsIt">${escHtml(apt.roomsIt || '')}</textarea></div>
-        <div class="s-field"><label>Descrizione camere (EN)</label><textarea id="s-a${i}-roomsEn">${escHtml(apt.roomsEn || '')}</textarea></div>
         <div class="s-field"><label>WiFi — Nome rete</label><input type="text" id="s-a${i}-wifi" value="${escAttr(apt.wifi || '')}"></div>
         <div class="s-field"><label>WiFi — Password</label><input type="text" id="s-a${i}-wifiPass" value="${escAttr(apt.wifiPass || '')}"></div>
         <div class="s-field"><label>Check-in (orario)</label><input type="text" id="s-a${i}-checkin" value="${escAttr(apt.checkin || '')}" placeholder="15:00"></div>
@@ -2653,6 +2651,10 @@ function renderSettingsApts(apts) {
         <div class="s-sub-title">🏠 Regole della casa</div>
         <div id="s-a${i}-rules" data-count="0"></div>
         <button class="s-add-btn" style="margin-top:8px" onclick="addAptHouseRule(${i})">➕ Aggiungi Regola</button>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🛌 Camera da Letto — Dotazioni (comma-separato)</div>
+        <div class="s-field"><label>IT</label><input type="text" id="s-a${i}-bedroomTagsIt" value="${escAttr(apt.bedroomTagsIt || '')}" placeholder="Letto matrimoniale,Armadio,Biancheria..."></div>
+        <div class="s-field"><label>EN</label><input type="text" id="s-a${i}-bedroomTagsEn" value="${escAttr(apt.bedroomTagsEn || '')}" placeholder="Double bed,Wardrobe,Linen..."></div>
         <div class="s-divider"></div>
         <div class="s-sub-title">🍳 Cucina — Dotazioni (comma-separato)</div>
         <div class="s-field"><label>IT</label><input type="text" id="s-a${i}-kitchenTagsIt" value="${escAttr(apt.kitchenTagsIt || '')}" placeholder="Piano cottura,Forno,Frigorifero..."></div>
@@ -2678,7 +2680,7 @@ function collectSettingsApts() {
   const apts = [];
   for (let i = 0; i < count; i++) {
     const apt = {};
-    ['name','nameEn','address','addressShort','mapsLink','maxGuests','maxGuestsEn','roomsIt','roomsEn','wifi','wifiPass','checkin','checkout','howToReachIt','howToReachEn','howToAccessIt','howToAccessEn','parkingIt','parkingEn','kitchenTagsIt','kitchenTagsEn','bathroomTagsIt','bathroomTagsEn'].forEach(k => {
+    ['name','nameEn','address','addressShort','mapsLink','maxGuests','maxGuestsEn','wifi','wifiPass','checkin','checkout','howToReachIt','howToReachEn','howToAccessIt','howToAccessEn','parkingIt','parkingEn','bedroomTagsIt','bedroomTagsEn','kitchenTagsIt','kitchenTagsEn','bathroomTagsIt','bathroomTagsEn'].forEach(k => {
       const el = document.getElementById(`s-a${i}-${k}`);
       if (el) apt[k] = el.value;
     });
@@ -2692,7 +2694,7 @@ function collectSettingsApts() {
 function addSettingsApt() {
   const current = collectSettingsApts();
   const n = current.length + 1;
-  current.push({ name: `Appartamento ${n}`, nameEn: `Apartment ${n}`, address: '', addressShort: '', mapsLink: '', maxGuests: '4 persone', maxGuestsEn: '4 guests', roomsIt: '', roomsEn: '', wifi: '', wifiPass: '', checkin: '15:00', checkout: '10:00', howToReachIt: '', howToReachEn: '', howToAccessIt: '', howToAccessEn: '', parkingIt: '', parkingEn: '', houseRules: [], kitchenTagsIt: '', kitchenTagsEn: '', bathroomTagsIt: '', bathroomTagsEn: '', extraServices: [] });
+  current.push({ name: `Appartamento ${n}`, nameEn: `Apartment ${n}`, address: '', addressShort: '', mapsLink: '', maxGuests: '4 persone', maxGuestsEn: '4 guests', wifi: '', wifiPass: '', checkin: '15:00', checkout: '10:00', howToReachIt: '', howToReachEn: '', howToAccessIt: '', howToAccessEn: '', parkingIt: '', parkingEn: '', houseRules: [], bedroomTagsIt: '', bedroomTagsEn: '', kitchenTagsIt: '', kitchenTagsEn: '', bathroomTagsIt: '', bathroomTagsEn: '', extraServices: [] });
   renderSettingsApts(current);
   const last = document.getElementById('s-apts-container').lastElementChild;
   if (last) { last.open = true; last.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
