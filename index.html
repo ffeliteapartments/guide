@@ -1318,6 +1318,35 @@
       </div>
       <div class="section-pad" style="padding-top:0">
 
+        <!-- Check-in / Check-out / Ospiti -->
+        <div class="stats-grid" style="margin-bottom:16px">
+          <div class="stat-card">
+            <div class="stat-icon">🔑</div>
+            <div class="stat-label" data-it="Check-in" data-en="Check-in">Check-in</div>
+            <div class="stat-value" id="st-checkin">15:00</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🚪</div>
+            <div class="stat-label" data-it="Check-out" data-en="Check-out">Check-out</div>
+            <div class="stat-value" id="st-checkout">10:00</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-label" data-it="Ospiti max" data-en="Max guests">Ospiti max</div>
+            <div class="stat-value" id="st-guests">4 persone</div>
+          </div>
+        </div>
+
+        <!-- Camere e spazi -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <span class="info-card-icon">🛏️</span>
+            <span class="info-card-title" data-it="Camere e spazi" data-en="Rooms and spaces">Camere e spazi</span>
+          </div>
+          <p class="info-card-body" id="st-rooms-desc"></p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px" id="st-rooms-tags"></div>
+        </div>
+
         <!-- Come raggiungerci -->
         <div class="info-card">
           <div class="info-card-header">
@@ -2107,6 +2136,7 @@ function renderApp(aptIndex, lang) {
 
   const stMaps = document.getElementById('st-maps');
   stMaps.href = apt.mapsLink || '#';
+  document.getElementById('st-how-reach').textContent = lang === 'it' ? (apt.howToReachIt || '') : (apt.howToReachEn || '');
 
   // Rooms description
   const roomsDesc = lang === 'it' ? apt.roomsIt : apt.roomsEn;
