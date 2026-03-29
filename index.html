@@ -1387,10 +1387,9 @@
             <span class="space-icon">🛌</span>
             <span class="space-name" data-it="Camera da Letto" data-en="Bedroom">Camera da Letto</span>
           </div>
-          <div class="amenity-tags" id="st-rooms-tags">
-            <!-- populated by JS based on roomsIt/roomsEn -->
+          <div class="amenity-tags" id="st-bedroom-tags">
+            <!-- populated by JS -->
           </div>
-          <p style="font-size:13px;color:var(--text2);margin-top:10px;line-height:1.6" id="st-rooms-desc"></p>
         </div>
 
         <div class="space-card">
@@ -1466,7 +1465,6 @@
           <p class="transport-desc" id="tr-tickets-desc">
             Biglietto singolo: ~€1,50 (valido 90 minuti). Abbonamento giornaliero: ~€5,00.
           </p>
-          <div class="transport-badge">💶 ~€1,50</div>
         </div>
 
         <!-- Taxi -->
@@ -1623,20 +1621,6 @@
         <div class="s-sub-title">💬 Messaggio di Benvenuto</div>
         <div class="s-field"><label>Testo IT</label><textarea id="s-welcomeIt" placeholder="Siamo felici di avervi come ospiti..."></textarea></div>
         <div class="s-field"><label>Testo EN</label><textarea id="s-welcomeEn" placeholder="We are delighted to have you..."></textarea></div>
-        <div class="s-divider"></div>
-        <div class="s-sub-title">⭐ Recensione Google</div>
-        <div class="s-field"><label>Link recensione Google</label><input type="url" id="s-googleReviewUrl" placeholder="https://g.page/r/..."></div>
-        <p style="font-size:11px;color:var(--text2);margin-top:4px;line-height:1.5">Se compilato, apparirà un pulsante "Lascia una Recensione su Google" nella sezione Partenza.</p>
-        <div class="s-divider"></div>
-        <div class="s-sub-title">🌟 Messaggio di Chiusura (Partenza)</div>
-        <div class="s-field"><label>Titolo IT</label><input type="text" id="s-closingTitleIt" placeholder="Grazie per aver scelto il nostro B&amp;B!"></div>
-        <div class="s-field"><label>Titolo EN</label><input type="text" id="s-closingTitleEn" placeholder="Thank you for choosing our B&amp;B!"></div>
-        <div class="s-field"><label>Testo IT</label><textarea id="s-closingTextIt" placeholder="È stato un piacere avervi come ospiti..."></textarea></div>
-        <div class="s-field"><label>Testo EN</label><textarea id="s-closingTextEn" placeholder="It was a pleasure having you as guests..."></textarea></div>
-        <div class="s-divider"></div>
-        <div class="s-sub-title">🏁 Istruzioni al Check-out (Partenza)</div>
-        <div id="s-checkout-steps" data-count="0"></div>
-        <button class="s-add-btn" style="margin-top:8px" onclick="addSettingsCheckoutStep()">➕ Aggiungi Passo</button>
       </div>
     </details>
 
@@ -1718,6 +1702,26 @@
         <div class="s-sub-title">🚖 Taxi &amp; App</div>
         <div class="s-field"><label>IT</label><textarea id="s-tr-taxiIt" placeholder="Taxi ufficiali: trovate i posteggi..."></textarea></div>
         <div class="s-field"><label>EN</label><textarea id="s-tr-taxiEn" placeholder="Official taxis: find stands..."></textarea></div>
+      </div>
+    </details>
+
+    <!-- Partenza -->
+    <details class="s-section">
+      <summary class="s-section-title">🧳 Partenza</summary>
+      <div class="s-fields">
+        <div class="s-sub-title">🏁 Istruzioni al Check-out</div>
+        <div id="s-checkout-steps" data-count="0"></div>
+        <button class="s-add-btn" style="margin-top:8px" onclick="addSettingsCheckoutStep()">➕ Aggiungi Passo</button>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🌟 Messaggio di Chiusura</div>
+        <div class="s-field"><label>Titolo IT</label><input type="text" id="s-closingTitleIt" placeholder="Grazie per aver scelto il nostro B&amp;B!"></div>
+        <div class="s-field"><label>Titolo EN</label><input type="text" id="s-closingTitleEn" placeholder="Thank you for choosing our B&amp;B!"></div>
+        <div class="s-field"><label>Testo IT</label><textarea id="s-closingTextIt" placeholder="È stato un piacere avervi come ospiti..."></textarea></div>
+        <div class="s-field"><label>Testo EN</label><textarea id="s-closingTextEn" placeholder="It was a pleasure having you as guests..."></textarea></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">⭐ Recensione Google</div>
+        <div class="s-field"><label>Link recensione Google</label><input type="url" id="s-googleReviewUrl" placeholder="https://g.page/r/..."></div>
+        <p style="font-size:11px;color:var(--text2);margin-top:4px;line-height:1.5">Se compilato, apparirà un pulsante "Lascia una Recensione su Google" nella sezione Partenza.</p>
       </div>
     </details>
 
@@ -1810,11 +1814,10 @@ const DEFAULT_DATA = {
       mapsLink: "#",
       maxGuests: "4 persone",
       maxGuestsEn: "4 guests",
-      roomsIt: "2 camere con letto matrimoniale. Biancheria inclusa.",
-      roomsEn: "2 double bedrooms. Linen included.",
+      bedroomTagsIt: "Letto matrimoniale,Armadio,Biancheria inclusa,Cuscini extra",
+      bedroomTagsEn: "Double bed,Wardrobe,Linen included,Extra pillows",
       wifi: "NomeRete",
       wifiPass: "password123",
-      checkin: "15:00",
       checkout: "10:00",
       howToReachIt: "Dalla stazione centrale: prendete la metro linea A fino alla fermata Centrale, poi 10 minuti a piedi. In taxi dal centro ~10€. Consigliamo di salvare l'indirizzo su Google Maps prima di partire.",
       howToReachEn: "From the central station: take metro line A to the Centrale stop, then 10 minutes on foot. Taxi from the center ~€10. We recommend saving the address on Google Maps before you leave.",
@@ -1848,8 +1851,8 @@ const DEFAULT_DATA = {
       mapsLink: "#",
       maxGuests: "4 persone",
       maxGuestsEn: "4 guests",
-      roomsIt: "2 camere con letto matrimoniale. Biancheria inclusa.",
-      roomsEn: "2 double bedrooms. Linen included.",
+      bedroomTagsIt: "Letto matrimoniale,Armadio,Biancheria inclusa,Cuscini extra",
+      bedroomTagsEn: "Double bed,Wardrobe,Linen included,Extra pillows",
       wifi: "NomeRete2",
       wifiPass: "password456",
       checkin: "15:00",
@@ -2165,8 +2168,8 @@ function renderApp(aptIndex, lang) {
   document.getElementById('w-title').textContent = lang === 'it' ? 'Benvenuti! 👋' : 'Welcome! 👋';
   const wItEl = document.getElementById('w-text-it');
   const wEnEl = document.getElementById('w-text-en');
-  wItEl.textContent = d.welcomeIt || '';
-  wEnEl.textContent = d.welcomeEn || '';
+  wItEl.innerHTML = renderRichText(d.welcomeIt || '');
+  wEnEl.innerHTML = renderRichText(d.welcomeEn || '');
   wItEl.style.display = lang === 'it' ? '' : 'none';
   wEnEl.style.display = lang === 'en' ? '' : 'none';
   document.getElementById('w-sign').textContent = '★ ' + d.hostName;
@@ -2182,9 +2185,9 @@ function renderApp(aptIndex, lang) {
   stMaps.href = apt.mapsLink || '#';
 
   // Stay tab - soggiorno extended fields
-  document.getElementById('st-how-reach').textContent = lang === 'it' ? (apt.howToReachIt || '') : (apt.howToReachEn || apt.howToReachIt || '');
-  document.getElementById('st-how-access').textContent = lang === 'it' ? (apt.howToAccessIt || '') : (apt.howToAccessEn || apt.howToAccessIt || '');
-  document.getElementById('st-parking').textContent = lang === 'it' ? (apt.parkingIt || '') : (apt.parkingEn || apt.parkingIt || '');
+  document.getElementById('st-how-reach').innerHTML = renderRichText(lang === 'it' ? (apt.howToReachIt || '') : (apt.howToReachEn || apt.howToReachIt || ''));
+  document.getElementById('st-how-access').innerHTML = renderRichText(lang === 'it' ? (apt.howToAccessIt || '') : (apt.howToAccessEn || apt.howToAccessIt || ''));
+  document.getElementById('st-parking').innerHTML = renderRichText(lang === 'it' ? (apt.parkingIt || '') : (apt.parkingEn || apt.parkingIt || ''));
 
   // House Rules
   const rulesList = document.getElementById('st-rules-list');
@@ -2194,16 +2197,18 @@ function renderApp(aptIndex, lang) {
     li.className = 'rule-item';
     const title = lang === 'it' ? r.titleIt : (r.titleEn || r.titleIt);
     const desc = lang === 'it' ? r.descIt : (r.descEn || r.descIt);
-    li.innerHTML = `<span class="rule-icon">${escHtml(r.icon || '')}</span><div><div class="rule-title">${escHtml(title || '')}</div><div class="rule-desc">${escHtml(desc || '')}</div></div>`;
+    li.innerHTML = `<span class="rule-icon">${escHtml(r.icon || '')}</span><div><div class="rule-title">${escHtml(title || '')}</div><div class="rule-desc">${renderRichText(desc || '')}</div></div>`;
     rulesList.appendChild(li);
   });
 
-  // Rooms description
-  const roomsDesc = lang === 'it' ? apt.roomsIt : apt.roomsEn;
-  document.getElementById('st-rooms-desc').textContent = roomsDesc;
-  document.getElementById('st-rooms-tags').innerHTML = roomsDesc
-    ? roomsDesc.split('.').filter(s => s.trim()).map(s => `<span class="tag">${escHtml(s.trim())}</span>`).join('')
-    : '';
+  // Bedroom tags
+  const bedroomTagsEl = document.getElementById('st-bedroom-tags');
+  if (bedroomTagsEl) {
+    const bedroomRaw = lang === 'it' ? (apt.bedroomTagsIt || '') : (apt.bedroomTagsEn || apt.bedroomTagsIt || '');
+    bedroomTagsEl.innerHTML = bedroomRaw
+      ? bedroomRaw.split(',').map(t => t.trim()).filter(Boolean).map(t => `<span class="tag">${escHtml(t)}</span>`).join('')
+      : '';
+  }
 
   // Kitchen tags
   const kitchenTagsEl = document.getElementById('st-kitchen-tags');
@@ -2300,10 +2305,10 @@ function renderPlaces(places, lang) {
         <span class="place-icon">${p.emoji || '📍'}</span>
         <span class="place-title">${escHtml(p.name)}</span>
       </div>
-      <p class="place-desc">${escHtml(desc)}</p>
+      <p class="place-desc">${renderRichText(desc)}</p>
       <div class="place-how">
         <div class="place-how-label">${escHtml(howLabel)}</div>
-        ${escHtml(how)}
+        ${renderRichText(how)}
       </div>
       <a class="maps-btn" href="${escAttr(p.maps || '#')}" target="_blank">${mapsLabel}</a>
     `;
@@ -2328,7 +2333,7 @@ function renderFood(restaurants, lang) {
         </div>
         <span class="rest-price">${escHtml(r.price)}</span>
       </div>
-      <p class="rest-desc">${escHtml(desc)}</p>
+      <p class="rest-desc">${renderRichText(desc)}</p>
       <a class="maps-btn" href="${escAttr(r.maps || '#')}" target="_blank">${mapsLabel}</a>
     `;
     container.appendChild(card);
@@ -2349,7 +2354,7 @@ function renderFood(restaurants, lang) {
       <div class="superm-icon">🛒</div>
       <div class="superm-body">
         <div class="superm-title">${superLabel}</div>
-        <div class="superm-desc">${superDesc}</div>
+        <div class="superm-desc">${renderRichText(superDesc)}</div>
       </div>
     </div>
     ${superMapsBtn}
@@ -2379,7 +2384,7 @@ function renderTransport(transport, lang) {
         <span class="transport-icon">${item.icon}</span>
         <span class="transport-title">${escHtml(title)}</span>
       </div>
-      <p class="transport-desc">${escHtml(text)}</p>
+      <p class="transport-desc">${renderRichText(text)}</p>
       ${mapsBtn}
     `;
     container.appendChild(card);
@@ -2387,11 +2392,11 @@ function renderTransport(transport, lang) {
 
   // Biglietti
   const ticketsEl = document.getElementById('tr-tickets-desc');
-  if (ticketsEl) ticketsEl.textContent = lang === 'it' ? (transport.ticketsIt || '') : (transport.ticketsEn || transport.ticketsIt || '');
+  if (ticketsEl) ticketsEl.innerHTML = renderRichText(lang === 'it' ? (transport.ticketsIt || '') : (transport.ticketsEn || transport.ticketsIt || ''));
 
   // Taxi & App
   const taxiEl = document.getElementById('tr-taxi-desc');
-  if (taxiEl) taxiEl.textContent = lang === 'it' ? (transport.taxiIt || '') : (transport.taxiEn || transport.taxiIt || '');
+  if (taxiEl) taxiEl.innerHTML = renderRichText(lang === 'it' ? (transport.taxiIt || '') : (transport.taxiEn || transport.taxiIt || ''));
 }
 
 // ════════════════════════════════════════════
@@ -2424,7 +2429,7 @@ function renderDeparture(d, lang) {
   const titleEl = document.getElementById('closing-title');
   const textEl = document.getElementById('closing-text');
   if (titleEl) titleEl.textContent = lang === 'it' ? (d.closingTitleIt || '') : (d.closingTitleEn || '');
-  if (textEl) textEl.textContent = lang === 'it' ? (d.closingTextIt || '') : (d.closingTextEn || '');
+  if (textEl) textEl.innerHTML = renderRichText(lang === 'it' ? (d.closingTextIt || '') : (d.closingTextEn || ''));
 
   // Checkout steps
   const stepsContainer = document.getElementById('departure-steps-list');
@@ -2631,8 +2636,6 @@ function renderSettingsApts(apts) {
         <div class="s-field"><label>Link Google Maps</label><input type="url" id="s-a${i}-mapsLink" value="${escAttr(apt.mapsLink || '')}"></div>
         <div class="s-field"><label>Max ospiti (IT)</label><input type="text" id="s-a${i}-maxGuests" value="${escAttr(apt.maxGuests || '')}"></div>
         <div class="s-field"><label>Max ospiti (EN)</label><input type="text" id="s-a${i}-maxGuestsEn" value="${escAttr(apt.maxGuestsEn || '')}"></div>
-        <div class="s-field"><label>Descrizione camere (IT)</label><textarea id="s-a${i}-roomsIt">${escHtml(apt.roomsIt || '')}</textarea></div>
-        <div class="s-field"><label>Descrizione camere (EN)</label><textarea id="s-a${i}-roomsEn">${escHtml(apt.roomsEn || '')}</textarea></div>
         <div class="s-field"><label>WiFi — Nome rete</label><input type="text" id="s-a${i}-wifi" value="${escAttr(apt.wifi || '')}"></div>
         <div class="s-field"><label>WiFi — Password</label><input type="text" id="s-a${i}-wifiPass" value="${escAttr(apt.wifiPass || '')}"></div>
         <div class="s-field"><label>Check-in (orario)</label><input type="text" id="s-a${i}-checkin" value="${escAttr(apt.checkin || '')}" placeholder="15:00"></div>
@@ -2653,6 +2656,10 @@ function renderSettingsApts(apts) {
         <div class="s-sub-title">🏠 Regole della casa</div>
         <div id="s-a${i}-rules" data-count="0"></div>
         <button class="s-add-btn" style="margin-top:8px" onclick="addAptHouseRule(${i})">➕ Aggiungi Regola</button>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🛌 Camera da Letto — Dotazioni (comma-separato)</div>
+        <div class="s-field"><label>IT</label><input type="text" id="s-a${i}-bedroomTagsIt" value="${escAttr(apt.bedroomTagsIt || '')}" placeholder="Letto matrimoniale,Armadio,Biancheria..."></div>
+        <div class="s-field"><label>EN</label><input type="text" id="s-a${i}-bedroomTagsEn" value="${escAttr(apt.bedroomTagsEn || '')}" placeholder="Double bed,Wardrobe,Linen..."></div>
         <div class="s-divider"></div>
         <div class="s-sub-title">🍳 Cucina — Dotazioni (comma-separato)</div>
         <div class="s-field"><label>IT</label><input type="text" id="s-a${i}-kitchenTagsIt" value="${escAttr(apt.kitchenTagsIt || '')}" placeholder="Piano cottura,Forno,Frigorifero..."></div>
@@ -2678,7 +2685,7 @@ function collectSettingsApts() {
   const apts = [];
   for (let i = 0; i < count; i++) {
     const apt = {};
-    ['name','nameEn','address','addressShort','mapsLink','maxGuests','maxGuestsEn','roomsIt','roomsEn','wifi','wifiPass','checkin','checkout','howToReachIt','howToReachEn','howToAccessIt','howToAccessEn','parkingIt','parkingEn','kitchenTagsIt','kitchenTagsEn','bathroomTagsIt','bathroomTagsEn'].forEach(k => {
+    ['name','nameEn','address','addressShort','mapsLink','maxGuests','maxGuestsEn','wifi','wifiPass','checkin','checkout','howToReachIt','howToReachEn','howToAccessIt','howToAccessEn','parkingIt','parkingEn','bedroomTagsIt','bedroomTagsEn','kitchenTagsIt','kitchenTagsEn','bathroomTagsIt','bathroomTagsEn'].forEach(k => {
       const el = document.getElementById(`s-a${i}-${k}`);
       if (el) apt[k] = el.value;
     });
@@ -2692,7 +2699,7 @@ function collectSettingsApts() {
 function addSettingsApt() {
   const current = collectSettingsApts();
   const n = current.length + 1;
-  current.push({ name: `Appartamento ${n}`, nameEn: `Apartment ${n}`, address: '', addressShort: '', mapsLink: '', maxGuests: '4 persone', maxGuestsEn: '4 guests', roomsIt: '', roomsEn: '', wifi: '', wifiPass: '', checkin: '15:00', checkout: '10:00', howToReachIt: '', howToReachEn: '', howToAccessIt: '', howToAccessEn: '', parkingIt: '', parkingEn: '', houseRules: [], kitchenTagsIt: '', kitchenTagsEn: '', bathroomTagsIt: '', bathroomTagsEn: '', extraServices: [] });
+  current.push({ name: `Appartamento ${n}`, nameEn: `Apartment ${n}`, address: '', addressShort: '', mapsLink: '', maxGuests: '4 persone', maxGuestsEn: '4 guests', wifi: '', wifiPass: '', checkin: '15:00', checkout: '10:00', howToReachIt: '', howToReachEn: '', howToAccessIt: '', howToAccessEn: '', parkingIt: '', parkingEn: '', houseRules: [], bedroomTagsIt: '', bedroomTagsEn: '', kitchenTagsIt: '', kitchenTagsEn: '', bathroomTagsIt: '', bathroomTagsEn: '', extraServices: [] });
   renderSettingsApts(current);
   const last = document.getElementById('s-apts-container').lastElementChild;
   if (last) { last.open = true; last.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
@@ -3220,6 +3227,14 @@ function escAttr(str) {
     .replace(/'/g, '&#39;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
+}
+
+function renderRichText(text) {
+  if (!text) return '';
+  let s = escHtml(text);
+  s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/\n/g, '<br>');
+  return s;
 }
 
 // ════════════════════════════════════════════
