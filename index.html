@@ -1014,6 +1014,145 @@
     padding: 28px 20px 0;
     margin-bottom: 20px;
   }
+
+  /* ── PIN MODAL ────────────────────────────────────── */
+  #pin-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: rgba(13,27,30,0.94);
+    backdrop-filter: blur(10px);
+    align-items: center;
+    justify-content: center;
+  }
+  #pin-modal.open { display: flex; }
+
+  .pin-dialog {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px 24px 24px;
+    width: 300px;
+    text-align: center;
+    animation: fadeUp .3s ease;
+  }
+  .pin-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .pin-subtitle {
+    font-size: 12px;
+    color: var(--text2);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .pin-dots {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  .pin-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background .15s, transform .1s;
+  }
+  .pin-dot.filled {
+    background: var(--gold);
+    transform: scale(1.2);
+  }
+  .pin-dot.error {
+    background: var(--accent);
+  }
+  .pin-error {
+    color: var(--accent);
+    font-size: 12px;
+    height: 18px;
+    margin-bottom: 14px;
+  }
+  .pin-keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .pin-key {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-size: 20px;
+    font-weight: 500;
+    padding: 15px 10px;
+    cursor: pointer;
+    transition: background .12s, transform .08s;
+    font-family: 'Jost', sans-serif;
+    user-select: none;
+  }
+  .pin-key:active, .pin-key:focus {
+    background: var(--border);
+    transform: scale(0.94);
+    outline: none;
+  }
+  .pin-cancel {
+    background: transparent;
+    border: none;
+    color: var(--text2);
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 6px;
+  }
+
+  /* ── SETTINGS: DYNAMIC BUTTONS ───────────────────── */
+  .s-remove-btn {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    border-radius: 8px;
+    padding: 3px 9px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    transition: background .15s, color .15s;
+  }
+  .s-remove-btn:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+  .s-add-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px dashed var(--teal);
+    color: var(--teal);
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    transition: background .15s;
+    margin: 8px 0 4px;
+    display: block;
+  }
+  .s-add-btn:hover { background: rgba(42,157,143,0.12); }
+  .s-sub-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .s-section-title-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    gap: 8px;
+  }
 </style>
 </head>
 <body>
@@ -1541,60 +1680,28 @@
       </div>
     </details>
 
-    <!-- Appartamento 1 -->
-    <details class="s-section">
-      <summary class="s-section-title">🏠 Appartamento 1</summary>
-      <div class="s-fields">
-        <div class="s-field"><label>Nome appartamento (IT)</label><input type="text" id="s-a0-name" placeholder="Appartamento 1"></div>
-        <div class="s-field"><label>Nome appartamento (EN)</label><input type="text" id="s-a0-nameEn" placeholder="Apartment 1"></div>
-        <div class="s-field"><label>Indirizzo completo</label><input type="text" id="s-a0-address" placeholder="Via Example 1, La Tua Città"></div>
-        <div class="s-field"><label>Indirizzo breve</label><input type="text" id="s-a0-addressShort" placeholder="Via Example 1"></div>
-        <div class="s-field"><label>Link Google Maps</label><input type="url" id="s-a0-mapsLink" placeholder="https://maps.google.com/..."></div>
-        <div class="s-field"><label>Max ospiti (IT)</label><input type="text" id="s-a0-maxGuests" placeholder="4 persone"></div>
-        <div class="s-field"><label>Max ospiti (EN)</label><input type="text" id="s-a0-maxGuestsEn" placeholder="4 guests"></div>
-        <div class="s-field"><label>Descrizione camere (IT)</label><textarea id="s-a0-roomsIt" placeholder="2 camere con letto matrimoniale..."></textarea></div>
-        <div class="s-field"><label>Descrizione camere (EN)</label><textarea id="s-a0-roomsEn" placeholder="2 double bedrooms..."></textarea></div>
-        <div class="s-field"><label>WiFi — Nome rete</label><input type="text" id="s-a0-wifi" placeholder="NomeRete"></div>
-        <div class="s-field"><label>WiFi — Password</label><input type="text" id="s-a0-wifiPass" placeholder="password123"></div>
-        <div class="s-field"><label>Check-in (orario)</label><input type="text" id="s-a0-checkin" placeholder="15:00"></div>
-        <div class="s-field"><label>Check-out (orario)</label><input type="text" id="s-a0-checkout" placeholder="10:00"></div>
-      </div>
-    </details>
-
-    <!-- Appartamento 2 -->
-    <details class="s-section">
-      <summary class="s-section-title">🏠 Appartamento 2</summary>
-      <div class="s-fields">
-        <div class="s-field"><label>Nome appartamento (IT)</label><input type="text" id="s-a1-name" placeholder="Appartamento 2"></div>
-        <div class="s-field"><label>Nome appartamento (EN)</label><input type="text" id="s-a1-nameEn" placeholder="Apartment 2"></div>
-        <div class="s-field"><label>Indirizzo completo</label><input type="text" id="s-a1-address" placeholder="Via Example 2, La Tua Città"></div>
-        <div class="s-field"><label>Indirizzo breve</label><input type="text" id="s-a1-addressShort" placeholder="Via Example 2"></div>
-        <div class="s-field"><label>Link Google Maps</label><input type="url" id="s-a1-mapsLink" placeholder="https://maps.google.com/..."></div>
-        <div class="s-field"><label>Max ospiti (IT)</label><input type="text" id="s-a1-maxGuests" placeholder="4 persone"></div>
-        <div class="s-field"><label>Max ospiti (EN)</label><input type="text" id="s-a1-maxGuestsEn" placeholder="4 guests"></div>
-        <div class="s-field"><label>Descrizione camere (IT)</label><textarea id="s-a1-roomsIt" placeholder="2 camere con letto matrimoniale..."></textarea></div>
-        <div class="s-field"><label>Descrizione camere (EN)</label><textarea id="s-a1-roomsEn" placeholder="2 double bedrooms..."></textarea></div>
-        <div class="s-field"><label>WiFi — Nome rete</label><input type="text" id="s-a1-wifi" placeholder="NomeRete2"></div>
-        <div class="s-field"><label>WiFi — Password</label><input type="text" id="s-a1-wifiPass" placeholder="password456"></div>
-        <div class="s-field"><label>Check-in (orario)</label><input type="text" id="s-a1-checkin" placeholder="15:00"></div>
-        <div class="s-field"><label>Check-out (orario)</label><input type="text" id="s-a1-checkout" placeholder="10:00"></div>
-      </div>
-    </details>
+    <!-- Appartamenti (dynamic) -->
+    <div id="s-apts-container" data-count="0">
+      <!-- generated by JS -->
+    </div>
+    <button class="s-add-btn" onclick="addSettingsApt()">➕ Aggiungi Appartamento</button>
 
     <!-- Luoghi -->
     <details class="s-section">
       <summary class="s-section-title">🗺️ Luoghi da Visitare</summary>
-      <div class="s-fields" id="s-places-fields">
-        <!-- generated for 5 slots -->
+      <div class="s-fields" id="s-places-fields" data-count="0">
+        <!-- generated by JS -->
       </div>
+      <button class="s-add-btn" onclick="addSettingsPlace()">➕ Aggiungi Luogo</button>
     </details>
 
     <!-- Ristoranti -->
     <details class="s-section">
       <summary class="s-section-title">🍽️ Ristoranti</summary>
-      <div class="s-fields" id="s-restaurants-fields">
-        <!-- generated for 4 slots -->
+      <div class="s-fields" id="s-restaurants-fields" data-count="0">
+        <!-- generated by JS -->
       </div>
+      <button class="s-add-btn" onclick="addSettingsRest()">➕ Aggiungi Ristorante</button>
     </details>
 
     <!-- Trasporti -->
@@ -1628,10 +1735,56 @@
       </div>
     </details>
 
+    <!-- PIN Sicurezza -->
+    <details class="s-section">
+      <summary class="s-section-title">🔐 Sicurezza PIN</summary>
+      <div class="s-fields">
+        <div class="s-sub-title">Cambia PIN Host</div>
+        <p style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.5">Il PIN predefinito è <strong style="color:var(--gold)">1234</strong>. Cambialo subito per proteggere le impostazioni.</p>
+        <div class="s-field"><label>PIN attuale</label><input type="password" id="s-pin-current" placeholder="••••" maxlength="4" inputmode="numeric"></div>
+        <div class="s-field"><label>Nuovo PIN (4 cifre)</label><input type="password" id="s-pin-new" placeholder="••••" maxlength="4" inputmode="numeric"></div>
+        <div class="s-field"><label>Conferma nuovo PIN</label><input type="password" id="s-pin-confirm" placeholder="••••" maxlength="4" inputmode="numeric"></div>
+        <div id="s-pin-msg" style="font-size:12px;min-height:18px;margin-top:4px"></div>
+        <button class="s-btn" onclick="changePin()" style="margin-top:8px">🔐 Cambia PIN</button>
+      </div>
+    </details>
+
   </div><!-- /settings-body -->
 </div><!-- /settings-panel -->
 
 </div><!-- /app-shell -->
+
+<!-- ════════════════════════════════════════════
+     PIN MODAL
+════════════════════════════════════════════ -->
+<div id="pin-modal">
+  <div class="pin-dialog">
+    <div class="pin-title">🔐 Area Host</div>
+    <div class="pin-subtitle">Inserisci il PIN per accedere<br>alle impostazioni</div>
+    <div class="pin-dots" id="pin-dots">
+      <div class="pin-dot" id="pd0"></div>
+      <div class="pin-dot" id="pd1"></div>
+      <div class="pin-dot" id="pd2"></div>
+      <div class="pin-dot" id="pd3"></div>
+    </div>
+    <div class="pin-error" id="pin-error"></div>
+    <div class="pin-keypad">
+      <button class="pin-key" onclick="pinKey('1')">1</button>
+      <button class="pin-key" onclick="pinKey('2')">2</button>
+      <button class="pin-key" onclick="pinKey('3')">3</button>
+      <button class="pin-key" onclick="pinKey('4')">4</button>
+      <button class="pin-key" onclick="pinKey('5')">5</button>
+      <button class="pin-key" onclick="pinKey('6')">6</button>
+      <button class="pin-key" onclick="pinKey('7')">7</button>
+      <button class="pin-key" onclick="pinKey('8')">8</button>
+      <button class="pin-key" onclick="pinKey('9')">9</button>
+      <div></div>
+      <button class="pin-key" onclick="pinKey('0')">0</button>
+      <button class="pin-key" onclick="pinBackspace()">⌫</button>
+    </div>
+    <button class="pin-cancel" onclick="closePinModal()">Annulla</button>
+  </div>
+</div>
 
 <script>
 // ════════════════════════════════════════════
@@ -1781,6 +1934,11 @@ let currentData = null;
 let currentAptIndex = 0;
 let currentLang = 'it';
 let landingLang = 'it';
+
+// PIN state
+let pinBuffer = '';
+const PIN_KEY = 'bnb_admin_pin';
+function getStoredPin() { return localStorage.getItem(PIN_KEY) || '1234'; }
 
 // ════════════════════════════════════════════
 //  DATA HELPERS
@@ -2106,9 +2264,53 @@ function fallbackCopy(text, btn) {
 }
 
 // ════════════════════════════════════════════
-//  SETTINGS PANEL
+//  PIN MODAL
 // ════════════════════════════════════════════
 function openSettings() {
+  pinBuffer = '';
+  updatePinDots();
+  document.getElementById('pin-error').textContent = '';
+  document.getElementById('pin-modal').classList.add('open');
+}
+
+function closePinModal() {
+  document.getElementById('pin-modal').classList.remove('open');
+  pinBuffer = '';
+}
+
+function pinKey(digit) {
+  if (pinBuffer.length >= 4) return;
+  pinBuffer += digit;
+  updatePinDots();
+  if (pinBuffer.length === 4) setTimeout(checkPin, 120);
+}
+
+function pinBackspace() {
+  pinBuffer = pinBuffer.slice(0, -1);
+  updatePinDots();
+  document.getElementById('pin-error').textContent = '';
+}
+
+function updatePinDots() {
+  for (let i = 0; i < 4; i++) {
+    const dot = document.getElementById('pd' + i);
+    dot.classList.toggle('filled', i < pinBuffer.length);
+    dot.classList.remove('error');
+  }
+}
+
+function checkPin() {
+  if (pinBuffer === getStoredPin()) {
+    closePinModal();
+    _openSettingsPanel();
+  } else {
+    document.getElementById('pin-error').textContent = '❌ PIN errato. Riprova.';
+    for (let i = 0; i < 4; i++) document.getElementById('pd' + i).classList.add('error');
+    setTimeout(() => { pinBuffer = ''; updatePinDots(); }, 600);
+  }
+}
+
+function _openSettingsPanel() {
   populateSettingsForms();
   const panel = document.getElementById('settings-panel');
   panel.classList.add('open');
@@ -2120,6 +2322,205 @@ function closeSettings() {
   document.body.style.overflow = '';
 }
 
+function changePin() {
+  const current = document.getElementById('s-pin-current').value;
+  const newPin = document.getElementById('s-pin-new').value;
+  const confirm2 = document.getElementById('s-pin-confirm').value;
+  const msg = document.getElementById('s-pin-msg');
+  const showErr = t => { msg.style.color = 'var(--accent)'; msg.textContent = '❌ ' + t; };
+  const showOk = t => { msg.style.color = 'var(--teal)'; msg.textContent = '✅ ' + t; };
+  if (current !== getStoredPin()) { showErr('PIN attuale non corretto.'); return; }
+  if (!/^\d{4}$/.test(newPin)) { showErr('Il nuovo PIN deve essere di esattamente 4 cifre numeriche.'); return; }
+  if (newPin !== confirm2) { showErr('I due PIN non coincidono. Riprova.'); return; }
+  localStorage.setItem(PIN_KEY, newPin);
+  document.getElementById('s-pin-current').value = '';
+  document.getElementById('s-pin-new').value = '';
+  document.getElementById('s-pin-confirm').value = '';
+  showOk('PIN aggiornato con successo!');
+  setTimeout(() => { msg.textContent = ''; }, 3000);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS: DYNAMIC APARTMENTS
+// ════════════════════════════════════════════
+function renderSettingsApts(apts) {
+  const container = document.getElementById('s-apts-container');
+  container.dataset.count = apts.length;
+  container.innerHTML = '';
+  apts.forEach((apt, i) => {
+    const canDel = apts.length > 1;
+    const section = document.createElement('details');
+    section.className = 's-section';
+    const delBtn = canDel
+      ? `<button class="s-remove-btn" onclick="event.stopPropagation(); removeSettingsApt(${i})">🗑️ Elimina</button>`
+      : '';
+    section.innerHTML = `
+      <summary class="s-section-title"><span class="s-section-title-inner">🏠 Appartamento ${i + 1}${delBtn}</span></summary>
+      <div class="s-fields">
+        <div class="s-field"><label>Nome (IT)</label><input type="text" id="s-a${i}-name" value="${escAttr(apt.name || '')}" placeholder="Appartamento ${i + 1}"></div>
+        <div class="s-field"><label>Nome (EN)</label><input type="text" id="s-a${i}-nameEn" value="${escAttr(apt.nameEn || '')}" placeholder="Apartment ${i + 1}"></div>
+        <div class="s-field"><label>Indirizzo completo</label><input type="text" id="s-a${i}-address" value="${escAttr(apt.address || '')}"></div>
+        <div class="s-field"><label>Indirizzo breve</label><input type="text" id="s-a${i}-addressShort" value="${escAttr(apt.addressShort || '')}"></div>
+        <div class="s-field"><label>Link Google Maps</label><input type="url" id="s-a${i}-mapsLink" value="${escAttr(apt.mapsLink || '')}"></div>
+        <div class="s-field"><label>Max ospiti (IT)</label><input type="text" id="s-a${i}-maxGuests" value="${escAttr(apt.maxGuests || '')}"></div>
+        <div class="s-field"><label>Max ospiti (EN)</label><input type="text" id="s-a${i}-maxGuestsEn" value="${escAttr(apt.maxGuestsEn || '')}"></div>
+        <div class="s-field"><label>Descrizione camere (IT)</label><textarea id="s-a${i}-roomsIt">${escHtml(apt.roomsIt || '')}</textarea></div>
+        <div class="s-field"><label>Descrizione camere (EN)</label><textarea id="s-a${i}-roomsEn">${escHtml(apt.roomsEn || '')}</textarea></div>
+        <div class="s-field"><label>WiFi — Nome rete</label><input type="text" id="s-a${i}-wifi" value="${escAttr(apt.wifi || '')}"></div>
+        <div class="s-field"><label>WiFi — Password</label><input type="text" id="s-a${i}-wifiPass" value="${escAttr(apt.wifiPass || '')}"></div>
+        <div class="s-field"><label>Check-in (orario)</label><input type="text" id="s-a${i}-checkin" value="${escAttr(apt.checkin || '')}" placeholder="15:00"></div>
+        <div class="s-field"><label>Check-out (orario)</label><input type="text" id="s-a${i}-checkout" value="${escAttr(apt.checkout || '')}" placeholder="10:00"></div>
+      </div>`;
+    container.appendChild(section);
+  });
+}
+
+function collectSettingsApts() {
+  const container = document.getElementById('s-apts-container');
+  const count = parseInt(container.dataset.count || '0');
+  const apts = [];
+  for (let i = 0; i < count; i++) {
+    const apt = {};
+    ['name','nameEn','address','addressShort','mapsLink','maxGuests','maxGuestsEn','roomsIt','roomsEn','wifi','wifiPass','checkin','checkout'].forEach(k => {
+      const el = document.getElementById(`s-a${i}-${k}`);
+      if (el) apt[k] = el.value;
+    });
+    apts.push(apt);
+  }
+  return apts;
+}
+
+function addSettingsApt() {
+  const current = collectSettingsApts();
+  const n = current.length + 1;
+  current.push({ name: `Appartamento ${n}`, nameEn: `Apartment ${n}`, address: '', addressShort: '', mapsLink: '', maxGuests: '4 persone', maxGuestsEn: '4 guests', roomsIt: '', roomsEn: '', wifi: '', wifiPass: '', checkin: '15:00', checkout: '10:00' });
+  renderSettingsApts(current);
+  const last = document.getElementById('s-apts-container').lastElementChild;
+  if (last) { last.open = true; last.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+}
+
+function removeSettingsApt(idx) {
+  const current = collectSettingsApts();
+  if (current.length <= 1) { alert('Devi avere almeno un appartamento.'); return; }
+  if (!confirm(`Eliminare Appartamento ${idx + 1}? Le modifiche non salvate verranno perse.`)) return;
+  current.splice(idx, 1);
+  renderSettingsApts(current);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS: DYNAMIC PLACES
+// ════════════════════════════════════════════
+function renderSettingsPlaces(places) {
+  const container = document.getElementById('s-places-fields');
+  container.dataset.count = places.length;
+  container.innerHTML = '';
+  places.forEach((p, i) => {
+    container.innerHTML += `
+      <div class="s-sub-title s-sub-title-row">
+        <span>Luogo ${i + 1}</span>
+        <button class="s-remove-btn" onclick="removeSettingsPlace(${i})">🗑️ Rimuovi</button>
+      </div>
+      <input type="hidden" id="s-p${i}-emoji" value="${escAttr(p.emoji || '📍')}">
+      <div class="s-field"><label>Nome</label><input type="text" id="s-p${i}-name" value="${escAttr(p.name || '')}"></div>
+      <div class="s-field"><label>Descrizione IT</label><textarea id="s-p${i}-descIt">${escHtml(p.descIt || '')}</textarea></div>
+      <div class="s-field"><label>Descrizione EN</label><textarea id="s-p${i}-descEn">${escHtml(p.descEn || '')}</textarea></div>
+      <div class="s-field"><label>Come arrivarci IT</label><textarea id="s-p${i}-howIt">${escHtml(p.howIt || '')}</textarea></div>
+      <div class="s-field"><label>Come arrivarci EN</label><textarea id="s-p${i}-howEn">${escHtml(p.howEn || '')}</textarea></div>
+      <div class="s-field"><label>Link Maps</label><input type="url" id="s-p${i}-maps" value="${escAttr(p.maps || '')}"></div>
+      ${i < places.length - 1 ? '<div class="s-divider"></div>' : ''}`;
+  });
+}
+
+function collectSettingsPlaces() {
+  const container = document.getElementById('s-places-fields');
+  const count = parseInt(container.dataset.count || '0');
+  const places = [];
+  for (let i = 0; i < count; i++) {
+    const emojiEl = document.getElementById(`s-p${i}-emoji`);
+    const p = { emoji: emojiEl ? emojiEl.value : '📍' };
+    ['name','descIt','descEn','howIt','howEn','maps'].forEach(k => {
+      const el = document.getElementById(`s-p${i}-${k}`);
+      if (el) p[k] = el.value.trim();
+    });
+    places.push(p);
+  }
+  return places;
+}
+
+function addSettingsPlace() {
+  const current = collectSettingsPlaces();
+  current.push({ name: '', emoji: '📍', descIt: '', descEn: '', howIt: '', howEn: '', maps: '#' });
+  renderSettingsPlaces(current);
+  const container = document.getElementById('s-places-fields');
+  container.scrollIntoView({ behavior: 'smooth', block: 'end' });
+}
+
+function removeSettingsPlace(idx) {
+  const current = collectSettingsPlaces();
+  if (!confirm(`Rimuovere "${current[idx].name || ('Luogo ' + (idx + 1))}"?`)) return;
+  current.splice(idx, 1);
+  renderSettingsPlaces(current);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS: DYNAMIC RESTAURANTS
+// ════════════════════════════════════════════
+function renderSettingsRests(rests) {
+  const container = document.getElementById('s-restaurants-fields');
+  container.dataset.count = rests.length;
+  container.innerHTML = '';
+  rests.forEach((r, i) => {
+    container.innerHTML += `
+      <div class="s-sub-title s-sub-title-row">
+        <span>Ristorante ${i + 1}</span>
+        <button class="s-remove-btn" onclick="removeSettingsRest(${i})">🗑️ Rimuovi</button>
+      </div>
+      <input type="hidden" id="s-r${i}-emoji" value="${escAttr(r.emoji || '🍽️')}">
+      <div class="s-field"><label>Nome</label><input type="text" id="s-r${i}-name" value="${escAttr(r.name || '')}"></div>
+      <div class="s-field"><label>Tipo</label><input type="text" id="s-r${i}-tipo" value="${escAttr(r.tipo || '')}"></div>
+      <div class="s-field"><label>Descrizione IT</label><textarea id="s-r${i}-descIt">${escHtml(r.descIt || '')}</textarea></div>
+      <div class="s-field"><label>Descrizione EN</label><textarea id="s-r${i}-descEn">${escHtml(r.descEn || '')}</textarea></div>
+      <div class="s-field"><label>Fascia prezzo</label><input type="text" id="s-r${i}-price" value="${escAttr(r.price || '')}" placeholder="€ / €€ / €€€"></div>
+      <div class="s-field"><label>Link Maps</label><input type="url" id="s-r${i}-maps" value="${escAttr(r.maps || '')}"></div>
+      ${i < rests.length - 1 ? '<div class="s-divider"></div>' : ''}`;
+  });
+}
+
+function collectSettingsRests() {
+  const container = document.getElementById('s-restaurants-fields');
+  const count = parseInt(container.dataset.count || '0');
+  const rests = [];
+  for (let i = 0; i < count; i++) {
+    const emojiEl = document.getElementById(`s-r${i}-emoji`);
+    const r = { emoji: emojiEl ? emojiEl.value : '🍽️' };
+    ['name','tipo','descIt','descEn','price','maps'].forEach(k => {
+      const el = document.getElementById(`s-r${i}-${k}`);
+      if (el) r[k] = el.value.trim();
+    });
+    rests.push(r);
+  }
+  return rests;
+}
+
+function addSettingsRest() {
+  const current = collectSettingsRests();
+  current.push({ name: '', emoji: '🍽️', tipo: '', descIt: '', descEn: '', price: '€€', maps: '#' });
+  renderSettingsRests(current);
+  const container = document.getElementById('s-restaurants-fields');
+  container.scrollIntoView({ behavior: 'smooth', block: 'end' });
+}
+
+function removeSettingsRest(idx) {
+  const current = collectSettingsRests();
+  if (!confirm(`Rimuovere "${current[idx].name || ('Ristorante ' + (idx + 1))}"?`)) return;
+  current.splice(idx, 1);
+  renderSettingsRests(current);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS PANEL
+// ════════════════════════════════════════════
+
 function populateSettingsForms() {
   const d = currentData;
 
@@ -2130,48 +2531,14 @@ function populateSettingsForms() {
   document.getElementById('s-hostName').value = d.hostName;
   document.getElementById('s-hostPhone').value = d.hostPhone;
 
-  // Apts
-  for (let i = 0; i < 2; i++) {
-    const apt = d.apts[i] || {};
-    ['name','nameEn','address','addressShort','mapsLink','maxGuests','maxGuestsEn','roomsIt','roomsEn','wifi','wifiPass','checkin','checkout'].forEach(k => {
-      const el = document.getElementById(`s-a${i}-${k}`);
-      if (el) el.value = apt[k] || '';
-    });
-  }
+  // Apts (dynamic)
+  renderSettingsApts(d.apts);
 
-  // Places (5)
-  const pFields = document.getElementById('s-places-fields');
-  pFields.innerHTML = '';
-  for (let i = 0; i < 5; i++) {
-    const p = d.places[i] || {};
-    pFields.innerHTML += `
-      <div class="s-sub-title">Luogo ${i+1}</div>
-      <div class="s-field"><label>Nome</label><input type="text" id="s-p${i}-name" value="${escAttr(p.name||'')}"></div>
-      <div class="s-field"><label>Descrizione IT</label><textarea id="s-p${i}-descIt">${escHtml(p.descIt||'')}</textarea></div>
-      <div class="s-field"><label>Descrizione EN</label><textarea id="s-p${i}-descEn">${escHtml(p.descEn||'')}</textarea></div>
-      <div class="s-field"><label>Come arrivarci IT</label><textarea id="s-p${i}-howIt">${escHtml(p.howIt||'')}</textarea></div>
-      <div class="s-field"><label>Come arrivarci EN</label><textarea id="s-p${i}-howEn">${escHtml(p.howEn||'')}</textarea></div>
-      <div class="s-field"><label>Link Maps</label><input type="url" id="s-p${i}-maps" value="${escAttr(p.maps||'')}"></div>
-      ${i < 4 ? '<div class="s-divider"></div>' : ''}
-    `;
-  }
+  // Places (dynamic)
+  renderSettingsPlaces(d.places);
 
-  // Restaurants (4)
-  const rFields = document.getElementById('s-restaurants-fields');
-  rFields.innerHTML = '';
-  for (let i = 0; i < 4; i++) {
-    const r = d.restaurants[i] || {};
-    rFields.innerHTML += `
-      <div class="s-sub-title">Ristorante ${i+1}</div>
-      <div class="s-field"><label>Nome</label><input type="text" id="s-r${i}-name" value="${escAttr(r.name||'')}"></div>
-      <div class="s-field"><label>Tipo</label><input type="text" id="s-r${i}-tipo" value="${escAttr(r.tipo||'')}"></div>
-      <div class="s-field"><label>Descrizione IT</label><textarea id="s-r${i}-descIt">${escHtml(r.descIt||'')}</textarea></div>
-      <div class="s-field"><label>Descrizione EN</label><textarea id="s-r${i}-descEn">${escHtml(r.descEn||'')}</textarea></div>
-      <div class="s-field"><label>Fascia prezzo</label><input type="text" id="s-r${i}-price" value="${escAttr(r.price||'')}" placeholder="€ / €€ / €€€"></div>
-      <div class="s-field"><label>Link Maps</label><input type="url" id="s-r${i}-maps" value="${escAttr(r.maps||'')}"></div>
-      ${i < 3 ? '<div class="s-divider"></div>' : ''}
-    `;
-  }
+  // Restaurants (dynamic)
+  renderSettingsRests(d.restaurants);
 
   // Transport
   const tr = d.transport;
@@ -2198,29 +2565,14 @@ function collectFormData() {
   d.hostName = document.getElementById('s-hostName').value.trim() || d.hostName;
   d.hostPhone = document.getElementById('s-hostPhone').value.trim() || d.hostPhone;
 
-  for (let i = 0; i < 2; i++) {
-    if (!d.apts[i]) d.apts[i] = {};
-    ['name','nameEn','address','addressShort','mapsLink','maxGuests','maxGuestsEn','roomsIt','roomsEn','wifi','wifiPass','checkin','checkout'].forEach(k => {
-      const el = document.getElementById(`s-a${i}-${k}`);
-      if (el) d.apts[i][k] = el.value.trim();
-    });
-  }
+  // Dynamic apts
+  d.apts = collectSettingsApts();
 
-  for (let i = 0; i < 5; i++) {
-    if (!d.places[i]) d.places[i] = {};
-    ['name','descIt','descEn','howIt','howEn','maps'].forEach(k => {
-      const el = document.getElementById(`s-p${i}-${k}`);
-      if (el) d.places[i][k] = el.value.trim();
-    });
-  }
+  // Dynamic places
+  d.places = collectSettingsPlaces();
 
-  for (let i = 0; i < 4; i++) {
-    if (!d.restaurants[i]) d.restaurants[i] = {};
-    ['name','tipo','descIt','descEn','price','maps'].forEach(k => {
-      const el = document.getElementById(`s-r${i}-${k}`);
-      if (el) d.restaurants[i][k] = el.value.trim();
-    });
-  }
+  // Dynamic restaurants
+  d.restaurants = collectSettingsRests();
 
   d.transport.airportIt = document.getElementById('s-tr-airportIt').value.trim();
   d.transport.airportEn = document.getElementById('s-tr-airportEn').value.trim();
@@ -2317,6 +2669,14 @@ function escAttr(str) {
 (function init() {
   currentData = loadData();
   renderLanding();
+
+  // Global keydown for PIN modal — intentional: single-page app, listener persists for the app lifetime
+  document.addEventListener('keydown', function(e) {
+    if (!document.getElementById('pin-modal').classList.contains('open')) return;
+    if (e.key >= '0' && e.key <= '9') { e.preventDefault(); pinKey(e.key); }
+    else if (e.key === 'Backspace') { e.preventDefault(); pinBackspace(); }
+    else if (e.key === 'Escape') closePinModal();
+  });
 })();
 </script>
 </body>
