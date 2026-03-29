@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Il Tuo B&amp;B — Guest Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1947,10 +1950,31 @@ function deepClone(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
 
+function mergeWithDefaults(stored, defaults) {
+  if (!stored || typeof stored !== 'object') return deepClone(defaults);
+  const result = deepClone(defaults);
+  for (const key of Object.keys(defaults)) {
+    const sv = stored[key];
+    const dv = defaults[key];
+    if (sv === undefined || sv === null) continue;
+    if (Array.isArray(dv)) {
+      if (Array.isArray(sv) && sv.length > 0) {
+        const tpl = dv[0] || {};
+        result[key] = sv.map(item => mergeWithDefaults(item, tpl));
+      }
+    } else if (typeof dv === 'object') {
+      if (typeof sv === 'object') result[key] = mergeWithDefaults(sv, dv);
+    } else {
+      result[key] = sv;
+    }
+  }
+  return result;
+}
+
 function loadData() {
   try {
     const raw = localStorage.getItem('bnb_guide_data');
-    if (raw) return JSON.parse(raw);
+    if (raw) return mergeWithDefaults(JSON.parse(raw), DEFAULT_DATA);
   } catch(e) { console.error('Failed to load saved data:', e); }
   return deepClone(DEFAULT_DATA);
 }
@@ -2094,11 +2118,11 @@ function renderApp(aptIndex, lang) {
 
   // SOS
   document.getElementById('sos-host-name').textContent = d.hostName;
-  document.getElementById('sos-host-phone').textContent = '📞 ' + d.hostPhone;
-  document.getElementById('sos-host-call').href = 'tel:' + d.hostPhone.replace(/\s/g, '');
-  document.getElementById('sos-c2-name').textContent = d.contact2Name;
-  document.getElementById('sos-c2-phone').textContent = '📞 ' + d.contact2Phone;
-  document.getElementById('sos-c2-call').href = 'tel:' + d.contact2Phone.replace(/\s/g, '');
+  document.getElementById('sos-host-phone').textContent = '📞 ' + (d.hostPhone || '');
+  document.getElementById('sos-host-call').href = 'tel:' + (d.hostPhone || '').replace(/\s/g, '');
+  document.getElementById('sos-c2-name').textContent = d.contact2Name || '';
+  document.getElementById('sos-c2-phone').textContent = '📞 ' + (d.contact2Phone || '');
+  document.getElementById('sos-c2-call').href = 'tel:' + (d.contact2Phone || '').replace(/\s/g, '');
 
   // Translate data-it / data-en elements
   applyLangAttrs(lang);
