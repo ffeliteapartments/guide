@@ -45,6 +45,30 @@
     overflow-x: hidden;
   }
 
+  @media (min-width: 768px) {
+    .app-shell {
+      max-width: 640px;
+      box-shadow: 0 0 80px rgba(0,0,0,.6);
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+    .bottom-nav { max-width: 640px; }
+    #settings-panel { max-width: 640px; left: 50%; transform: translateX(-50%); }
+    .pin-dialog { width: 360px; }
+    .landing-title { font-size: 52px; }
+    .apt-card { padding: 22px 20px; }
+  }
+
+  @media (min-width: 1024px) {
+    .app-shell {
+      max-width: 720px;
+    }
+    .bottom-nav { max-width: 720px; }
+    #settings-panel { max-width: 720px; }
+    .landing-title { font-size: 58px; }
+    .section-title { font-size: 30px; }
+  }
+
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -1545,6 +1569,7 @@
       📂 Importa JSON
       <input type="file" id="import-file" accept=".json" style="display:none" onchange="importJSON(event)">
     </label>
+    <button class="s-btn" id="publish-btn" onclick="publishOnline()" style="grid-column:1/-1;background:var(--teal);border-color:var(--teal);color:#fff">🚀 Pubblica Online</button>
   </div>
 
   <div class="settings-body">
@@ -1659,6 +1684,11 @@
         <div class="s-field"><label>Conferma nuovo PIN</label><input type="password" id="s-pin-confirm" placeholder="••••" maxlength="4" inputmode="numeric"></div>
         <div id="s-pin-msg" style="font-size:12px;min-height:18px;margin-top:4px"></div>
         <button class="s-btn" onclick="changePin()" style="margin-top:8px">🔐 Cambia PIN</button>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🚀 Pubblica Online</div>
+        <p style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.5">Inserisci un GitHub Personal Access Token (classic) con permesso <strong style="color:var(--gold)">repo</strong> per pubblicare le modifiche su <strong>ffeliteapartments.github.io/guide</strong>. Il token è salvato solo su questo dispositivo.</p>
+        <div class="s-field"><label>GitHub Token</label><input type="password" id="s-github-token" placeholder="ghp_..." autocomplete="off"></div>
+        <div id="s-publish-msg" style="font-size:12px;min-height:18px;margin-top:4px"></div>
       </div>
     </details>
 
@@ -1889,6 +1919,10 @@ const DEFAULT_DATA = {
   }
 };
 
+/* PUBLISHED_DATA_START */
+const PUBLISHED_DATA = null;
+/* PUBLISHED_DATA_END */
+
 // ════════════════════════════════════════════
 //  STATE
 // ════════════════════════════════════════════
@@ -1898,7 +1932,18 @@ let currentAptIndex = 0;
 // PIN state
 let pinBuffer = '';
 const PIN_KEY = 'bnb_admin_pin';
-function getStoredPin() { return localStorage.getItem(PIN_KEY) || '1234'; }
+/* DEFAULT_PIN_HASH_START */
+const DEFAULT_PIN_HASH = '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4';
+/* DEFAULT_PIN_HASH_END */
+
+async function hashPin(pin) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pin));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function getStoredPinHash() {
+  return localStorage.getItem(PIN_KEY) || DEFAULT_PIN_HASH;
+}
 
 // ════════════════════════════════════════════
 //  DATA HELPERS
@@ -1954,6 +1999,7 @@ function loadData() {
       return mergeWithDefaults(stored, DEFAULT_DATA);
     }
   } catch(e) { console.error('Failed to load saved data:', e); }
+  if (PUBLISHED_DATA) return mergeWithDefaults(PUBLISHED_DATA, DEFAULT_DATA);
   return deepClone(DEFAULT_DATA);
 }
 
@@ -2478,19 +2524,30 @@ function updatePinDots() {
 }
 
 function checkPin() {
-  if (pinBuffer === getStoredPin()) {
-    closePinModal();
-    _openSettingsPanel();
-  } else {
-    document.getElementById('pin-error').textContent = '❌ PIN errato. Riprova.';
-    for (let i = 0; i < 4; i++) document.getElementById('pd' + i).classList.add('error');
-    setTimeout(() => { pinBuffer = ''; updatePinDots(); }, 600);
-  }
+  hashPin(pinBuffer).then(hash => {
+    if (hash === getStoredPinHash()) {
+      closePinModal();
+      _openSettingsPanel();
+    } else {
+      document.getElementById('pin-error').textContent = '❌ PIN errato. Riprova.';
+      for (let i = 0; i < 4; i++) document.getElementById('pd' + i).classList.add('error');
+      setTimeout(() => { pinBuffer = ''; updatePinDots(); }, 600);
+    }
+  });
 }
 
-function forgotPin() {
-  if (!confirm('Resettare il PIN al valore predefinito (1234)?')) return;
-  localStorage.removeItem(PIN_KEY);
+async function forgotPin() {
+  const word = prompt('Inserisci la parola segreta per resettare il PIN:');
+  if (word === null) return;
+  if (word !== 'Gigimoto10!') {
+    const err = document.getElementById('pin-error');
+    err.style.color = 'var(--accent)';
+    err.textContent = '❌ Parola segreta errata.';
+    setTimeout(() => { err.style.color = ''; err.textContent = ''; }, 2000);
+    return;
+  }
+  const hash = await hashPin('1234');
+  localStorage.setItem(PIN_KEY, hash);
   pinBuffer = '';
   updatePinDots();
   const err = document.getElementById('pin-error');
@@ -2511,22 +2568,126 @@ function closeSettings() {
   document.body.style.overflow = '';
 }
 
-function changePin() {
+async function changePin() {
   const current = document.getElementById('s-pin-current').value;
   const newPin = document.getElementById('s-pin-new').value;
   const confirm2 = document.getElementById('s-pin-confirm').value;
   const msg = document.getElementById('s-pin-msg');
   const showErr = t => { msg.style.color = 'var(--accent)'; msg.textContent = '❌ ' + t; };
   const showOk = t => { msg.style.color = 'var(--teal)'; msg.textContent = '✅ ' + t; };
-  if (current !== getStoredPin()) { showErr('PIN attuale non corretto.'); return; }
+  const currentHash = await hashPin(current);
+  if (currentHash !== getStoredPinHash()) { showErr('PIN attuale non corretto.'); return; }
   if (!/^\d{4}$/.test(newPin)) { showErr('Il nuovo PIN deve essere di esattamente 4 cifre numeriche.'); return; }
   if (newPin !== confirm2) { showErr('I due PIN non coincidono. Riprova.'); return; }
-  localStorage.setItem(PIN_KEY, newPin);
+  const newHash = await hashPin(newPin);
+  localStorage.setItem(PIN_KEY, newHash);
   document.getElementById('s-pin-current').value = '';
   document.getElementById('s-pin-new').value = '';
   document.getElementById('s-pin-confirm').value = '';
   showOk('PIN aggiornato con successo!');
   setTimeout(() => { msg.textContent = ''; }, 3000);
+}
+
+// ════════════════════════════════════════════
+//  PIN MIGRATION (plain → SHA-256)
+// ════════════════════════════════════════════
+async function migratePinIfNeeded() {
+  const stored = localStorage.getItem(PIN_KEY);
+  if (stored && /^\d{4}$/.test(stored)) {
+    const hash = await hashPin(stored);
+    localStorage.setItem(PIN_KEY, hash);
+  }
+}
+
+// ════════════════════════════════════════════
+//  PUBLISH ONLINE (GitHub API)
+// ════════════════════════════════════════════
+async function publishOnline() {
+  const tokenInput = document.getElementById('s-github-token');
+  const token = (tokenInput && tokenInput.value.trim()) || localStorage.getItem('bnb_github_token') || '';
+  const msg = document.getElementById('s-publish-msg');
+  const showErr = t => { if (msg) { msg.style.color = 'var(--accent)'; msg.textContent = '❌ ' + t; } else alert('❌ ' + t); };
+  const showOk  = t => { if (msg) { msg.style.color = 'var(--teal)';   msg.textContent = '✅ ' + t; } else alert('✅ ' + t); };
+
+  if (!token) {
+    showErr('Inserisci il GitHub Token nella sezione Sicurezza PIN prima di pubblicare.');
+    return;
+  }
+  // Save token for convenience
+  localStorage.setItem('bnb_github_token', token);
+
+  const btn = document.getElementById('publish-btn');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Pubblicazione…'; }
+  if (msg) msg.textContent = '';
+
+  try {
+    const OWNER = 'ffeliteapartments';
+    const REPO  = 'guide';
+    const FILE  = 'index.html';
+    const BRANCH = 'main';
+    const API   = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE}`;
+
+    // 1. Get current file (for SHA)
+    const getResp = await fetch(`${API}?ref=${BRANCH}`, {
+      headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (!getResp.ok) {
+      const e = await getResp.json().catch(() => ({}));
+      throw new Error(e.message || `HTTP ${getResp.status}`);
+    }
+    const fileData = await getResp.json();
+    // GitHub returns content with newlines every 60 chars — strip them
+    const rawContent = atob(fileData.content.replace(/\n/g, ''));
+
+    // 2. Get current PIN hash
+    const pinHash = getStoredPinHash();
+
+    // 3. Get current data (save first to make sure it's up to date)
+    const dataStr = JSON.stringify(currentData, null, 2);
+
+    // 4. Patch DEFAULT_PIN_HASH
+    let newContent = rawContent.replace(
+      /\/\* DEFAULT_PIN_HASH_START \*\/[\s\S]*?\/\* DEFAULT_PIN_HASH_END \*\//,
+      `/* DEFAULT_PIN_HASH_START */\nconst DEFAULT_PIN_HASH = '${pinHash}';\n/* DEFAULT_PIN_HASH_END */`
+    );
+
+    // 5. Patch PUBLISHED_DATA
+    newContent = newContent.replace(
+      /\/\* PUBLISHED_DATA_START \*\/[\s\S]*?\/\* PUBLISHED_DATA_END \*\//,
+      `/* PUBLISHED_DATA_START */\nconst PUBLISHED_DATA = ${dataStr};\n/* PUBLISHED_DATA_END */`
+    );
+
+    // 6. Base64-encode (handle Unicode)
+    const newContentB64 = btoa(unescape(encodeURIComponent(newContent)));
+
+    // 7. Commit
+    const putResp = await fetch(API, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: 'Aggiorna guida e PIN [via admin panel]',
+        content: newContentB64,
+        sha: fileData.sha,
+        branch: BRANCH
+      })
+    });
+
+    if (!putResp.ok) {
+      const e = await putResp.json().catch(() => ({}));
+      throw new Error(e.message || `HTTP ${putResp.status}`);
+    }
+
+    showOk('Pubblicato! Le modifiche saranno live su ffeliteapartments.github.io/guide tra qualche secondo.');
+    setTimeout(() => { if (msg) msg.textContent = ''; }, 8000);
+  } catch (err) {
+    showErr(err.message || 'Errore sconosciuto.');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '🚀 Pubblica Online'; }
+  }
 }
 
 // ════════════════════════════════════════════
@@ -3258,6 +3419,11 @@ function populateSettingsForms() {
   document.getElementById('s-st-transportTitleIt').value = st.transportTitleIt || '';
   document.getElementById('s-st-departureEyebrowIt').value = st.departureEyebrowIt || '';
   document.getElementById('s-st-departureTitleIt').value = st.departureTitleIt || '';
+
+  // GitHub token (stored separately)
+  const ghToken = localStorage.getItem('bnb_github_token') || '';
+  const ghField = document.getElementById('s-github-token');
+  if (ghField) ghField.value = ghToken;
 }
 
 function collectFormData() {
@@ -3396,6 +3562,9 @@ function renderRichText(text) {
 // ════════════════════════════════════════════
 (function init() {
   currentData = loadData();
+
+  // Migrate legacy plain-text PIN to SHA-256 hash
+  migratePinIfNeeded();
 
   renderLanding();
 
