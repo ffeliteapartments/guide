@@ -1,0 +1,3733 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Il Tuo B&amp;B — Guest Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1b1e;
+    --bg2: #162226;
+    --card: #1c2e32;
+    --card2: #213439;
+    --border: #2a4048;
+    --gold: #c9a84c;
+    --gold2: #e2c97e;
+    --text: #e8e0d5;
+    --text2: #a0b4b8;
+    --teal: #2a9d8f;
+    --teal2: #3ab5a5;
+    --accent: #e76f51;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    font-family: 'Jost', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .app-shell {
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .fade-up { animation: fadeUp .45s ease both; }
+  .fade-in { animation: fadeIn .3s ease both; }
+
+  /* ── LANDING ──────────────────────────────────────── */
+  #landing {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: linear-gradient(160deg, #0d1b1e 0%, #162c30 60%, #0d1b1e 100%);
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 40px;
+    position: relative;
+  }
+
+  .landing-topbar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 20px 0;
+  }
+
+  .landing-hero {
+    padding: 32px 24px 20px;
+    animation: fadeUp .5s ease both;
+  }
+
+  .landing-eyebrow {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+
+  .landing-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .landing-title em {
+    font-style: italic;
+    color: var(--gold2);
+  }
+
+  .landing-subtitle {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text2);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  .divider-gold {
+    width: 48px;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    margin: 16px 0;
+  }
+
+  .landing-intro {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.6;
+    padding: 0 24px 28px;
+    animation: fadeUp .5s .1s ease both;
+  }
+
+  .apt-cards {
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    animation: fadeUp .5s .2s ease both;
+  }
+
+  .apt-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow .2s;
+  }
+  .apt-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, var(--gold), var(--teal));
+    border-radius: 4px 0 0 4px;
+  }
+
+  .apt-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .apt-card-body { flex: 1; min-width: 0; }
+
+  .apt-card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .apt-card-superhost {
+    font-size: 11px;
+    color: var(--bg);
+    font-weight: 700;
+    letter-spacing: .5px;
+    background: var(--gold);
+    border-radius: 20px;
+    padding: 4px 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .apt-card-addr {
+    font-size: 12px;
+    color: var(--text2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .apt-lang-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: border-color .2s, transform .2s;
+    text-align: left;
+    width: 100%;
+    color: var(--text);
+  }
+  .lang-btn:hover, .lang-btn:active {
+    border-color: var(--gold);
+    transform: translateY(-1px);
+  }
+
+  .lang-btn-flag {
+    font-size: 24px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .lang-btn-body { flex: 1; min-width: 0; }
+
+  .lang-btn-name {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .lang-btn-sub {
+    font-size: 11px;
+    color: var(--text2);
+    margin-top: 2px;
+  }
+
+  .lang-btn-arrow {
+    color: var(--gold);
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .gear-btn {
+    position: fixed;
+    bottom: 28px;
+    right: max(20px, calc((100vw - 430px)/2 + 20px));
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,.4);
+    transition: transform .2s, box-shadow .2s;
+    z-index: 100;
+  }
+  .gear-btn:hover { transform: rotate(20deg) scale(1.08); box-shadow: 0 6px 28px rgba(0,0,0,.5); }
+  .gear-btn.hidden { display: none; }
+
+  /* ── GUIDE PAGE ────────────────────────────────────── */
+  #guide {
+    display: none;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--bg);
+  }
+  #guide.active { display: flex; }
+
+  .guide-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    min-height: 58px;
+  }
+
+  .back-btn {
+    background: transparent;
+    border: none;
+    color: var(--gold);
+    font-size: 22px;
+    cursor: pointer;
+    padding: 4px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .guide-apt-name {
+    flex: 1;
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ── TAB CONTENT ───────────────────────────────────── */
+  .guide-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 80px;
+  }
+
+  .tab-section { display: none; }
+  .tab-section.active { display: block; animation: fadeIn .3s ease; }
+
+  /* ── BOTTOM NAV ────────────────────────────────────── */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    display: flex;
+    z-index: 50;
+  }
+
+  .nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 4px 8px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: var(--text2);
+    transition: color .2s;
+    gap: 3px;
+  }
+  .nav-item .nav-icon { font-size: 20px; line-height: 1; }
+  .nav-item .nav-label { font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: .3px; }
+  .nav-item.active { color: var(--gold); }
+
+  /* ── COMMON SECTION STYLES ─────────────────────────── */
+  .section-pad { padding: 24px 20px; }
+
+  .section-eyebrow {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+  .section-title em { font-style: italic; color: var(--gold2); }
+
+  .section-sub {
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 20px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  .card + .card { margin-top: 14px; }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text2);
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  /* ── HOME TAB ─────────────────────────────────────── */
+  .home-hero {
+    background: linear-gradient(160deg, var(--bg2) 0%, var(--card) 100%);
+    padding: 32px 24px 28px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .home-apt-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--gold2);
+    line-height: 1.1;
+    margin: 8px 0 6px;
+  }
+
+  .home-address {
+    font-size: 13px;
+    color: var(--text2);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 20px;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .stat-icon { font-size: 20px; margin-bottom: 4px; }
+  .stat-label { font-size: 11px; color: var(--text2); font-weight: 500; letter-spacing: .3px; }
+  .stat-value { font-size: 15px; font-weight: 600; color: var(--text); }
+  .stat-value a { color: var(--teal2); text-decoration: none; font-size: 13px; }
+
+  .welcome-card {
+    margin: 0 20px 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 20px;
+  }
+
+  .welcome-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .welcome-text {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+
+  .welcome-sign {
+    font-size: 14px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .quick-nav { padding: 4px 20px 20px; }
+  .quick-nav-title {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--text2);
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .quick-nav-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: border-color .2s, transform .15s;
+    margin-bottom: 10px;
+  }
+  .quick-nav-card:hover, .quick-nav-card:active {
+    border-color: var(--gold);
+    transform: translateX(3px);
+  }
+  .quick-nav-icon { font-size: 22px; }
+  .quick-nav-body { flex: 1; }
+  .quick-nav-label { font-size: 15px; font-weight: 600; color: var(--text); }
+  .quick-nav-desc { font-size: 12px; color: var(--text2); margin-top: 2px; }
+  .quick-nav-arrow { font-size: 18px; color: var(--gold); }
+
+  /* ── STAY TAB ─────────────────────────────────────── */
+  .checkinout-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .time-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 16px;
+    text-align: center;
+  }
+  .time-label { font-size: 11px; color: var(--text2); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .time-value { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--gold2); }
+  .time-icon { font-size: 20px; margin-bottom: 6px; }
+
+  .guests-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--teal);
+    color: #fff;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .info-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+  .info-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .info-card-icon { font-size: 22px; }
+  .info-card-title { font-size: 16px; font-weight: 600; color: var(--text); }
+  .info-card-body { font-size: 14px; color: var(--text2); line-height: 1.7; }
+
+  .maps-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--teal);
+    color: #fff;
+    border-radius: 10px;
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 12px;
+    transition: background .2s;
+  }
+  .maps-btn:hover { background: var(--teal2); }
+  .maps-btn.review-btn { background: var(--gold); color: #0d1b1e; justify-content: center; }
+  .maps-btn.review-btn:hover { background: var(--gold2); }
+
+  .wifi-card {
+    background: linear-gradient(135deg, #1a3540 0%, var(--card) 100%);
+    border: 1px solid var(--teal);
+    border-radius: 18px;
+    padding: 24px 20px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .wifi-card::before {
+    content: '📶';
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    font-size: 80px;
+    opacity: .06;
+    transform: rotate(-20deg);
+  }
+  .wifi-card-eyebrow {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--teal2);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .wifi-network {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .wifi-pass-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-top: 12px;
+  }
+  .wifi-pass-text {
+    font-family: monospace;
+    font-size: 16px;
+    color: var(--gold2);
+    flex: 1;
+    letter-spacing: 1px;
+  }
+  .copy-btn {
+    background: var(--gold);
+    border: none;
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+  }
+  .copy-btn:active { transform: scale(.92); }
+  .copy-btn.copied { background: var(--teal); }
+
+  .rules-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .rule-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--card2);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+  .rule-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .rule-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .rule-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+  .space-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 10px;
+  }
+  .space-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .space-icon { font-size: 22px; }
+  .space-name { font-size: 16px; font-weight: 600; color: var(--text); }
+  .amenity-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--text2);
+    font-weight: 500;
+  }
+
+  .service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+  .service-item {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 12px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    transition: background .2s, border-color .2s, transform .15s;
+  }
+  .service-item:hover { background: var(--card); border-color: var(--teal); }
+  .service-item:active { transform: scale(.96); }
+  .service-icon { font-size: 24px; margin-bottom: 6px; }
+  .service-name { font-size: 12px; font-weight: 600; color: var(--text); }
+  .service-desc { font-size: 11px; color: var(--text2); margin-top: 2px; }
+  .service-wa-hint { font-size: 10px; color: var(--teal); margin-top: 5px; font-weight: 500; }
+
+  /* ── PLACES TAB ───────────────────────────────────── */
+  .place-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+  .place-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+  .place-icon { font-size: 26px; flex-shrink: 0; }
+  .place-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.2; }
+  .place-desc { font-size: 13px; color: var(--text2); line-height: 1.65; margin-bottom: 12px; }
+  .place-how {
+    background: var(--card2);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+  }
+  .place-how-label { font-size: 11px; letter-spacing: 1.5px; color: var(--gold); text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+
+  /* ── FOOD TAB ─────────────────────────────────────── */
+  .restaurant-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+  .rest-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+  .rest-icon { font-size: 26px; flex-shrink: 0; }
+  .rest-body { flex: 1; min-width: 0; }
+  .rest-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text); }
+  .rest-tipo { font-size: 12px; color: var(--text2); margin-top: 2px; }
+  .rest-price {
+    background: var(--gold);
+    color: var(--bg);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: 700;
+    align-self: flex-start;
+    flex-shrink: 0;
+  }
+  .rest-desc { font-size: 13px; color: var(--text2); line-height: 1.65; margin-bottom: 10px; }
+
+  .supermercato-card {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .superm-row { display: flex; align-items: center; gap: 14px; }
+  .superm-icon { font-size: 28px; flex-shrink: 0; }
+  .superm-body { flex: 1; }
+  .superm-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .superm-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+  /* ── TRANSPORT TAB ────────────────────────────────── */
+  .transport-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 18px;
+    margin-bottom: 12px;
+  }
+  .transport-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .transport-icon { font-size: 20px; }
+  .transport-title { font-size: 14px; font-weight: 600; color: var(--text); }
+  .transport-desc { font-size: 13px; color: var(--text2); line-height: 1.65; }
+  .transport-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 12px;
+    color: var(--gold2);
+    font-weight: 600;
+    margin-top: 6px;
+  }
+
+  .sos-section { margin-top: 4px; }
+  .sos-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .sos-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .sos-icon { font-size: 22px; flex-shrink: 0; }
+  .sos-body { flex: 1; }
+  .sos-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .sos-number { font-size: 12px; color: var(--text2); margin-top: 2px; }
+  .call-btn {
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 9px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background .2s;
+    flex-shrink: 0;
+  }
+  .call-btn:hover { background: var(--teal2); }
+  .call-btn.host { background: var(--gold); color: var(--bg); }
+  .call-btn.host:hover { background: var(--gold2); }
+
+  .checkout-steps { margin-top: 4px; }
+  .checkout-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+  .step-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .step-num {
+    width: 30px;
+    height: 30px;
+    background: var(--gold);
+    color: var(--bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .step-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+  .closing-msg {
+    text-align: center;
+    padding: 30px 24px 20px;
+    border-top: 1px solid var(--border);
+    margin-top: 10px;
+  }
+  .closing-icon { font-size: 36px; margin-bottom: 10px; }
+  .closing-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold2);
+    margin-bottom: 8px;
+  }
+  .closing-text { font-size: 13px; color: var(--text2); line-height: 1.7; }
+
+  /* ── SETTINGS PANEL ───────────────────────────────── */
+  #settings-panel {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg);
+    z-index: 9999;
+    overflow-y: auto;
+    display: none;
+    flex-direction: column;
+  }
+  #settings-panel.open { display: flex; animation: fadeIn .25s ease; }
+
+  .settings-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+  }
+
+  .settings-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .close-btn {
+    background: transparent;
+    border: none;
+    color: var(--text2);
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 2px;
+  }
+
+  .settings-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .s-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 8px;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+  .s-btn:hover { background: var(--card2); border-color: var(--gold); }
+  .s-btn.primary { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+  .s-btn.primary:hover { background: var(--gold2); }
+  .s-btn.danger { border-color: var(--accent); color: var(--accent); }
+  .s-btn.danger:hover { background: rgba(231,111,81,.1); }
+  .s-btn.publish { border-color: #4caf7d; color: #4caf7d; }
+  .s-btn.publish:hover { background: rgba(76,175,125,.1); }
+
+  .settings-body { padding: 16px 20px 40px; }
+
+  details.s-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  summary.s-section-title {
+    padding: 16px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    user-select: none;
+  }
+  summary.s-section-title::-webkit-details-marker { display: none; }
+  summary.s-section-title::after {
+    content: '›';
+    margin-left: auto;
+    font-size: 20px;
+    color: var(--text2);
+    transition: transform .2s;
+  }
+  details.s-section[open] summary.s-section-title::after {
+    transform: rotate(90deg);
+  }
+
+  .s-fields { padding: 4px 18px 18px; display: flex; flex-direction: column; gap: 12px; }
+
+  .s-field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text2);
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .s-field input, .s-field textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .s-field input:focus, .s-field textarea:focus { border-color: var(--gold); }
+  .s-field textarea { resize: vertical; min-height: 70px; line-height: 1.5; }
+
+  .s-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 8px 0;
+  }
+
+  .s-sub-title {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 10px 0 4px;
+  }
+
+  /* ── SECTION HEADERS ──────────────────────────────── */
+  .tab-header {
+    padding: 28px 20px 0;
+    margin-bottom: 20px;
+  }
+
+  /* ── PIN MODAL ────────────────────────────────────── */
+  #pin-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: rgba(13,27,30,0.94);
+    backdrop-filter: blur(10px);
+    align-items: center;
+    justify-content: center;
+  }
+  #pin-modal.open { display: flex; }
+
+  .pin-dialog {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px 24px 24px;
+    width: 300px;
+    text-align: center;
+    animation: fadeUp .3s ease;
+  }
+  .pin-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .pin-subtitle {
+    font-size: 12px;
+    color: var(--text2);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .pin-dots {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  .pin-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background .15s, transform .1s;
+  }
+  .pin-dot.filled {
+    background: var(--gold);
+    transform: scale(1.2);
+  }
+  .pin-dot.error {
+    background: var(--accent);
+  }
+  .pin-error {
+    color: var(--accent);
+    font-size: 12px;
+    height: 18px;
+    margin-bottom: 14px;
+  }
+  .pin-keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .pin-key {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-size: 20px;
+    font-weight: 500;
+    padding: 15px 10px;
+    cursor: pointer;
+    transition: background .12s, transform .08s;
+    font-family: 'Jost', sans-serif;
+    user-select: none;
+  }
+  .pin-key:active, .pin-key:focus {
+    background: var(--border);
+    transform: scale(0.94);
+    outline: none;
+  }
+  .pin-cancel {
+    background: transparent;
+    border: none;
+    color: var(--text2);
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 6px;
+  }
+
+  /* ── SETTINGS: DYNAMIC BUTTONS ───────────────────── */
+  .s-remove-btn {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    border-radius: 8px;
+    padding: 3px 9px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    transition: background .15s, color .15s;
+  }
+  .s-remove-btn:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+  .s-add-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px dashed var(--teal);
+    color: var(--teal);
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    transition: background .15s;
+    margin: 8px 0 4px;
+    display: block;
+  }
+  .s-add-btn:hover { background: rgba(42,157,143,0.12); }
+  .s-sub-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .s-section-title-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    gap: 8px;
+  }
+</style>
+</head>
+<body>
+<div class="app-shell">
+
+<!-- ════════════════════════════════════════════
+     LANDING PAGE
+════════════════════════════════════════════ -->
+<div id="landing">
+  <div class="landing-topbar">
+  </div>
+
+  <div class="landing-hero">
+    <div class="landing-eyebrow" id="l-cityzone">La Tua Città · Zona</div>
+    <div class="landing-title">
+      <span id="l-bbname-line1">Il Tuo</span><br>
+      <em id="l-bbname-em">B&amp;B</em>
+    </div>
+    <div class="landing-subtitle" id="l-subtitle">Guest Guide</div>
+    <div class="divider-gold"></div>
+  </div>
+
+  <p class="landing-intro" id="l-intro">
+    Benvenuti! Selezionate il vostro appartamento per accedere alla guida completa.
+  </p>
+
+  <div class="apt-cards" id="apt-cards-container">
+    <!-- generated by JS -->
+  </div>
+</div>
+
+<!-- Gear button (landing only) -->
+<button class="gear-btn" id="gear-btn" onclick="openSettings()" title="Personalizzazione">⚙️</button>
+
+<!-- ════════════════════════════════════════════
+     GUIDE PAGE
+════════════════════════════════════════════ -->
+<div id="guide">
+  <div class="guide-header">
+    <button class="back-btn" onclick="goBack()" aria-label="Torna indietro">←</button>
+    <div class="guide-apt-name" id="guide-apt-name">Appartamento 1</div>
+  </div>
+
+  <div class="guide-content" id="guide-content">
+
+    <!-- ── TAB: HOME ── -->
+    <div class="tab-section active" id="tab-home">
+
+      <div class="home-hero">
+        <div class="section-eyebrow" id="h-eyebrow">✦ LA TUA CITTÀ · ZONA</div>
+        <div class="home-apt-title" id="h-apt-title">Appartamento 1</div>
+        <div class="home-address" id="h-address">Via Example 1 · La Tua Città</div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">🔑</div>
+          <div class="stat-label">Check-in</div>
+          <div class="stat-value" id="s-checkin">15:00</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🚪</div>
+          <div class="stat-label">Check-out</div>
+          <div class="stat-value" id="s-checkout">10:00</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📶</div>
+          <div class="stat-label">WiFi</div>
+          <div class="stat-value" id="s-wifi">NomeRete</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🧭</div>
+          <div class="stat-label">Mappa</div>
+          <div class="stat-value"><a id="s-maps" href="#" target="_blank">Apri Maps</a></div>
+        </div>
+      </div>
+
+      <div class="welcome-card">
+        <div class="welcome-title" id="w-title">Benvenuti! 👋</div>
+        <p class="welcome-text" id="w-text-it">
+          Siamo felici di avervi come ospiti! Questo appartamento è stato preparato con cura per rendere il vostro soggiorno indimenticabile. Siamo a vostra disposizione per qualsiasi necessità — non esitate a contattarci.
+        </p>
+        <div class="welcome-sign" id="w-sign">★ Nome Host</div>
+      </div>
+
+      <div class="quick-nav">
+        <div class="quick-nav-title" id="h-explore-title">Esplora la guida</div>
+        <div class="quick-nav-card" onclick="switchTab('stay')">
+          <div class="quick-nav-icon">🛋️</div>
+          <div class="quick-nav-body">
+            <div class="quick-nav-label">Soggiorno</div>
+            <div class="quick-nav-desc" id="qn-stay-desc">WiFi, regole, spazi, servizi</div>
+          </div>
+          <div class="quick-nav-arrow">›</div>
+        </div>
+        <div class="quick-nav-card" onclick="switchTab('places')">
+          <div class="quick-nav-icon">🗺️</div>
+          <div class="quick-nav-body">
+            <div class="quick-nav-label">Luoghi</div>
+            <div class="quick-nav-desc" id="qn-places-desc">Attrazioni e punti di interesse</div>
+          </div>
+          <div class="quick-nav-arrow">›</div>
+        </div>
+        <div class="quick-nav-card" onclick="switchTab('food')">
+          <div class="quick-nav-icon">🍽️</div>
+          <div class="quick-nav-body">
+            <div class="quick-nav-label">Mangiare</div>
+            <div class="quick-nav-desc" id="qn-food-desc">Ristoranti, bar, supermercati</div>
+          </div>
+          <div class="quick-nav-arrow">›</div>
+        </div>
+        <div class="quick-nav-card" onclick="switchTab('transport')">
+          <div class="quick-nav-icon">🚇</div>
+          <div class="quick-nav-body">
+            <div class="quick-nav-label">Muoversi</div>
+            <div class="quick-nav-desc" id="qn-transport-desc">Metro, bus, taxi, emergenze</div>
+          </div>
+          <div class="quick-nav-arrow">›</div>
+        </div>
+        <div class="quick-nav-card" onclick="switchTab('departure')">
+          <div class="quick-nav-icon">🧳</div>
+          <div class="quick-nav-body">
+            <div class="quick-nav-label">Partenza</div>
+            <div class="quick-nav-desc" id="qn-departure-desc">Check-out e recensione</div>
+          </div>
+          <div class="quick-nav-arrow">›</div>
+        </div>
+      </div>
+
+      <div id="home-review-section" style="display:none;padding:0 0 4px">
+        <a id="home-review-btn" href="#" target="_blank" rel="noopener" class="maps-btn review-btn" style="display:flex"><span id="home-review-label">⭐ Lascia una Recensione su Google</span></a>
+      </div>
+
+    </div><!-- /tab-home -->
+
+    <!-- ── TAB: STAY ── -->
+    <div class="tab-section" id="tab-stay">
+      <div class="tab-header">
+        <div class="section-eyebrow">Il Tuo Appartamento</div>
+        <div class="section-title">Soggiorno</div>
+      </div>
+      <div class="section-pad" style="padding-top:0">
+
+        <!-- Check-in / Check-out -->
+        <div class="checkinout-row">
+          <div class="time-card">
+            <div class="time-icon">🔑</div>
+            <div class="time-label">Check-in</div>
+            <div class="time-value" id="st-checkin">15:00</div>
+          </div>
+          <div class="time-card">
+            <div class="time-icon">🚪</div>
+            <div class="time-label">Check-out</div>
+            <div class="time-value" id="st-checkout">10:00</div>
+          </div>
+        </div>
+        <div class="guests-badge">👥 <span id="st-guests">4 persone</span></div>
+
+        <!-- Come raggiungerci -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <span class="info-card-icon">📍</span>
+            <span class="info-card-title" id="st-how-reach-title">Come raggiungerci</span>
+          </div>
+          <p class="info-card-body" id="st-how-reach"></p>
+          <a class="maps-btn" id="st-maps" href="#" target="_blank">🧭 <span id="st-maps-label">Apri su Maps</span></a>
+        </div>
+
+        <!-- Come accedere -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <span class="info-card-icon">🗝️</span>
+            <span class="info-card-title" id="st-how-access-title">Come accedere</span>
+          </div>
+          <p class="info-card-body" id="st-how-access"></p>
+        </div>
+
+        <!-- Parcheggio -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <span class="info-card-icon">🚗</span>
+            <span class="info-card-title" id="st-parking-title">Parcheggio</span>
+          </div>
+          <p class="info-card-body" id="st-parking"></p>
+        </div>
+
+        <!-- WiFi -->
+        <div class="wifi-card">
+          <div class="wifi-card-eyebrow">📶 WiFi</div>
+          <div class="wifi-network" id="st-wifi-name">NomeRete</div>
+          <div class="wifi-pass-row">
+            <div class="wifi-pass-text" id="st-wifi-pass">password123</div>
+            <button class="copy-btn" id="copy-wifi-btn" onclick="copyWifi()" title="Copia password">📋</button>
+          </div>
+        </div>
+
+        <!-- House Rules -->
+        <div class="card" style="margin-bottom:14px">
+          <div class="card-title" id="st-rules-title">🏠 Regole della casa</div>
+          <ul class="rules-list" id="st-rules-list">
+            <!-- populated by JS -->
+          </ul>
+        </div>
+
+        <!-- Spaces -->
+        <div class="card-title" id="st-spaces-title" style="margin-bottom:10px">🏡 Gli Spazi</div>
+
+        <div class="space-card">
+          <div class="space-header">
+            <span class="space-icon">🛌</span>
+            <span class="space-name" id="st-bedroom-label">Camera da Letto</span>
+          </div>
+          <div class="amenity-tags" id="st-bedroom-tags">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+        <div class="space-card">
+          <div class="space-header">
+            <span class="space-icon">🍳</span>
+            <span class="space-name" id="st-kitchen-label">Cucina</span>
+          </div>
+          <div class="amenity-tags" id="st-kitchen-tags">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+        <div class="space-card" style="margin-bottom:20px">
+          <div class="space-header">
+            <span class="space-icon">🚿</span>
+            <span class="space-name" id="st-bathroom-label">Bagno</span>
+          </div>
+          <div class="amenity-tags" id="st-bathroom-tags">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+        <!-- Extra Services -->
+        <div class="card-title" id="st-services-title" style="margin-bottom:10px">✨ Servizi Extra</div>
+        <div class="service-grid" id="st-extra-services" style="margin-bottom:20px">
+          <!-- populated by JS -->
+        </div>
+
+      </div>
+    </div><!-- /tab-stay -->
+
+    <!-- ── TAB: PLACES ── -->
+    <div class="tab-section" id="tab-places">
+      <div class="tab-header">
+        <div class="section-eyebrow">Scopri la Città</div>
+        <div class="section-title">Luoghi</div>
+        <div class="section-sub" id="places-section-sub">Le attrazioni più belle nei dintorni</div>
+      </div>
+      <div class="section-pad" style="padding-top:0" id="places-container">
+        <!-- populated by JS -->
+      </div>
+    </div>
+
+    <!-- ── TAB: FOOD ── -->
+    <div class="tab-section" id="tab-food">
+      <div class="tab-header">
+        <div class="section-eyebrow">Dove Mangiare</div>
+        <div class="section-title">Mangiare</div>
+        <div class="section-sub" id="food-section-sub">I migliori locali consigliati dall'host</div>
+      </div>
+      <div class="section-pad" style="padding-top:0" id="food-container">
+        <!-- populated by JS -->
+      </div>
+    </div>
+
+    <!-- ── TAB: TRANSPORT ── -->
+    <div class="tab-section" id="tab-transport">
+      <div class="tab-header">
+        <div class="section-eyebrow">In Città</div>
+        <div class="section-title">Muoversi</div>
+        <div class="section-sub" id="transport-section-sub">Come spostarsi in città</div>
+      </div>
+      <div class="section-pad" style="padding-top:0">
+
+        <div id="transport-container"><!-- populated by JS --></div>
+
+        <!-- Biglietti -->
+        <div class="transport-card">
+          <div class="transport-header">
+            <span class="transport-icon">🎫</span>
+            <span class="transport-title" id="tr-tickets-title">Biglietti</span>
+          </div>
+          <p class="transport-desc" id="tr-tickets-desc">
+            Biglietto singolo: ~€1,50 (valido 90 minuti). Abbonamento giornaliero: ~€5,00.
+          </p>
+        </div>
+
+        <!-- Taxi -->
+        <div class="transport-card">
+          <div class="transport-header">
+            <span class="transport-icon">🚖</span>
+            <span class="transport-title" id="tr-taxi-title">Taxi &amp; App</span>
+          </div>
+          <p class="transport-desc" id="tr-taxi-desc">
+            Taxi ufficiali disponibili in piazza e in stazione. App: Uber, FREE NOW, Bolt.
+          </p>
+        </div>
+
+        <!-- Emergencies -->
+        <div class="sos-section" style="margin-top:24px">
+          <div class="sos-title">🆘 <span id="tr-emergencies-label">Emergenze</span></div>
+
+          <div class="sos-card">
+            <div class="sos-icon">🏥</div>
+            <div class="sos-body">
+              <div class="sos-name" id="tr-er-name">Pronto Soccorso</div>
+              <div class="sos-number">📞 118</div>
+            </div>
+            <a class="call-btn" href="tel:118">📞 118</a>
+          </div>
+
+          <div class="sos-card">
+            <div class="sos-icon">👮</div>
+            <div class="sos-body">
+              <div class="sos-name" id="tr-police-name">Carabinieri</div>
+              <div class="sos-number">📞 112</div>
+            </div>
+            <a class="call-btn" href="tel:112">📞 112</a>
+          </div>
+
+          <div class="sos-card">
+            <div class="sos-icon">🔥</div>
+            <div class="sos-body">
+              <div class="sos-name" id="tr-fire-name">Vigili del Fuoco</div>
+              <div class="sos-number">📞 115</div>
+            </div>
+            <a class="call-btn" href="tel:115">📞 115</a>
+          </div>
+
+          <div class="sos-card">
+            <div class="sos-icon">👤</div>
+            <div class="sos-body">
+              <div class="sos-name">Host: <span id="sos-host-name">Nome Host</span></div>
+              <div class="sos-number" id="sos-host-phone">📞 +39 000 000 0000</div>
+            </div>
+            <a class="call-btn host" id="sos-host-call" href="tel:+390000000000">📞 <span id="sos-host-call-label">Chiama</span></a>
+          </div>
+
+          <div id="sos-extra-contacts"><!-- populated by JS --></div>
+        </div>
+
+      </div>
+    </div><!-- /tab-transport -->
+
+    <!-- ── TAB: DEPARTURE ── -->
+    <div class="tab-section" id="tab-departure">
+      <div class="tab-header">
+        <div class="section-eyebrow">È Ora di Partire</div>
+        <div class="section-title">Partenza</div>
+        <div class="section-sub" id="departure-section-sub">Tutto quello che c'è da sapere prima di andare</div>
+      </div>
+      <div class="section-pad" style="padding-top:0">
+
+        <!-- Checkout steps -->
+        <div class="checkout-steps">
+          <div class="checkout-title">🏁 <span id="dep-checkout-label">Al Check-out</span></div>
+          <div id="departure-steps-list">
+            <!-- populated by JS -->
+          </div>
+          <div id="google-review-btn-container" style="display:none;margin-top:12px;padding:0 4px">
+            <a id="google-review-btn" href="#" target="_blank" rel="noopener" class="maps-btn review-btn"><span id="google-review-label">⭐ Lascia una Recensione su Google</span></a>
+          </div>
+        </div>
+
+        <!-- Closing message -->
+        <div class="closing-msg">
+          <div class="closing-icon">🌟</div>
+          <div class="closing-title" id="closing-title">Grazie per aver scelto il nostro B&amp;B!</div>
+          <p class="closing-text" id="closing-text">
+            È stato un piacere avervi come ospiti. Speriamo di rivedervi presto! Buon viaggio! ✈️
+          </p>
+        </div>
+
+      </div>
+    </div><!-- /tab-departure -->
+
+  </div><!-- /guide-content -->
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav" id="bottom-nav">
+    <button class="nav-item active" data-tab="home" onclick="switchTab('home')">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-label">Home</span>
+    </button>
+    <button class="nav-item" data-tab="stay" onclick="switchTab('stay')">
+      <span class="nav-icon">🛋️</span>
+      <span class="nav-label">Soggiorno</span>
+    </button>
+    <button class="nav-item" data-tab="places" onclick="switchTab('places')">
+      <span class="nav-icon">🗺️</span>
+      <span class="nav-label">Luoghi</span>
+    </button>
+    <button class="nav-item" data-tab="food" onclick="switchTab('food')">
+      <span class="nav-icon">🍽️</span>
+      <span class="nav-label">Mangiare</span>
+    </button>
+    <button class="nav-item" data-tab="transport" onclick="switchTab('transport')">
+      <span class="nav-icon">🚇</span>
+      <span class="nav-label">Muoversi</span>
+    </button>
+    <button class="nav-item" data-tab="departure" onclick="switchTab('departure')">
+      <span class="nav-icon">🧳</span>
+      <span class="nav-label">Partenza</span>
+    </button>
+  </nav>
+</div><!-- /guide -->
+
+<!-- ════════════════════════════════════════════
+     SETTINGS PANEL
+════════════════════════════════════════════ -->
+<div id="settings-panel">
+  <div class="settings-header">
+    <div class="settings-title">⚙️ Personalizzazione</div>
+    <button class="close-btn" onclick="closeSettings()" aria-label="Chiudi">✕</button>
+  </div>
+
+  <div class="settings-actions">
+    <button class="s-btn primary" onclick="saveAndApply()">💾 Salva e Applica</button>
+    <button class="s-btn danger" onclick="resetData()">🗑️ Reset</button>
+    <button class="s-btn" onclick="exportJSON()">📋 Esporta JSON</button>
+    <label class="s-btn" style="cursor:pointer">
+      📂 Importa JSON
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importJSON(event)">
+    </label>
+    <button class="s-btn publish" onclick="exportHTML()">📥 Scarica HTML Aggiornato</button>
+  </div>
+
+  <div class="settings-body">
+
+    <!-- Info B&B -->
+    <details class="s-section" open>
+      <summary class="s-section-title">🏡 Info B&amp;B</summary>
+      <div class="s-fields">
+        <div class="s-field"><label>Nome B&amp;B</label><input type="text" id="s-bbName" placeholder="Il Tuo B&B"></div>
+        <div class="s-field"><label>Sottotitolo</label><input type="text" id="s-subtitle" placeholder="Guest Guide"></div>
+        <div class="s-field"><label>Città e Zona</label><input type="text" id="s-cityZone" placeholder="La Tua Città · Zona"></div>
+        <div class="s-field"><label>Nome Host principale</label><input type="text" id="s-hostName" placeholder="Nome Host"></div>
+        <div class="s-field"><label>Telefono Host</label><input type="tel" id="s-hostPhone" placeholder="+39 000 000 0000"></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">💬 Messaggio di Benvenuto</div>
+        <div class="s-field"><label>Testo di Benvenuto</label><textarea id="s-welcomeIt" placeholder="Siamo felici di avervi come ospiti..."></textarea></div>
+      </div>
+    </details>
+
+    <!-- Appartamenti (dynamic) -->
+    <div id="s-apts-container" data-count="0">
+      <!-- generated by JS -->
+    </div>
+    <button class="s-add-btn" onclick="addSettingsApt()">➕ Aggiungi Appartamento</button>
+
+    <!-- Partenza -->
+    <details class="s-section">
+      <summary class="s-section-title">🧳 Partenza</summary>
+      <div class="s-fields">
+        <div class="s-sub-title">🌟 Messaggio di Chiusura</div>
+        <div class="s-field"><label>Titolo</label><input type="text" id="s-closingTitleIt" placeholder="Grazie per aver scelto il nostro B&amp;B!"></div>
+        <div class="s-field"><label>Testo</label><textarea id="s-closingTextIt" placeholder="È stato un piacere avervi come ospiti..."></textarea></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">⭐ Recensione Google</div>
+        <div class="s-field"><label>Link recensione Google</label><input type="url" id="s-googleReviewUrl" placeholder="https://g.page/r/..."></div>
+        <p style="font-size:11px;color:var(--text2);margin-top:4px;line-height:1.5">Se compilato, apparirà un pulsante "Lascia una Recensione su Google" nella sezione Partenza.</p>
+      </div>
+    </details>
+
+    <!-- Etichette Navigazione e Sezioni -->
+    <details class="s-section">
+      <summary class="s-section-title">🏷️ Etichette Navigazione e Sezioni</summary>
+      <div class="s-fields">
+        <div class="s-sub-title">🗂️ Navigazione inferiore</div>
+        <p style="font-size:11px;color:var(--text2);margin-bottom:12px;line-height:1.5">Personalizza le etichette visibili nella barra di navigazione.</p>
+        <div class="s-divider"></div>
+        <div class="s-sub-title" style="font-size:12px">🏠 Home</div>
+        <div class="s-field"><label>Emoji</label><input type="text" id="s-nl-homeIcon" placeholder="🏠" style="max-width:80px"></div>
+        <div class="s-field"><label>Etichetta</label><input type="text" id="s-nl-homeIt" placeholder="Home"></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title" style="font-size:12px">🛋️ Soggiorno</div>
+        <div class="s-field"><label>Emoji</label><input type="text" id="s-nl-stayIcon" placeholder="🛋️" style="max-width:80px"></div>
+        <div class="s-field"><label>Etichetta</label><input type="text" id="s-nl-stayIt" placeholder="Soggiorno"></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title" style="font-size:12px">🗺️ Luoghi</div>
+        <div class="s-field"><label>Emoji</label><input type="text" id="s-nl-placesIcon" placeholder="🗺️" style="max-width:80px"></div>
+        <div class="s-field"><label>Etichetta</label><input type="text" id="s-nl-placesIt" placeholder="Luoghi"></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title" style="font-size:12px">🍽️ Mangiare</div>
+        <div class="s-field"><label>Emoji</label><input type="text" id="s-nl-foodIcon" placeholder="🍽️" style="max-width:80px"></div>
+        <div class="s-field"><label>Etichetta</label><input type="text" id="s-nl-foodIt" placeholder="Mangiare"></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title" style="font-size:12px">🚇 Muoversi</div>
+        <div class="s-field"><label>Emoji</label><input type="text" id="s-nl-transportIcon" placeholder="🚇" style="max-width:80px"></div>
+        <div class="s-field"><label>Etichetta</label><input type="text" id="s-nl-transportIt" placeholder="Muoversi"></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title" style="font-size:12px">🧳 Partenza</div>
+        <div class="s-field"><label>Emoji</label><input type="text" id="s-nl-departureIcon" placeholder="🧳" style="max-width:80px"></div>
+        <div class="s-field"><label>Etichetta</label><input type="text" id="s-nl-departureIt" placeholder="Partenza"></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">📄 Intestazioni Sezioni</div>
+        <p style="font-size:11px;color:var(--text2);margin-bottom:12px;line-height:1.5">Personalizza i titoli delle sezioni all'interno della guida.</p>
+        <div class="s-sub-title" style="font-size:12px">🛋️ Sezione Soggiorno</div>
+        <div class="s-field"><label>Eyebrow</label><input type="text" id="s-st-stayEyebrowIt" placeholder="Il Tuo Appartamento"></div>
+        <div class="s-field"><label>Titolo</label><input type="text" id="s-st-stayTitleIt" placeholder="Soggiorno"></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title" style="font-size:12px">🗺️ Sezione Luoghi</div>
+        <div class="s-field"><label>Eyebrow</label><input type="text" id="s-st-placesEyebrowIt" placeholder="Scopri la Città"></div>
+        <div class="s-field"><label>Titolo</label><input type="text" id="s-st-placesTitleIt" placeholder="Luoghi"></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title" style="font-size:12px">🍽️ Sezione Mangiare</div>
+        <div class="s-field"><label>Eyebrow</label><input type="text" id="s-st-foodEyebrowIt" placeholder="Dove Mangiare"></div>
+        <div class="s-field"><label>Titolo</label><input type="text" id="s-st-foodTitleIt" placeholder="Mangiare"></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title" style="font-size:12px">🚇 Sezione Muoversi</div>
+        <div class="s-field"><label>Eyebrow</label><input type="text" id="s-st-transportEyebrowIt" placeholder="In Città"></div>
+        <div class="s-field"><label>Titolo</label><input type="text" id="s-st-transportTitleIt" placeholder="Muoversi"></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title" style="font-size:12px">🧳 Sezione Partenza</div>
+        <div class="s-field"><label>Eyebrow</label><input type="text" id="s-st-departureEyebrowIt" placeholder="È Ora di Partire"></div>
+        <div class="s-field"><label>Titolo</label><input type="text" id="s-st-departureTitleIt" placeholder="Partenza"></div>
+      </div>
+    </details>
+
+    <!-- Contatti extra -->
+    <details class="s-section">
+      <summary class="s-section-title">📞 Contatti Extra</summary>
+      <div class="s-fields" id="s-contacts-fields" data-count="0">
+        <!-- generated by JS -->
+      </div>
+      <button class="s-add-btn" onclick="addSettingsContact()">➕ Aggiungi Contatto</button>
+    </details>
+
+    <!-- PIN Sicurezza -->
+    <details class="s-section">
+      <summary class="s-section-title">🔐 Sicurezza PIN</summary>
+      <div class="s-fields">
+        <div class="s-sub-title">Cambia PIN Host</div>
+        <p style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.5">Il PIN predefinito è <strong style="color:var(--gold)">1234</strong>. Cambialo subito per proteggere le impostazioni.</p>
+        <div class="s-field"><label>PIN attuale</label><input type="password" id="s-pin-current" placeholder="••••" maxlength="4" inputmode="numeric"></div>
+        <div class="s-field"><label>Nuovo PIN (4 cifre)</label><input type="password" id="s-pin-new" placeholder="••••" maxlength="4" inputmode="numeric"></div>
+        <div class="s-field"><label>Conferma nuovo PIN</label><input type="password" id="s-pin-confirm" placeholder="••••" maxlength="4" inputmode="numeric"></div>
+        <div id="s-pin-msg" style="font-size:12px;min-height:18px;margin-top:4px"></div>
+        <button class="s-btn" onclick="changePin()" style="margin-top:8px">🔐 Cambia PIN</button>
+      </div>
+    </details>
+
+  </div><!-- /settings-body -->
+</div><!-- /settings-panel -->
+
+</div><!-- /app-shell -->
+
+<!-- ════════════════════════════════════════════
+     PIN MODAL
+════════════════════════════════════════════ -->
+<div id="pin-modal">
+  <div class="pin-dialog">
+    <div class="pin-title">🔐 Area Host</div>
+    <div class="pin-subtitle">Inserisci il PIN per accedere<br>alle impostazioni</div>
+    <div class="pin-dots" id="pin-dots">
+      <div class="pin-dot" id="pd0"></div>
+      <div class="pin-dot" id="pd1"></div>
+      <div class="pin-dot" id="pd2"></div>
+      <div class="pin-dot" id="pd3"></div>
+    </div>
+    <div class="pin-error" id="pin-error"></div>
+    <div class="pin-keypad">
+      <button class="pin-key" onclick="pinKey('1')">1</button>
+      <button class="pin-key" onclick="pinKey('2')">2</button>
+      <button class="pin-key" onclick="pinKey('3')">3</button>
+      <button class="pin-key" onclick="pinKey('4')">4</button>
+      <button class="pin-key" onclick="pinKey('5')">5</button>
+      <button class="pin-key" onclick="pinKey('6')">6</button>
+      <button class="pin-key" onclick="pinKey('7')">7</button>
+      <button class="pin-key" onclick="pinKey('8')">8</button>
+      <button class="pin-key" onclick="pinKey('9')">9</button>
+      <div></div>
+      <button class="pin-key" onclick="pinKey('0')">0</button>
+      <button class="pin-key" onclick="pinBackspace()">⌫</button>
+    </div>
+    <button class="pin-cancel" onclick="closePinModal()">Annulla</button>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════
+//  DEFAULT DATA
+// ════════════════════════════════════════════
+/* DEFAULT_DATA_START */
+const DEFAULT_DATA = {
+  bbName: "Il Tuo B&B",
+  subtitle: "Guest Guide",
+  cityZone: "La Tua Città · Zona",
+  hostName: "Nome Host",
+  hostPhone: "+39 000 000 0000",
+  googleReviewUrl: "",
+  welcomeIt: "Siamo felici di avervi come ospiti! Questo appartamento è stato preparato con cura per rendere il vostro soggiorno indimenticabile. Siamo a vostra disposizione per qualsiasi necessità — non esitate a contattarci.",
+  welcomeEn: "We're so happy to have you as our guests! This apartment has been carefully prepared to make your stay unforgettable. We are at your disposal for any need — don't hesitate to contact us.",
+  closingTitleIt: "Grazie per aver scelto il nostro B&B!",
+  closingTitleEn: "Thank you for choosing our B&B!",
+  closingTextIt: "È stato un piacere avervi come ospiti. Speriamo di rivedervi presto! Buon viaggio! ✈️",
+  closingTextEn: "It was a pleasure having you as our guests. We hope to see you again soon! Have a great trip! ✈️",
+  extraContacts: [
+    { name: "Secondo Contatto", phone: "+39 000 000 0001" }
+  ],
+  apts: [
+    {
+      name: "Appartamento 1",
+      address: "Via Example 1, La Tua Città",
+      addressShort: "Via Example 1",
+      mapsLink: "#",
+      maxGuests: "4 persone",
+      bedroomTagsIt: "Letto matrimoniale,Armadio,Biancheria inclusa,Cuscini extra",
+      bedroomTagsEn: "Double bed,Wardrobe,Linen included,Extra pillows",
+      wifi: "NomeRete",
+      wifiPass: "password123",
+      checkin: "15:00",
+      checkout: "10:00",
+      howToReachIt: "Dalla stazione centrale: prendete la metro linea A fino alla fermata Centrale, poi 10 minuti a piedi. In taxi dal centro ~10€. Consigliamo di salvare l'indirizzo su Google Maps prima di partire.",
+      howToReachEn: "From the central station: take metro line A to the Central stop, then 10 minutes on foot. By taxi from the center ~€10. We recommend saving the address on Google Maps before you leave.",
+      howToAccessIt: "Le chiavi vi verranno consegnate direttamente dall'host al vostro arrivo. In caso di check-in autonomo, troverete le istruzioni dettagliate via messaggio prima dell'arrivo.",
+      howToAccessEn: "Keys will be handed to you directly by the host upon your arrival. In case of self check-in, you will find detailed instructions via message before arrival.",
+      parkingIt: "Parcheggio pubblico disponibile nelle vicinanze (~200 metri). Strisce blu a pagamento nei giorni feriali 8:00–20:00 (~€1,50/h). Parcheggio gratuito nelle strisce bianche.",
+      parkingEn: "Public parking available nearby (~200 meters). Paid (blue) parking on weekdays 8:00–20:00 (~€1.50/h). Free parking in white areas.",
+      houseRules: [
+        { icon: "🔇", titleIt: "Silenzio Notturno", descIt: "Dalle 22:00 alle 8:00 si prega di mantenere il silenzio per rispetto dei vicini.", titleEn: "Quiet Hours", descEn: "From 10 PM to 8 AM please keep quiet out of respect for the neighbors." },
+        { icon: "🚭", titleIt: "Niente Fumo", descIt: "Vietato fumare all'interno dell'appartamento. È possibile farlo sul balcone.", titleEn: "No Smoking", descEn: "Smoking is not allowed inside the apartment. You may smoke on the balcony." },
+        { icon: "🐾", titleIt: "Animali Domestici", descIt: "Gli animali domestici non sono ammessi senza previo accordo con l'host.", titleEn: "Pets", descEn: "Pets are not allowed without prior agreement with the host." },
+        { icon: "👥", titleIt: "Ospiti Esterni", descIt: "Non sono ammesse feste. Il numero di ospiti non deve superare la capienza massima indicata.", titleEn: "External Guests", descEn: "Parties are not allowed. The number of guests must not exceed the maximum capacity indicated." },
+        { icon: "♻️", titleIt: "Raccolta Rifiuti", descIt: "Si prega di rispettare la raccolta differenziata. Istruzioni in cucina.", titleEn: "Waste Sorting", descEn: "Please respect waste sorting. Instructions are in the kitchen." }
+      ],
+      kitchenTagsIt: "Piano cottura,Forno,Frigorifero,Lavastoviglie,Caffettiera,Microonde",
+      kitchenTagsEn: "Hob,Oven,Fridge,Dishwasher,Coffee maker,Microwave",
+      bathroomTagsIt: "Doccia,Asciugamani,Phon,Prodotti igiene",
+      bathroomTagsEn: "Shower,Towels,Hairdryer,Toiletries",
+      extraServices: [
+        { icon: "🧺", nameIt: "Cambio Biancheria", descIt: "Ogni 4 giorni su richiesta", nameEn: "Linen Change", descEn: "Every 4 days on request" },
+        { icon: "🧹", nameIt: "Pulizie Aggiuntive", descIt: "Disponibile su richiesta", nameEn: "Additional Cleaning", descEn: "Available on request" },
+        { icon: "🚗", nameIt: "Transfer Aeroporto", descIt: "Prenotabile in anticipo", nameEn: "Airport Transfer", descEn: "Bookable in advance" },
+        { icon: "☕", nameIt: "Colazione", descIt: "Disponibile su richiesta", nameEn: "Breakfast", descEn: "Available on request" }
+      ],
+      places: [
+        { name: "Monumento Principale", emoji: "🏛", descIt: "Il monumento più famoso della città. Perfetto per chi ama la storia.", descEn: "The most famous monument in the city. Perfect for history lovers.", howIt: "🚇 Metro linea A → fermata Centrale → 10 min a piedi.", howEn: "🚇 Metro line A → Central stop → 10 min walk.", maps: "#" },
+        { name: "Piazza Centrale", emoji: "⛲", descIt: "La piazza principale della città, cuore della vita sociale.", descEn: "The main square of the city, heart of social life.", howIt: "🚌 Bus 10 o 20 → fermata Piazza Centrale.", howEn: "🚌 Bus 10 or 20 → Central Square stop.", maps: "#" },
+        { name: "Chiesa Storica", emoji: "🎭", descIt: "Un'importante chiesa storica con architettura medievale.", descEn: "An important historic church with medieval architecture.", howIt: "🚶 A piedi ~15 minuti dal centro.", howEn: "🚶 On foot ~15 minutes from the center.", maps: "#" },
+        { name: "Parco Panoramico", emoji: "🍊", descIt: "Parco con vista panoramica sulla città. Accesso libero.", descEn: "Park with a panoramic view of the city. Free access.", howIt: "🚌 Bus 5 → fermata Parco.", howEn: "🚌 Bus 5 → Park stop.", maps: "#" },
+        { name: "Museo Locale", emoji: "🏺", descIt: "Il museo principale della zona con collezioni locali.", descEn: "The main museum in the area with local collections.", howIt: "🚇 Metro → fermata Museo.", howEn: "🚇 Metro → Museum stop.", maps: "#" }
+      ],
+      restaurants: [
+        { name: "Ristorante Da Mario", emoji: "🍝", tipo: "Trattoria · Vicino a casa", descIt: "Cucina tipica italiana. Ottimi primi piatti. Prenotazione consigliata.", descEn: "Typical Italian cuisine. Excellent pasta dishes. Reservation recommended.", price: "€€", maps: "#" },
+        { name: "Pizzeria Il Forno", emoji: "🍕", tipo: "Pizzeria · Zona centro", descIt: "Ottima pizza napoletana cotta in forno a legna.", descEn: "Excellent Neapolitan pizza baked in a wood-fired oven.", price: "€", maps: "#" },
+        { name: "Bar Centrale", emoji: "☕", tipo: "Bar · Colazione", descIt: "Il bar perfetto per la colazione: cappuccino e cornetto.", descEn: "The perfect bar for breakfast: cappuccino and croissant.", price: "€", maps: "#" },
+        { name: "Osteria del Porto", emoji: "🍷", tipo: "Osteria · Cucina di pesce", descIt: "Specialità di pesce fresco. Atmosfera accogliente.", descEn: "Fresh fish specialties. Welcoming atmosphere.", price: "€€€", maps: "#" }
+      ],
+      supermarketIt: "Supermercato più vicino a ~300 metri. Orari: Lun–Sab 8:00–20:00, Dom 9:00–13:00.",
+      supermarketEn: "Nearest supermarket ~300 meters away. Hours: Mon–Sat 8:00–20:00, Sun 9:00–13:00.",
+      supermarketMaps: "",
+      checkoutSteps: [
+        { titleIt: "Raccogliete i vostri effetti personali", descIt: "Controllate tutti i cassetti, armadi e il bagno per non dimenticare nulla.", titleEn: "Collect your personal belongings", descEn: "Check all drawers, wardrobes and the bathroom so you don't forget anything." },
+        { titleIt: "Lasciate le chiavi", descIt: "Depositate le chiavi nel luogo indicato dall'host al momento del check-in.", titleEn: "Leave the keys", descEn: "Deposit the keys in the place indicated by the host at check-in." },
+        { titleIt: "Rifiuti e raccolta differenziata", descIt: "Smaltite i rifiuti negli appositi contenitori seguendo le istruzioni in cucina.", titleEn: "Waste and sorting", descEn: "Dispose of waste in the appropriate containers following the instructions in the kitchen." },
+        { titleIt: "Lasciate una recensione", descIt: "Se avete apprezzato il soggiorno, la vostra recensione è un grande aiuto per noi!", titleEn: "Leave a review", descEn: "If you enjoyed your stay, your review is a great help for us!" }
+      ],
+      transport: {
+        airportEnabled: true,
+        airportIcon: "✈️",
+        airportIt: "All'uscita dell'aeroporto trovi i taxi ufficiali. Tariffa fissa ~50–60€ per il centro. In alternativa, treno diretto per la stazione centrale ogni 30 min (~14€).",
+        airportEn: "At the airport exit you'll find official taxis. Fixed rate ~€50–60 to the center. Alternatively, direct train to the central station every 30 min (~€14).",
+        airportMaps: "",
+        stationEnabled: true,
+        stationIcon: "🚉",
+        stationIt: "Dalla stazione puoi prendere metro, autobus o taxi per raggiungere l'appartamento. La fermata metro è a 5 min a piedi.",
+        stationEn: "From the station you can take the metro, bus or taxi to reach the apartment. The metro stop is 5 minutes on foot.",
+        stationMaps: "",
+        metroEnabled: true,
+        metroIcon: "🚇",
+        metroIt: "Fermata più vicina: Centrale (Linea A) a 800 metri dall'appartamento.",
+        metroEn: "Nearest stop: Central (Line A), 800 meters from the apartment.",
+        metroMaps: "",
+        busEnabled: true,
+        busIcon: "🚌",
+        busIt: "Linee principali: Bus 10, 20, 30 verso il centro. Fermata a 200 metri dall'appartamento.",
+        busEn: "Main lines: Bus 10, 20, 30 towards the center. Stop 200 meters from the apartment.",
+        busMaps: "",
+        ticketsIt: "Biglietto singolo: ~€1,50 (valido 90 minuti). Abbonamento giornaliero: ~€5,00. Acquisto alle macchinette in stazione o tramite app.",
+        ticketsEn: "Single ticket: ~€1.50 (valid 90 minutes). Daily pass: ~€5.00. Purchase at station machines or via app.",
+        taxiIt: "Taxi ufficiali: trovate i posteggi in piazza principale e in stazione. App consigliate: Uber, FREE NOW, Bolt. Tariffa minima ~€5.",
+        taxiEn: "Official taxis: find stands at the main square and at the station. Recommended apps: Uber, FREE NOW, Bolt. Minimum fare ~€5."
+      }
+    },
+    {
+      name: "Appartamento 2",
+      address: "Via Example 2, La Tua Città",
+      addressShort: "Via Example 2",
+      mapsLink: "#",
+      maxGuests: "4 persone",
+      bedroomTagsIt: "Letto matrimoniale,Armadio,Biancheria inclusa,Cuscini extra",
+      bedroomTagsEn: "Double bed,Wardrobe,Linen included,Extra pillows",
+      wifi: "NomeRete2",
+      wifiPass: "password456",
+      checkin: "15:00",
+      checkout: "10:00",
+      howToReachIt: "Dalla stazione centrale: prendete la metro linea A fino alla fermata Centrale, poi 10 minuti a piedi. In taxi dal centro ~10€. Consigliamo di salvare l'indirizzo su Google Maps prima di partire.",
+      howToReachEn: "From the central station: take metro line A to the Central stop, then 10 minutes on foot. By taxi from the center ~€10. We recommend saving the address on Google Maps before you leave.",
+      howToAccessIt: "Le chiavi vi verranno consegnate direttamente dall'host al vostro arrivo. In caso di check-in autonomo, troverete le istruzioni dettagliate via messaggio prima dell'arrivo.",
+      howToAccessEn: "Keys will be handed to you directly by the host upon your arrival. In case of self check-in, you will find detailed instructions via message before arrival.",
+      parkingIt: "Parcheggio pubblico disponibile nelle vicinanze (~200 metri). Strisce blu a pagamento nei giorni feriali 8:00–20:00 (~€1,50/h). Parcheggio gratuito nelle strisce bianche.",
+      parkingEn: "Public parking available nearby (~200 meters). Paid (blue) parking on weekdays 8:00–20:00 (~€1.50/h). Free parking in white areas.",
+      houseRules: [
+        { icon: "🔇", titleIt: "Silenzio Notturno", descIt: "Dalle 22:00 alle 8:00 si prega di mantenere il silenzio per rispetto dei vicini.", titleEn: "Quiet Hours", descEn: "From 10 PM to 8 AM please keep quiet out of respect for the neighbors." },
+        { icon: "🚭", titleIt: "Niente Fumo", descIt: "Vietato fumare all'interno dell'appartamento. È possibile farlo sul balcone.", titleEn: "No Smoking", descEn: "Smoking is not allowed inside the apartment. You may smoke on the balcony." },
+        { icon: "🐾", titleIt: "Animali Domestici", descIt: "Gli animali domestici non sono ammessi senza previo accordo con l'host.", titleEn: "Pets", descEn: "Pets are not allowed without prior agreement with the host." },
+        { icon: "👥", titleIt: "Ospiti Esterni", descIt: "Non sono ammesse feste. Il numero di ospiti non deve superare la capienza massima indicata.", titleEn: "External Guests", descEn: "Parties are not allowed. The number of guests must not exceed the maximum capacity indicated." },
+        { icon: "♻️", titleIt: "Raccolta Rifiuti", descIt: "Si prega di rispettare la raccolta differenziata. Istruzioni in cucina.", titleEn: "Waste Sorting", descEn: "Please respect waste sorting. Instructions are in the kitchen." }
+      ],
+      kitchenTagsIt: "Piano cottura,Forno,Frigorifero,Lavastoviglie,Caffettiera,Microonde",
+      kitchenTagsEn: "Hob,Oven,Fridge,Dishwasher,Coffee maker,Microwave",
+      bathroomTagsIt: "Doccia,Asciugamani,Phon,Prodotti igiene",
+      bathroomTagsEn: "Shower,Towels,Hairdryer,Toiletries",
+      extraServices: [
+        { icon: "🧺", nameIt: "Cambio Biancheria", descIt: "Ogni 4 giorni su richiesta", nameEn: "Linen Change", descEn: "Every 4 days on request" },
+        { icon: "🧹", nameIt: "Pulizie Aggiuntive", descIt: "Disponibile su richiesta", nameEn: "Additional Cleaning", descEn: "Available on request" },
+        { icon: "🚗", nameIt: "Transfer Aeroporto", descIt: "Prenotabile in anticipo", nameEn: "Airport Transfer", descEn: "Bookable in advance" },
+        { icon: "☕", nameIt: "Colazione", descIt: "Disponibile su richiesta", nameEn: "Breakfast", descEn: "Available on request" }
+      ],
+      places: [
+        { name: "Monumento Principale", emoji: "🏛", descIt: "Il monumento più famoso della città. Perfetto per chi ama la storia.", descEn: "The most famous monument in the city. Perfect for history lovers.", howIt: "🚇 Metro linea A → fermata Centrale → 10 min a piedi.", howEn: "🚇 Metro line A → Central stop → 10 min walk.", maps: "#" },
+        { name: "Piazza Centrale", emoji: "⛲", descIt: "La piazza principale della città, cuore della vita sociale.", descEn: "The main square of the city, heart of social life.", howIt: "🚌 Bus 10 o 20 → fermata Piazza Centrale.", howEn: "🚌 Bus 10 or 20 → Central Square stop.", maps: "#" },
+        { name: "Chiesa Storica", emoji: "🎭", descIt: "Un'importante chiesa storica con architettura medievale.", descEn: "An important historic church with medieval architecture.", howIt: "🚶 A piedi ~15 minuti dal centro.", howEn: "🚶 On foot ~15 minutes from the center.", maps: "#" },
+        { name: "Parco Panoramico", emoji: "🍊", descIt: "Parco con vista panoramica sulla città. Accesso libero.", descEn: "Park with a panoramic view of the city. Free access.", howIt: "🚌 Bus 5 → fermata Parco.", howEn: "🚌 Bus 5 → Park stop.", maps: "#" },
+        { name: "Museo Locale", emoji: "🏺", descIt: "Il museo principale della zona con collezioni locali.", descEn: "The main museum in the area with local collections.", howIt: "🚇 Metro → fermata Museo.", howEn: "🚇 Metro → Museum stop.", maps: "#" }
+      ],
+      restaurants: [
+        { name: "Ristorante Da Mario", emoji: "🍝", tipo: "Trattoria · Vicino a casa", descIt: "Cucina tipica italiana. Ottimi primi piatti. Prenotazione consigliata.", descEn: "Typical Italian cuisine. Excellent pasta dishes. Reservation recommended.", price: "€€", maps: "#" },
+        { name: "Pizzeria Il Forno", emoji: "🍕", tipo: "Pizzeria · Zona centro", descIt: "Ottima pizza napoletana cotta in forno a legna.", descEn: "Excellent Neapolitan pizza baked in a wood-fired oven.", price: "€", maps: "#" },
+        { name: "Bar Centrale", emoji: "☕", tipo: "Bar · Colazione", descIt: "Il bar perfetto per la colazione: cappuccino e cornetto.", descEn: "The perfect bar for breakfast: cappuccino and croissant.", price: "€", maps: "#" },
+        { name: "Osteria del Porto", emoji: "🍷", tipo: "Osteria · Cucina di pesce", descIt: "Specialità di pesce fresco. Atmosfera accogliente.", descEn: "Fresh fish specialties. Welcoming atmosphere.", price: "€€€", maps: "#" }
+      ],
+      supermarketIt: "Supermercato più vicino a ~300 metri. Orari: Lun–Sab 8:00–20:00, Dom 9:00–13:00.",
+      supermarketEn: "Nearest supermarket ~300 meters away. Hours: Mon–Sat 8:00–20:00, Sun 9:00–13:00.",
+      supermarketMaps: "",
+      checkoutSteps: [
+        { titleIt: "Raccogliete i vostri effetti personali", descIt: "Controllate tutti i cassetti, armadi e il bagno per non dimenticare nulla.", titleEn: "Collect your personal belongings", descEn: "Check all drawers, wardrobes and the bathroom so you don't forget anything." },
+        { titleIt: "Lasciate le chiavi", descIt: "Depositate le chiavi nel luogo indicato dall'host al momento del check-in.", titleEn: "Leave the keys", descEn: "Deposit the keys in the place indicated by the host at check-in." },
+        { titleIt: "Rifiuti e raccolta differenziata", descIt: "Smaltite i rifiuti negli appositi contenitori seguendo le istruzioni in cucina.", titleEn: "Waste and sorting", descEn: "Dispose of waste in the appropriate containers following the instructions in the kitchen." },
+        { titleIt: "Lasciate una recensione", descIt: "Se avete apprezzato il soggiorno, la vostra recensione è un grande aiuto per noi!", titleEn: "Leave a review", descEn: "If you enjoyed your stay, your review is a great help for us!" }
+      ],
+      transport: {
+        airportEnabled: true,
+        airportIcon: "✈️",
+        airportIt: "All'uscita dell'aeroporto trovi i taxi ufficiali. Tariffa fissa ~50–60€ per il centro. In alternativa, treno diretto per la stazione centrale ogni 30 min (~14€).",
+        airportEn: "At the airport exit you'll find official taxis. Fixed rate ~€50–60 to the center. Alternatively, direct train to the central station every 30 min (~€14).",
+        airportMaps: "",
+        stationEnabled: true,
+        stationIcon: "🚉",
+        stationIt: "Dalla stazione puoi prendere metro, autobus o taxi per raggiungere l'appartamento. La fermata metro è a 5 min a piedi.",
+        stationEn: "From the station you can take the metro, bus or taxi to reach the apartment. The metro stop is 5 minutes on foot.",
+        stationMaps: "",
+        metroEnabled: true,
+        metroIcon: "🚇",
+        metroIt: "Fermata più vicina: Centrale (Linea A) a 800 metri dall'appartamento.",
+        metroEn: "Nearest stop: Central (Line A), 800 meters from the apartment.",
+        metroMaps: "",
+        busEnabled: true,
+        busIcon: "🚌",
+        busIt: "Linee principali: Bus 10, 20, 30 verso il centro. Fermata a 200 metri dall'appartamento.",
+        busEn: "Main lines: Bus 10, 20, 30 towards the center. Stop 200 meters from the apartment.",
+        busMaps: "",
+        ticketsIt: "Biglietto singolo: ~€1,50 (valido 90 minuti). Abbonamento giornaliero: ~€5,00. Acquisto alle macchinette in stazione o tramite app.",
+        ticketsEn: "Single ticket: ~€1.50 (valid 90 minutes). Daily pass: ~€5.00. Purchase at station machines or via app.",
+        taxiIt: "Taxi ufficiali: trovate i posteggi in piazza principale e in stazione. App consigliate: Uber, FREE NOW, Bolt. Tariffa minima ~€5.",
+        taxiEn: "Official taxis: find stands at the main square and at the station. Recommended apps: Uber, FREE NOW, Bolt. Minimum fare ~€5."
+      }
+    }
+  ],
+  navLabels: {
+    homeIt: "Home",
+    homeEn: "Home",
+    homeIcon: "🏠",
+    stayIt: "Soggiorno",
+    stayEn: "Stay",
+    stayIcon: "🛋️",
+    placesIt: "Luoghi",
+    placesEn: "Places",
+    placesIcon: "🗺️",
+    foodIt: "Mangiare",
+    foodEn: "Food",
+    foodIcon: "🍽️",
+    transportIt: "Muoversi",
+    transportEn: "Transport",
+    transportIcon: "🚇",
+    departureIt: "Partenza",
+    departureEn: "Departure",
+    departureIcon: "🧳"
+  },
+  sectionTitles: {
+    stayEyebrowIt: "Il Tuo Appartamento",
+    stayEyebrowEn: "Your Apartment",
+    stayTitleIt: "Soggiorno",
+    stayTitleEn: "Stay",
+    placesEyebrowIt: "Scopri la Città",
+    placesEyebrowEn: "Discover the City",
+    placesTitleIt: "Luoghi",
+    placesTitleEn: "Places",
+    foodEyebrowIt: "Dove Mangiare",
+    foodEyebrowEn: "Where to Eat",
+    foodTitleIt: "Mangiare",
+    foodTitleEn: "Food",
+    transportEyebrowIt: "In Città",
+    transportEyebrowEn: "Around the City",
+    transportTitleIt: "Muoversi",
+    transportTitleEn: "Transport",
+    departureEyebrowIt: "È Ora di Partire",
+    departureEyebrowEn: "Time to Leave",
+    departureTitleIt: "Partenza",
+    departureTitleEn: "Departure"
+  }
+};
+/* DEFAULT_DATA_END */
+
+// ════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════
+let currentData = null;
+let currentAptIndex = 0;
+let currentLang = 'it';
+
+// ════════════════════════════════════════════
+//  UI LABELS (IT / EN)
+// ════════════════════════════════════════════
+const LABELS = {
+  it: {
+    welcome: 'Benvenuti! 👋',
+    mapsOpen: 'Apri Maps',
+    mapsOpenStay: 'Apri su Maps',
+    howToReach: 'Come raggiungerci',
+    howToAccess: 'Come accedere',
+    parking: 'Parcheggio',
+    houseRules: '🏠 Regole della casa',
+    spaces: '🏡 Gli Spazi',
+    bedroom: 'Camera da Letto',
+    kitchen: 'Cucina',
+    bathroom: 'Bagno',
+    extraServices: '✨ Servizi Extra',
+    waHint: '💬 Richiedi su WhatsApp',
+    exploreGuide: 'Esplora la guida',
+    stayDesc: 'WiFi, regole, spazi, servizi',
+    placesDesc: 'Attrazioni e punti di interesse',
+    foodDesc: 'Ristoranti, bar, supermercati',
+    transportDesc: 'Metro, bus, taxi, emergenze',
+    departureDesc: 'Check-out e recensione',
+    placesSub: 'Le attrazioni più belle nei dintorni',
+    foodSub: "I migliori locali consigliati dall'host",
+    transportSub: 'Come spostarsi in città',
+    tickets: 'Biglietti',
+    taxi: 'Taxi & App',
+    emergencies: 'Emergenze',
+    emergencyRoom: 'Pronto Soccorso',
+    police: 'Carabinieri',
+    fireBrigade: 'Vigili del Fuoco',
+    call: 'Chiama',
+    departureSub: "Tutto quello che c'è da sapere prima di andare",
+    checkoutLabel: 'Al Check-out',
+    reviewBtnLabel: '⭐ Lascia una Recensione su Google',
+    howToGet: 'Come arrivarci',
+    mapsGuide: '🧭 Guidami qui',
+    mapsView: '🧭 Vedi su Maps',
+    supermarket: 'Supermercato',
+    fromAirport: "Dall'Aeroporto",
+    fromStation: 'Dalla Stazione',
+    metro: 'Metro',
+    bus: 'Bus',
+    waServiceMsg: (name) => `Ciao! Vorrei richiedere il servizio: ${name}`
+  },
+  en: {
+    welcome: 'Welcome! 👋',
+    mapsOpen: 'Open Maps',
+    mapsOpenStay: 'Open on Maps',
+    howToReach: 'How to reach us',
+    howToAccess: 'How to access',
+    parking: 'Parking',
+    houseRules: '🏠 House Rules',
+    spaces: '🏡 The Spaces',
+    bedroom: 'Bedroom',
+    kitchen: 'Kitchen',
+    bathroom: 'Bathroom',
+    extraServices: '✨ Extra Services',
+    waHint: '💬 Request on WhatsApp',
+    exploreGuide: 'Explore the guide',
+    stayDesc: 'WiFi, rules, spaces, services',
+    placesDesc: 'Attractions and points of interest',
+    foodDesc: 'Restaurants, bars, supermarkets',
+    transportDesc: 'Metro, bus, taxi, emergencies',
+    departureDesc: 'Check-out and review',
+    placesSub: 'The most beautiful attractions nearby',
+    foodSub: 'The best places recommended by the host',
+    transportSub: 'How to get around the city',
+    tickets: 'Tickets',
+    taxi: 'Taxi & Apps',
+    emergencies: 'Emergencies',
+    emergencyRoom: 'Emergency Room',
+    police: 'Police',
+    fireBrigade: 'Fire Brigade',
+    call: 'Call',
+    departureSub: 'Everything you need to know before leaving',
+    checkoutLabel: 'At Check-out',
+    reviewBtnLabel: '⭐ Leave a Google Review',
+    howToGet: 'How to get there',
+    mapsGuide: '🧭 Guide me here',
+    mapsView: '🧭 View on Maps',
+    supermarket: 'Supermarket',
+    fromAirport: 'From the Airport',
+    fromStation: 'From the Station',
+    metro: 'Metro',
+    bus: 'Bus',
+    waServiceMsg: (name) => `Hello! I would like to request the service: ${name}`
+  }
+};
+
+// PIN state
+let pinBuffer = '';
+const PIN_KEY = 'bnb_admin_pin';
+
+async function hashPin(pin) {
+  const data = new TextEncoder().encode(pin);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function getStoredPinHash() {
+  const stored = localStorage.getItem(PIN_KEY);
+  // If not set or still a plain 4-digit PIN (legacy), hash on the fly
+  if (!stored || /^\d{4}$/.test(stored)) {
+    const hash = await hashPin(stored || '1234');
+    if (stored) localStorage.setItem(PIN_KEY, hash); // persist migration
+    return hash;
+  }
+  return stored;
+}
+
+// ════════════════════════════════════════════
+//  DATA HELPERS
+// ════════════════════════════════════════════
+function deepClone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
+function mergeWithDefaults(stored, defaults) {
+  if (!stored || typeof stored !== 'object') return deepClone(defaults);
+  const result = deepClone(defaults);
+  for (const key of Object.keys(defaults)) {
+    const sv = stored[key];
+    const dv = defaults[key];
+    if (sv === undefined || sv === null) continue;
+    if (Array.isArray(dv)) {
+      if (Array.isArray(sv)) {
+        // Preserve empty arrays (user intentionally cleared) and merge populated ones
+        const tpl = dv[0] || {};
+        result[key] = sv.length > 0 ? sv.map(item => mergeWithDefaults(item, tpl)) : [];
+      }
+    } else if (typeof dv === 'object') {
+      if (typeof sv === 'object') result[key] = mergeWithDefaults(sv, dv);
+    } else {
+      result[key] = sv;
+    }
+  }
+  return result;
+}
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem('bnb_guide_data');
+    if (raw) {
+      const stored = JSON.parse(raw);
+      // Migrate legacy contact2Name/contact2Phone to extraContacts array
+      if ((stored.contact2Name !== undefined || stored.contact2Phone !== undefined) && !stored.extraContacts) {
+        stored.extraContacts = [{ name: stored.contact2Name || '', phone: stored.contact2Phone || '' }];
+        delete stored.contact2Name;
+        delete stored.contact2Phone;
+      }
+      // Migrate global places/restaurants/transport/checkoutSteps to per-apt
+      if (stored.apts && Array.isArray(stored.apts)) {
+        stored.apts.forEach(apt => {
+          if (apt.places === undefined && stored.places !== undefined) apt.places = stored.places;
+          if (apt.restaurants === undefined && stored.restaurants !== undefined) apt.restaurants = stored.restaurants;
+          if (apt.supermarketIt === undefined && stored.supermarketIt !== undefined) apt.supermarketIt = stored.supermarketIt;
+          if (apt.supermarketMaps === undefined && stored.supermarketMaps !== undefined) apt.supermarketMaps = stored.supermarketMaps;
+          if (apt.transport === undefined && stored.transport !== undefined) apt.transport = stored.transport;
+          if (apt.checkoutSteps === undefined && stored.checkoutSteps !== undefined) apt.checkoutSteps = stored.checkoutSteps;
+        });
+      }
+      return mergeWithDefaults(stored, DEFAULT_DATA);
+    }
+  } catch(e) { console.error('Failed to load saved data:', e); }
+  return deepClone(DEFAULT_DATA);
+}
+
+function saveData(data) {
+  try {
+    localStorage.setItem('bnb_guide_data', JSON.stringify(data));
+  } catch(e) { console.error('Failed to save data:', e); }
+}
+
+// ════════════════════════════════════════════
+//  RENDER LANDING
+// ════════════════════════════════════════════
+function renderLanding() {
+  const d = currentData;
+
+  document.getElementById('l-cityzone').textContent = d.cityZone;
+  const nameParts = d.bbName.split(' ');
+  if (nameParts.length >= 3) {
+    document.getElementById('l-bbname-line1').textContent = nameParts.slice(0, -1).join(' ');
+    document.getElementById('l-bbname-em').innerHTML = nameParts[nameParts.length - 1];
+  } else {
+    document.getElementById('l-bbname-line1').textContent = d.bbName;
+    document.getElementById('l-bbname-em').innerHTML = '';
+  }
+  document.getElementById('l-subtitle').textContent = d.subtitle;
+
+  document.getElementById('l-intro').textContent = 'Benvenuti! Selezionate il vostro appartamento per accedere alla guida completa.';
+
+  // Apt cards
+  const container = document.getElementById('apt-cards-container');
+  container.innerHTML = '';
+  d.apts.forEach((apt, i) => {
+    const card = document.createElement('div');
+    card.className = 'apt-card';
+    card.innerHTML = `
+      <div class="apt-card-top">
+        <div class="apt-card-body">
+          <div class="apt-card-name">${escHtml(apt.name)}</div>
+          <div class="apt-card-addr">${escHtml(apt.addressShort || apt.address)} · ${escHtml(d.cityZone)}</div>
+        </div>
+        <div class="apt-card-superhost">★ Superhost</div>
+      </div>
+      <div class="apt-lang-btns">
+        <button class="lang-btn" onclick="openGuide(${i}, 'it')">
+          <span class="lang-btn-flag">🇮🇹</span>
+          <div class="lang-btn-body">
+            <div class="lang-btn-name">Italiano</div>
+            <div class="lang-btn-sub">Guida Ospiti</div>
+          </div>
+          <span class="lang-btn-arrow">›</span>
+        </button>
+        <button class="lang-btn" onclick="openGuide(${i}, 'en')">
+          <span class="lang-btn-flag">🇬🇧</span>
+          <div class="lang-btn-body">
+            <div class="lang-btn-name">English</div>
+            <div class="lang-btn-sub">Guest Guide</div>
+          </div>
+          <span class="lang-btn-arrow">›</span>
+        </button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  document.title = `${d.bbName} — ${d.subtitle}`;
+}
+
+// ════════════════════════════════════════════
+//  OPEN / CLOSE GUIDE
+// ════════════════════════════════════════════
+function openGuide(aptIndex, lang) {
+  currentAptIndex = aptIndex;
+  currentLang = lang === 'en' ? 'en' : 'it';
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('gear-btn').classList.add('hidden');
+  const guide = document.getElementById('guide');
+  guide.classList.add('active');
+  renderApp(aptIndex);
+  guide.scrollTop = 0;
+  switchTab('home');
+}
+
+function goBack() {
+  document.getElementById('guide').classList.remove('active');
+  document.getElementById('landing').style.display = '';
+  document.getElementById('gear-btn').classList.remove('hidden');
+}
+
+// ════════════════════════════════════════════
+//  RENDER APP (guide for an apt)
+// ════════════════════════════════════════════
+function renderApp(aptIndex) {
+  const d = currentData;
+  const apt = d.apts[aptIndex] || d.apts[0];
+  const lang = currentLang;
+  const L = LABELS[lang] || LABELS.it;
+  const sfx = lang === 'en' ? 'En' : 'It';
+
+  // Header
+  document.getElementById('guide-apt-name').textContent = apt.name;
+
+  // Home tab
+  document.getElementById('h-eyebrow').textContent = '✦ ' + d.cityZone.toUpperCase();
+  document.getElementById('h-apt-title').textContent = apt.name;
+  document.getElementById('h-address').textContent = apt.addressShort || apt.address;
+  document.getElementById('s-checkin').textContent = apt.checkin;
+  document.getElementById('s-checkout').textContent = apt.checkout;
+  document.getElementById('s-wifi').textContent = apt.wifi;
+  const sMaps = document.getElementById('s-maps');
+  sMaps.href = apt.mapsLink || '#';
+  sMaps.textContent = L.mapsOpen;
+
+  document.getElementById('w-title').textContent = L.welcome;
+  const wItEl = document.getElementById('w-text-it');
+  wItEl.innerHTML = renderRichText(d['welcome' + sfx] || d.welcomeIt || '');
+  document.getElementById('w-sign').textContent = '★ ' + d.hostName;
+
+  // Home tab static labels
+  const hExplore = document.getElementById('h-explore-title');
+  if (hExplore) hExplore.textContent = L.exploreGuide;
+  const qnStay = document.getElementById('qn-stay-desc');
+  if (qnStay) qnStay.textContent = L.stayDesc;
+  const qnPlaces = document.getElementById('qn-places-desc');
+  if (qnPlaces) qnPlaces.textContent = L.placesDesc;
+  const qnFood = document.getElementById('qn-food-desc');
+  if (qnFood) qnFood.textContent = L.foodDesc;
+  const qnTransport = document.getElementById('qn-transport-desc');
+  if (qnTransport) qnTransport.textContent = L.transportDesc;
+  const qnDeparture = document.getElementById('qn-departure-desc');
+  if (qnDeparture) qnDeparture.textContent = L.departureDesc;
+  const homeReviewLabel = document.getElementById('home-review-label');
+  if (homeReviewLabel) homeReviewLabel.textContent = L.reviewBtnLabel;
+
+  // Stay tab
+  document.getElementById('st-checkin').textContent = apt.checkin;
+  document.getElementById('st-checkout').textContent = apt.checkout;
+  document.getElementById('st-guests').textContent = apt.maxGuests;
+  document.getElementById('st-wifi-name').textContent = apt.wifi;
+  document.getElementById('st-wifi-pass').textContent = apt.wifiPass;
+
+  const stMaps = document.getElementById('st-maps');
+  stMaps.href = apt.mapsLink || '#';
+  const stMapsLabel = document.getElementById('st-maps-label');
+  if (stMapsLabel) stMapsLabel.textContent = L.mapsOpenStay;
+
+  // Stay tab static labels
+  const stHowReachTitle = document.getElementById('st-how-reach-title');
+  if (stHowReachTitle) stHowReachTitle.textContent = L.howToReach;
+  const stHowAccessTitle = document.getElementById('st-how-access-title');
+  if (stHowAccessTitle) stHowAccessTitle.textContent = L.howToAccess;
+  const stParkingTitle = document.getElementById('st-parking-title');
+  if (stParkingTitle) stParkingTitle.textContent = L.parking;
+  const stRulesTitle = document.getElementById('st-rules-title');
+  if (stRulesTitle) stRulesTitle.textContent = L.houseRules;
+  const stSpacesTitle = document.getElementById('st-spaces-title');
+  if (stSpacesTitle) stSpacesTitle.textContent = L.spaces;
+  const stBedroomLabel = document.getElementById('st-bedroom-label');
+  if (stBedroomLabel) stBedroomLabel.textContent = L.bedroom;
+  const stKitchenLabel = document.getElementById('st-kitchen-label');
+  if (stKitchenLabel) stKitchenLabel.textContent = L.kitchen;
+  const stBathroomLabel = document.getElementById('st-bathroom-label');
+  if (stBathroomLabel) stBathroomLabel.textContent = L.bathroom;
+  const stServicesTitle = document.getElementById('st-services-title');
+  if (stServicesTitle) stServicesTitle.textContent = L.extraServices;
+
+  // Section sub labels
+  const placesSub = document.getElementById('places-section-sub');
+  if (placesSub) placesSub.textContent = L.placesSub;
+  const foodSub = document.getElementById('food-section-sub');
+  if (foodSub) foodSub.textContent = L.foodSub;
+  const transportSub = document.getElementById('transport-section-sub');
+  if (transportSub) transportSub.textContent = L.transportSub;
+  const departureSub = document.getElementById('departure-section-sub');
+  if (departureSub) departureSub.textContent = L.departureSub;
+
+  // Transport static labels
+  const trTicketsTitle = document.getElementById('tr-tickets-title');
+  if (trTicketsTitle) trTicketsTitle.textContent = L.tickets;
+  const trTaxiTitle = document.getElementById('tr-taxi-title');
+  if (trTaxiTitle) trTaxiTitle.textContent = L.taxi;
+  const trEmergLabel = document.getElementById('tr-emergencies-label');
+  if (trEmergLabel) trEmergLabel.textContent = L.emergencies;
+  const trErName = document.getElementById('tr-er-name');
+  if (trErName) trErName.textContent = L.emergencyRoom;
+  const trPoliceName = document.getElementById('tr-police-name');
+  if (trPoliceName) trPoliceName.textContent = L.police;
+  const trFireName = document.getElementById('tr-fire-name');
+  if (trFireName) trFireName.textContent = L.fireBrigade;
+  const sosHostCallLabel = document.getElementById('sos-host-call-label');
+  if (sosHostCallLabel) sosHostCallLabel.textContent = L.call;
+
+  // Departure static labels
+  const depCheckoutLabel = document.getElementById('dep-checkout-label');
+  if (depCheckoutLabel) depCheckoutLabel.textContent = L.checkoutLabel;
+  const googleReviewLabel = document.getElementById('google-review-label');
+  if (googleReviewLabel) googleReviewLabel.textContent = L.reviewBtnLabel;
+
+  // Stay tab - extended fields
+  document.getElementById('st-how-reach').innerHTML = renderRichText(apt['howToReach' + sfx] || apt.howToReachIt || '');
+  document.getElementById('st-how-access').innerHTML = renderRichText(apt['howToAccess' + sfx] || apt.howToAccessIt || '');
+  document.getElementById('st-parking').innerHTML = renderRichText(apt['parking' + sfx] || apt.parkingIt || '');
+
+  // House Rules
+  const rulesList = document.getElementById('st-rules-list');
+  rulesList.innerHTML = '';
+  (apt.houseRules || []).forEach(r => {
+    const li = document.createElement('li');
+    li.className = 'rule-item';
+    const title = r['title' + sfx] || r.titleIt;
+    const desc = r['desc' + sfx] || r.descIt;
+    li.innerHTML = `<span class="rule-icon">${escHtml(r.icon || '')}</span><div><div class="rule-title">${escHtml(title || '')}</div><div class="rule-desc">${renderRichText(desc || '')}</div></div>`;
+    rulesList.appendChild(li);
+  });
+
+  // Bedroom tags
+  const bedroomTagsEl = document.getElementById('st-bedroom-tags');
+  if (bedroomTagsEl) {
+    const bedroomRaw = apt['bedroomTags' + sfx] || apt.bedroomTagsIt || '';
+    bedroomTagsEl.innerHTML = bedroomRaw
+      ? bedroomRaw.split(',').map(t => t.trim()).filter(Boolean).map(t => `<span class="tag">${escHtml(t)}</span>`).join('')
+      : '';
+  }
+
+  // Kitchen tags
+  const kitchenTagsEl = document.getElementById('st-kitchen-tags');
+  if (kitchenTagsEl) {
+    const kitchenRaw = apt['kitchenTags' + sfx] || apt.kitchenTagsIt || '';
+    kitchenTagsEl.innerHTML = kitchenRaw
+      ? kitchenRaw.split(',').map(t => t.trim()).filter(Boolean).map(t => `<span class="tag">${escHtml(t)}</span>`).join('')
+      : '';
+  }
+
+  // Bathroom tags
+  const bathroomTagsEl = document.getElementById('st-bathroom-tags');
+  if (bathroomTagsEl) {
+    const bathroomRaw = apt['bathroomTags' + sfx] || apt.bathroomTagsIt || '';
+    bathroomTagsEl.innerHTML = bathroomRaw
+      ? bathroomRaw.split(',').map(t => t.trim()).filter(Boolean).map(t => `<span class="tag">${escHtml(t)}</span>`).join('')
+      : '';
+  }
+
+  // Extra Services
+  const servicesEl = document.getElementById('st-extra-services');
+  if (servicesEl) {
+    servicesEl.innerHTML = '';
+    const waHint = L.waHint;
+    (apt.extraServices || []).forEach(svc => {
+      const name = svc['name' + sfx] || svc.nameIt || '';
+      const desc = svc['desc' + sfx] || svc.descIt || '';
+      const a = document.createElement('a');
+      a.className = 'service-item';
+      a.href = '#';
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        requestService(name, lang);
+      });
+      a.innerHTML = `
+        <div class="service-icon">${escHtml(svc.icon || '✨')}</div>
+        <div class="service-name">${escHtml(name)}</div>
+        <div class="service-desc">${escHtml(desc)}</div>
+        <div class="service-wa-hint">${waHint}</div>`;
+      servicesEl.appendChild(a);
+    });
+  }
+
+  // Places
+  renderPlaces(apt.places || [], lang);
+
+  // Food
+  renderFood(apt.restaurants || [], apt['supermarket' + sfx] || apt.supermarketIt, apt.supermarketMaps, lang);
+
+  // Transport
+  renderTransport(apt.transport || {}, lang);
+
+  // Departure
+  renderDeparture(d, apt.checkoutSteps || [], lang);
+
+  // SOS
+  document.getElementById('sos-host-name').textContent = d.hostName;
+  document.getElementById('sos-host-phone').textContent = '📞 ' + (d.hostPhone || '');
+  document.getElementById('sos-host-call').href = 'tel:' + (d.hostPhone || '').replace(/\s/g, '');
+  renderExtraContacts(d.extraContacts || [], lang);
+
+  // Google Review Button
+  const reviewUrl = d.googleReviewUrl || '';
+  const reviewContainer = document.getElementById('google-review-btn-container');
+  const homeReviewSection = document.getElementById('home-review-section');
+  if (reviewUrl) {
+    document.getElementById('google-review-btn').href = reviewUrl;
+    reviewContainer.style.display = '';
+    document.getElementById('home-review-btn').href = reviewUrl;
+    homeReviewSection.style.display = '';
+  } else {
+    reviewContainer.style.display = 'none';
+    homeReviewSection.style.display = 'none';
+  }
+
+  // Update nav labels from data
+  const nl = d.navLabels || DEFAULT_DATA.navLabels;
+  const navLabelMap = {
+    home: nl['home' + sfx] || nl.homeIt,
+    stay: nl['stay' + sfx] || nl.stayIt,
+    places: nl['places' + sfx] || nl.placesIt,
+    food: nl['food' + sfx] || nl.foodIt,
+    transport: nl['transport' + sfx] || nl.transportIt,
+    departure: nl['departure' + sfx] || nl.departureIt
+  };
+  const navIconMap = {
+    home: nl.homeIcon || DEFAULT_DATA.navLabels.homeIcon,
+    stay: nl.stayIcon || DEFAULT_DATA.navLabels.stayIcon,
+    places: nl.placesIcon || DEFAULT_DATA.navLabels.placesIcon,
+    food: nl.foodIcon || DEFAULT_DATA.navLabels.foodIcon,
+    transport: nl.transportIcon || DEFAULT_DATA.navLabels.transportIcon,
+    departure: nl.departureIcon || DEFAULT_DATA.navLabels.departureIcon
+  };
+  document.querySelectorAll('.nav-item[data-tab]').forEach(btn => {
+    const tab = btn.getAttribute('data-tab');
+    const label = btn.querySelector('.nav-label');
+    if (label && navLabelMap[tab]) label.textContent = navLabelMap[tab];
+    const icon = btn.querySelector('.nav-icon');
+    if (icon && navIconMap[tab]) icon.textContent = navIconMap[tab];
+  });
+  document.querySelectorAll('.quick-nav-card').forEach(card => {
+    const onclick = card.getAttribute('onclick') || '';
+    const match = onclick.match(/switchTab\('([^']+)'\)/);
+    if (match) {
+      const tab = match[1];
+      const label = card.querySelector('.quick-nav-label');
+      if (label && navLabelMap[tab]) label.textContent = navLabelMap[tab];
+      const icon = card.querySelector('.quick-nav-icon');
+      if (icon && navIconMap[tab]) icon.textContent = navIconMap[tab];
+    }
+  });
+
+  // Update section headers from data
+  const st = d.sectionTitles || DEFAULT_DATA.sectionTitles;
+  const sectionHeaderMap = [
+    { tab: 'stay',      eyebrow: st['stayEyebrow' + sfx] || st.stayEyebrowIt,           title: st['stayTitle' + sfx] || st.stayTitleIt },
+    { tab: 'places',    eyebrow: st['placesEyebrow' + sfx] || st.placesEyebrowIt,        title: st['placesTitle' + sfx] || st.placesTitleIt },
+    { tab: 'food',      eyebrow: st['foodEyebrow' + sfx] || st.foodEyebrowIt,            title: st['foodTitle' + sfx] || st.foodTitleIt },
+    { tab: 'transport', eyebrow: st['transportEyebrow' + sfx] || st.transportEyebrowIt,  title: st['transportTitle' + sfx] || st.transportTitleIt },
+    { tab: 'departure', eyebrow: st['departureEyebrow' + sfx] || st.departureEyebrowIt,  title: st['departureTitle' + sfx] || st.departureTitleIt }
+  ];
+  sectionHeaderMap.forEach(({ tab, eyebrow, title }) => {
+    const tabEl = document.getElementById('tab-' + tab);
+    if (!tabEl) return;
+    const eyebrowEl = tabEl.querySelector('.section-eyebrow');
+    const titleEl = tabEl.querySelector('.section-title');
+    if (eyebrowEl) eyebrowEl.textContent = eyebrow;
+    if (titleEl) titleEl.textContent = title;
+  });
+}
+
+function renderPlaces(places, lang) {
+  const L = LABELS[lang] || LABELS.it;
+  const sfx = lang === 'en' ? 'En' : 'It';
+  const container = document.getElementById('places-container');
+  container.innerHTML = '';
+  places.forEach(p => {
+    const desc = p['desc' + sfx] || p.descIt;
+    const how = p['how' + sfx] || p.howIt;
+    const howLabel = L.howToGet;
+    const mapsLabel = L.mapsGuide;
+    const card = document.createElement('div');
+    card.className = 'place-card';
+    card.innerHTML = `
+      <div class="place-header">
+        <span class="place-icon">${p.emoji || '📍'}</span>
+        <span class="place-title">${escHtml(p.name)}</span>
+      </div>
+      <p class="place-desc">${renderRichText(desc)}</p>
+      <div class="place-how">
+        <div class="place-how-label">${escHtml(howLabel)}</div>
+        ${renderRichText(how)}
+      </div>
+      <a class="maps-btn" href="${escAttr(p.maps || '#')}" target="_blank">${mapsLabel}</a>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function renderFood(restaurants, supermarketText, supermarketMaps, lang) {
+  const L = LABELS[lang] || LABELS.it;
+  const sfx = lang === 'en' ? 'En' : 'It';
+  const container = document.getElementById('food-container');
+  container.innerHTML = '';
+  restaurants.forEach(r => {
+    const desc = r['desc' + sfx] || r.descIt;
+    const mapsLabel = L.mapsView;
+    const card = document.createElement('div');
+    card.className = 'restaurant-card';
+    card.innerHTML = `
+      <div class="rest-header">
+        <span class="rest-icon">${r.emoji || '🍽️'}</span>
+        <div class="rest-body">
+          <div class="rest-name">${escHtml(r.name)}</div>
+          <div class="rest-tipo">${escHtml(r.tipo)}</div>
+        </div>
+        <span class="rest-price">${escHtml(r.price)}</span>
+      </div>
+      <p class="rest-desc">${renderRichText(desc)}</p>
+      <a class="maps-btn" href="${escAttr(r.maps || '#')}" target="_blank">${mapsLabel}</a>
+    `;
+    container.appendChild(card);
+  });
+
+  // Supermarket
+  const superLabel = L.supermarket;
+  const superDesc = supermarketText || (lang === 'en'
+    ? 'Nearest supermarket ~300 meters away. Hours: Mon–Sat 8:00–20:00, Sun 9:00–13:00.'
+    : 'Supermercato più vicino a ~300 metri. Orari: Lun–Sab 8:00–20:00, Dom 9:00–13:00.');
+  const superMaps = supermarketMaps || '';
+  const superMapsLabel = L.mapsView;
+  const superMapsBtn = superMaps ? `<a class="maps-btn" href="${escAttr(superMaps)}" target="_blank" rel="noopener">${superMapsLabel}</a>` : '';
+  const superCard = document.createElement('div');
+  superCard.className = 'supermercato-card';
+  superCard.innerHTML = `
+    <div class="superm-row">
+      <div class="superm-icon">🛒</div>
+      <div class="superm-body">
+        <div class="superm-title">${superLabel}</div>
+        <div class="superm-desc">${renderRichText(superDesc)}</div>
+      </div>
+    </div>
+    ${superMapsBtn}
+  `;
+  container.appendChild(superCard);
+}
+
+function renderTransport(transport, lang) {
+  const L = LABELS[lang] || LABELS.it;
+  const sfx = lang === 'en' ? 'En' : 'It';
+  const container = document.getElementById('transport-container');
+  container.innerHTML = '';
+  const items = [
+    { key: 'airport', icon: transport.airportIcon || '✈️', label: L.fromAirport, text: transport['airport' + sfx] || transport.airportIt, maps: transport.airportMaps, enabled: transport.airportEnabled !== false },
+    { key: 'station', icon: transport.stationIcon || '🚉', label: L.fromStation, text: transport['station' + sfx] || transport.stationIt, maps: transport.stationMaps, enabled: transport.stationEnabled !== false },
+    { key: 'metro', icon: transport.metroIcon || '🚇', label: L.metro, text: transport['metro' + sfx] || transport.metroIt, maps: transport.metroMaps, enabled: transport.metroEnabled !== false },
+    { key: 'bus', icon: transport.busIcon || '🚌', label: L.bus, text: transport['bus' + sfx] || transport.busIt, maps: transport.busMaps, enabled: transport.busEnabled !== false }
+  ];
+  const mapsLabel = L.mapsView;
+  items.forEach(item => {
+    if (!item.enabled) return;
+    const title = item.label;
+    const text = item.text;
+    const card = document.createElement('div');
+    card.className = 'transport-card';
+    const mapsBtn = item.maps ? `<a class="maps-btn" href="${escAttr(item.maps)}" target="_blank" rel="noopener">${mapsLabel}</a>` : '';
+    card.innerHTML = `
+      <div class="transport-header">
+        <span class="transport-icon">${item.icon}</span>
+        <span class="transport-title">${escHtml(title)}</span>
+      </div>
+      <p class="transport-desc">${renderRichText(text)}</p>
+      ${mapsBtn}
+    `;
+    container.appendChild(card);
+  });
+
+  // Tickets
+  const ticketsEl = document.getElementById('tr-tickets-desc');
+  if (ticketsEl) ticketsEl.innerHTML = renderRichText(transport['tickets' + sfx] || transport.ticketsIt || '');
+
+  // Taxi & App
+  const taxiEl = document.getElementById('tr-taxi-desc');
+  if (taxiEl) taxiEl.innerHTML = renderRichText(transport['taxi' + sfx] || transport.taxiIt || '');
+}
+
+// ════════════════════════════════════════════
+//  EXTRA CONTACTS RENDER
+// ════════════════════════════════════════════
+function renderExtraContacts(contacts, lang) {
+  const L = LABELS[lang] || LABELS.it;
+  const container = document.getElementById('sos-extra-contacts');
+  container.innerHTML = '';
+  const callLabel = L.call;
+  (contacts || []).forEach(c => {
+    if (!c.name && !c.phone) return;
+    const card = document.createElement('div');
+    card.className = 'sos-card';
+    card.innerHTML = `
+      <div class="sos-icon">👤</div>
+      <div class="sos-body">
+        <div class="sos-name">${escHtml(c.name || '')}</div>
+        <div class="sos-number">📞 ${escHtml(c.phone || '')}</div>
+      </div>
+      <a class="call-btn host" href="tel:${escAttr((c.phone || '').replace(/\s/g, ''))}">📞 ${callLabel}</a>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ════════════════════════════════════════════
+//  DEPARTURE TAB RENDER
+// ════════════════════════════════════════════
+function renderDeparture(d, checkoutSteps, lang) {
+  const L = LABELS[lang] || LABELS.it;
+  const sfx = lang === 'en' ? 'En' : 'It';
+  const titleEl = document.getElementById('closing-title');
+  const textEl = document.getElementById('closing-text');
+  if (titleEl) titleEl.textContent = d['closingTitle' + sfx] || d.closingTitleIt || '';
+  if (textEl) textEl.innerHTML = renderRichText(d['closingText' + sfx] || d.closingTextIt || '');
+
+  // Checkout steps
+  const stepsContainer = document.getElementById('departure-steps-list');
+  if (stepsContainer) {
+    stepsContainer.innerHTML = '';
+    (checkoutSteps || []).forEach((step, i) => {
+      const title = step['title' + sfx] || step.titleIt || '';
+      const desc = step['desc' + sfx] || step.descIt || '';
+      const item = document.createElement('div');
+      item.className = 'step-item';
+      item.innerHTML = `
+        <div class="step-num">${i + 1}</div>
+        <div class="step-body">
+          <div class="step-title">${escHtml(title)}</div>
+          <div class="step-desc">${escHtml(desc)}</div>
+        </div>`;
+      stepsContainer.appendChild(item);
+    });
+  }
+}
+
+// ════════════════════════════════════════════
+//  WHATSAPP SERVICE REQUEST
+// ════════════════════════════════════════════
+function requestService(serviceName, lang) {
+  const L = LABELS[lang] || LABELS.it;
+  const phone = ((currentData && currentData.hostPhone) || '').replace(/[\s\-\(\)]/g, '').replace(/^\+/, '');
+  const msg = L.waServiceMsg(serviceName);
+  const url = phone
+    ? `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`
+    : `https://wa.me/?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+
+// ════════════════════════════════════════════
+//  TAB NAVIGATION
+// ════════════════════════════════════════════
+const TAB_IDS = ['home', 'stay', 'places', 'food', 'transport', 'departure'];
+
+function switchTab(tabId) {
+  TAB_IDS.forEach(t => {
+    const section = document.getElementById('tab-' + t);
+    const btn = document.querySelector(`.nav-item[data-tab="${t}"]`);
+    if (section) section.classList.toggle('active', t === tabId);
+    if (btn) btn.classList.toggle('active', t === tabId);
+  });
+  const content = document.getElementById('guide-content');
+  if (content) content.scrollTop = 0;
+}
+
+// ════════════════════════════════════════════
+//  WIFI COPY
+// ════════════════════════════════════════════
+function copyWifi() {
+  const pass = document.getElementById('st-wifi-pass').textContent;
+  const btn = document.getElementById('copy-wifi-btn');
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(pass).then(() => {
+      btn.textContent = '✅';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = '📋'; btn.classList.remove('copied'); }, 2000);
+    }).catch(() => fallbackCopy(pass, btn));
+  } else {
+    fallbackCopy(pass, btn);
+  }
+}
+
+function fallbackCopy(text, btn) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.focus(); ta.select();
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch(e) {}
+  document.body.removeChild(ta);
+  if (ok) {
+    btn.textContent = '✅';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋'; btn.classList.remove('copied'); }, 2000);
+  } else {
+    btn.textContent = '❌';
+    setTimeout(() => { btn.textContent = '📋'; }, 2000);
+  }
+}
+
+// ════════════════════════════════════════════
+//  PIN MODAL
+// ════════════════════════════════════════════
+function openSettings() {
+  pinBuffer = '';
+  updatePinDots();
+  document.getElementById('pin-error').textContent = '';
+  document.getElementById('pin-modal').classList.add('open');
+}
+
+function closePinModal() {
+  document.getElementById('pin-modal').classList.remove('open');
+  pinBuffer = '';
+}
+
+function pinKey(digit) {
+  if (pinBuffer.length >= 4) return;
+  pinBuffer += digit;
+  updatePinDots();
+  if (pinBuffer.length === 4) setTimeout(checkPin, 120);
+}
+
+function pinBackspace() {
+  pinBuffer = pinBuffer.slice(0, -1);
+  updatePinDots();
+  document.getElementById('pin-error').textContent = '';
+}
+
+function updatePinDots() {
+  for (let i = 0; i < 4; i++) {
+    const dot = document.getElementById('pd' + i);
+    dot.classList.toggle('filled', i < pinBuffer.length);
+    dot.classList.remove('error');
+  }
+}
+
+async function checkPin() {
+  const hash = await hashPin(pinBuffer);
+  const storedHash = await getStoredPinHash();
+  if (hash === storedHash) {
+    closePinModal();
+    _openSettingsPanel();
+  } else {
+    document.getElementById('pin-error').textContent = '❌ PIN errato. Riprova.';
+    for (let i = 0; i < 4; i++) document.getElementById('pd' + i).classList.add('error');
+    setTimeout(() => { pinBuffer = ''; updatePinDots(); }, 600);
+  }
+}
+
+function _openSettingsPanel() {
+  populateSettingsForms();
+  const panel = document.getElementById('settings-panel');
+  panel.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSettings() {
+  document.getElementById('settings-panel').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+async function changePin() {
+  const current = document.getElementById('s-pin-current').value;
+  const newPin = document.getElementById('s-pin-new').value;
+  const confirm2 = document.getElementById('s-pin-confirm').value;
+  const msg = document.getElementById('s-pin-msg');
+  const showErr = t => { msg.style.color = 'var(--accent)'; msg.textContent = '❌ ' + t; };
+  const showOk = t => { msg.style.color = 'var(--teal)'; msg.textContent = '✅ ' + t; };
+  const currentHash = await hashPin(current);
+  const storedHash = await getStoredPinHash();
+  if (currentHash !== storedHash) { showErr('PIN attuale non corretto.'); return; }
+  if (!/^\d{4}$/.test(newPin)) { showErr('Il nuovo PIN deve essere di esattamente 4 cifre numeriche.'); return; }
+  if (newPin !== confirm2) { showErr('I due PIN non coincidono. Riprova.'); return; }
+  localStorage.setItem(PIN_KEY, await hashPin(newPin));
+  document.getElementById('s-pin-current').value = '';
+  document.getElementById('s-pin-new').value = '';
+  document.getElementById('s-pin-confirm').value = '';
+  showOk('PIN aggiornato con successo!');
+  setTimeout(() => { msg.textContent = ''; }, 3000);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS: DYNAMIC APARTMENTS
+// ════════════════════════════════════════════
+function renderSettingsApts(apts) {
+  const container = document.getElementById('s-apts-container');
+  container.dataset.count = apts.length;
+  container.innerHTML = '';
+  apts.forEach((apt, i) => {
+    const canDel = apts.length > 1;
+    const section = document.createElement('details');
+    section.className = 's-section';
+    const delBtn = canDel
+      ? `<button class="s-remove-btn" onclick="event.stopPropagation(); removeSettingsApt(${i})">🗑️ Elimina</button>`
+      : '';
+    section.innerHTML = `
+      <summary class="s-section-title"><span class="s-section-title-inner">🏠 Appartamento ${i + 1}${delBtn}</span></summary>
+      <div class="s-fields">
+        <div class="s-field"><label>Nome (IT)</label><input type="text" id="s-a${i}-name" value="${escAttr(apt.name || '')}" placeholder="Appartamento ${i + 1}"></div>
+        <div class="s-field"><label>Indirizzo completo</label><input type="text" id="s-a${i}-address" value="${escAttr(apt.address || '')}"></div>
+        <div class="s-field"><label>Indirizzo breve</label><input type="text" id="s-a${i}-addressShort" value="${escAttr(apt.addressShort || '')}"></div>
+        <div class="s-field"><label>Link Google Maps</label><input type="url" id="s-a${i}-mapsLink" value="${escAttr(apt.mapsLink || '')}"></div>
+        <div class="s-field"><label>Max ospiti (IT)</label><input type="text" id="s-a${i}-maxGuests" value="${escAttr(apt.maxGuests || '')}"></div>
+        <div class="s-field"><label>WiFi — Nome rete</label><input type="text" id="s-a${i}-wifi" value="${escAttr(apt.wifi || '')}"></div>
+        <div class="s-field"><label>WiFi — Password</label><input type="text" id="s-a${i}-wifiPass" value="${escAttr(apt.wifiPass || '')}"></div>
+        <div class="s-field"><label>Check-in (orario)</label><input type="text" id="s-a${i}-checkin" value="${escAttr(apt.checkin || '')}" placeholder="15:00"></div>
+        <div class="s-field"><label>Check-out (orario)</label><input type="text" id="s-a${i}-checkout" value="${escAttr(apt.checkout || '')}" placeholder="10:00"></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">📍 Come raggiungerci</div>
+        <div class="s-field"><label>Come raggiungerci</label><textarea id="s-a${i}-howToReachIt" placeholder="Dalla stazione centrale...">${escHtml(apt.howToReachIt || '')}</textarea></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🗝️ Come accedere</div>
+        <div class="s-field"><label>Come accedere</label><textarea id="s-a${i}-howToAccessIt" placeholder="Le chiavi vi verranno consegnate...">${escHtml(apt.howToAccessIt || '')}</textarea></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🚗 Parcheggio</div>
+        <div class="s-field"><label>Parcheggio</label><textarea id="s-a${i}-parkingIt" placeholder="Parcheggio pubblico disponibile...">${escHtml(apt.parkingIt || '')}</textarea></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🏠 Regole della casa</div>
+        <div id="s-a${i}-rules" data-count="0"></div>
+        <button class="s-add-btn" style="margin-top:8px" onclick="addAptHouseRule(${i})">➕ Aggiungi Regola</button>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🛌 Camera da Letto — Dotazioni (comma-separato)</div>
+        <div class="s-field"><label>Dotazioni camera</label><input type="text" id="s-a${i}-bedroomTagsIt" value="${escAttr(apt.bedroomTagsIt || '')}" placeholder="Letto matrimoniale,Armadio,Biancheria..."></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🍳 Cucina — Dotazioni (comma-separato)</div>
+        <div class="s-field"><label>Dotazioni cucina</label><input type="text" id="s-a${i}-kitchenTagsIt" value="${escAttr(apt.kitchenTagsIt || '')}" placeholder="Piano cottura,Forno,Frigorifero..."></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🚿 Bagno — Dotazioni (comma-separato)</div>
+        <div class="s-field"><label>Dotazioni bagno</label><input type="text" id="s-a${i}-bathroomTagsIt" value="${escAttr(apt.bathroomTagsIt || '')}" placeholder="Doccia,Asciugamani,Phon..."></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">✨ Servizi Extra</div>
+        <div id="s-a${i}-services" data-count="0"></div>
+        <button class="s-add-btn" style="margin-top:8px" onclick="addAptExtraService(${i})">➕ Aggiungi Servizio</button>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🗺️ Luoghi da Visitare</div>
+        <div id="s-a${i}-places" data-count="0"></div>
+        <button class="s-add-btn" style="margin-top:8px" onclick="addAptPlace(${i})">➕ Aggiungi Luogo</button>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🍽️ Ristoranti</div>
+        <div id="s-a${i}-restaurants" data-count="0"></div>
+        <button class="s-add-btn" style="margin-top:8px" onclick="addAptRest(${i})">➕ Aggiungi Ristorante</button>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🛒 Supermercato</div>
+        <div class="s-field"><label>Descrizione</label><textarea id="s-a${i}-supermarketIt" placeholder="Supermercato più vicino a ~300 metri...">${escHtml(apt.supermarketIt || '')}</textarea></div>
+        <div class="s-field"><label>Link Google Maps</label><input type="url" id="s-a${i}-supermarketMaps" value="${escAttr(apt.supermarketMaps || '')}" placeholder="https://maps.google.com/..."></div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🚇 Trasporti</div>
+        <div class="s-fields">
+          <div class="s-sub-title" style="font-size:12px">✈️ Aeroporto</div>
+          <div class="s-field" style="flex-direction:row;align-items:center;gap:10px;flex-wrap:wrap">
+            <label style="white-space:nowrap">Mostra sezione</label>
+            <input type="checkbox" id="s-a${i}-tr-airportEnabled" ${(apt.transport && apt.transport.airportEnabled !== false) ? 'checked' : ''} style="width:auto;accent-color:var(--teal)">
+          </div>
+          <div class="s-field"><label>Emoji</label><input type="text" id="s-a${i}-tr-airportIcon" value="${escAttr((apt.transport && apt.transport.airportIcon) || '✈️')}" placeholder="✈️" style="max-width:80px"></div>
+          <div class="s-field"><label>Descrizione</label><textarea id="s-a${i}-tr-airportIt" placeholder="All'uscita dell'aeroporto...">${escHtml((apt.transport && apt.transport.airportIt) || '')}</textarea></div>
+          <div class="s-field"><label>Link Maps</label><input type="url" id="s-a${i}-tr-airportMaps" value="${escAttr((apt.transport && apt.transport.airportMaps) || '')}" placeholder="https://maps.google.com/..."></div>
+          <div class="s-divider"></div>
+          <div class="s-sub-title" style="font-size:12px">🚉 Stazione</div>
+          <div class="s-field" style="flex-direction:row;align-items:center;gap:10px;flex-wrap:wrap">
+            <label style="white-space:nowrap">Mostra sezione</label>
+            <input type="checkbox" id="s-a${i}-tr-stationEnabled" ${(apt.transport && apt.transport.stationEnabled !== false) ? 'checked' : ''} style="width:auto;accent-color:var(--teal)">
+          </div>
+          <div class="s-field"><label>Emoji</label><input type="text" id="s-a${i}-tr-stationIcon" value="${escAttr((apt.transport && apt.transport.stationIcon) || '🚉')}" placeholder="🚉" style="max-width:80px"></div>
+          <div class="s-field"><label>Descrizione</label><textarea id="s-a${i}-tr-stationIt" placeholder="Dalla stazione...">${escHtml((apt.transport && apt.transport.stationIt) || '')}</textarea></div>
+          <div class="s-field"><label>Link Maps</label><input type="url" id="s-a${i}-tr-stationMaps" value="${escAttr((apt.transport && apt.transport.stationMaps) || '')}" placeholder="https://maps.google.com/..."></div>
+          <div class="s-divider"></div>
+          <div class="s-sub-title" style="font-size:12px">🚇 Metro</div>
+          <div class="s-field" style="flex-direction:row;align-items:center;gap:10px;flex-wrap:wrap">
+            <label style="white-space:nowrap">Mostra sezione</label>
+            <input type="checkbox" id="s-a${i}-tr-metroEnabled" ${(apt.transport && apt.transport.metroEnabled !== false) ? 'checked' : ''} style="width:auto;accent-color:var(--teal)">
+          </div>
+          <div class="s-field"><label>Emoji</label><input type="text" id="s-a${i}-tr-metroIcon" value="${escAttr((apt.transport && apt.transport.metroIcon) || '🚇')}" placeholder="🚇" style="max-width:80px"></div>
+          <div class="s-field"><label>Descrizione</label><input type="text" id="s-a${i}-tr-metroIt" value="${escAttr((apt.transport && apt.transport.metroIt) || '')}" placeholder="Fermata più vicina..."></div>
+          <div class="s-field"><label>Link Maps</label><input type="url" id="s-a${i}-tr-metroMaps" value="${escAttr((apt.transport && apt.transport.metroMaps) || '')}" placeholder="https://maps.google.com/..."></div>
+          <div class="s-divider"></div>
+          <div class="s-sub-title" style="font-size:12px">🚌 Bus</div>
+          <div class="s-field" style="flex-direction:row;align-items:center;gap:10px;flex-wrap:wrap">
+            <label style="white-space:nowrap">Mostra sezione</label>
+            <input type="checkbox" id="s-a${i}-tr-busEnabled" ${(apt.transport && apt.transport.busEnabled !== false) ? 'checked' : ''} style="width:auto;accent-color:var(--teal)">
+          </div>
+          <div class="s-field"><label>Emoji</label><input type="text" id="s-a${i}-tr-busIcon" value="${escAttr((apt.transport && apt.transport.busIcon) || '🚌')}" placeholder="🚌" style="max-width:80px"></div>
+          <div class="s-field"><label>Descrizione</label><input type="text" id="s-a${i}-tr-busIt" value="${escAttr((apt.transport && apt.transport.busIt) || '')}" placeholder="Linee principali..."></div>
+          <div class="s-field"><label>Link Maps</label><input type="url" id="s-a${i}-tr-busMaps" value="${escAttr((apt.transport && apt.transport.busMaps) || '')}" placeholder="https://maps.google.com/..."></div>
+          <div class="s-divider"></div>
+          <div class="s-sub-title" style="font-size:12px">🎫 Biglietti</div>
+          <div class="s-field"><label>Descrizione</label><textarea id="s-a${i}-tr-ticketsIt" placeholder="Biglietto singolo: ~€1,50...">${escHtml((apt.transport && apt.transport.ticketsIt) || '')}</textarea></div>
+          <div class="s-divider"></div>
+          <div class="s-sub-title" style="font-size:12px">🚖 Taxi &amp; App</div>
+          <div class="s-field"><label>Descrizione</label><textarea id="s-a${i}-tr-taxiIt" placeholder="Taxi ufficiali: trovate i posteggi...">${escHtml((apt.transport && apt.transport.taxiIt) || '')}</textarea></div>
+        </div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">🧳 Istruzioni Check-out</div>
+        <div id="s-a${i}-checkoutSteps" data-count="0"></div>
+        <button class="s-add-btn" style="margin-top:8px" onclick="addAptCheckoutStep(${i})">➕ Aggiungi Passo</button>
+      </div>`;
+    container.appendChild(section);
+    renderAptHouseRules(i, apt.houseRules || []);
+    renderAptExtraServices(i, apt.extraServices || []);
+    renderAptPlaces(i, apt.places || []);
+    renderAptRests(i, apt.restaurants || []);
+    renderAptCheckoutSteps(i, apt.checkoutSteps || []);
+  });
+}
+
+function collectSettingsApts() {
+  const container = document.getElementById('s-apts-container');
+  const count = parseInt(container.dataset.count || '0');
+  const apts = [];
+  for (let i = 0; i < count; i++) {
+    const apt = {};
+    ['name','address','addressShort','mapsLink','maxGuests','wifi','wifiPass','checkin','checkout','howToReachIt','howToAccessIt','parkingIt','bedroomTagsIt','kitchenTagsIt','bathroomTagsIt'].forEach(k => {
+      const el = document.getElementById(`s-a${i}-${k}`);
+      if (el) apt[k] = el.value;
+    });
+    apt.houseRules = collectAptHouseRules(i);
+    apt.extraServices = collectAptExtraServices(i);
+    apt.places = collectAptPlaces(i);
+    apt.restaurants = collectAptRests(i);
+    const superEl = document.getElementById(`s-a${i}-supermarketIt`);
+    apt.supermarketIt = superEl ? superEl.value.trim() : '';
+    const superMapsEl = document.getElementById(`s-a${i}-supermarketMaps`);
+    apt.supermarketMaps = superMapsEl ? superMapsEl.value.trim() : '';
+    apt.transport = collectAptTransport(i);
+    apt.checkoutSteps = collectAptCheckoutSteps(i);
+    apts.push(apt);
+  }
+  return apts;
+}
+
+function addSettingsApt() {
+  const current = collectSettingsApts();
+  const n = current.length + 1;
+  current.push({
+    name: `Appartamento ${n}`,
+    address: '', addressShort: '', mapsLink: '',
+    maxGuests: '4 persone',
+    wifi: '', wifiPass: '',
+    checkin: '15:00', checkout: '10:00',
+    howToReachIt: '', howToAccessIt: '', parkingIt: '',
+    houseRules: [],
+    bedroomTagsIt: '', kitchenTagsIt: '', bathroomTagsIt: '',
+    extraServices: [],
+    places: [],
+    restaurants: [],
+    supermarketIt: '', supermarketMaps: '',
+    transport: {
+      airportEnabled: true, airportIcon: '✈️', airportIt: '', airportMaps: '',
+      stationEnabled: true, stationIcon: '🚉', stationIt: '', stationMaps: '',
+      metroEnabled: true, metroIcon: '🚇', metroIt: '', metroMaps: '',
+      busEnabled: true, busIcon: '🚌', busIt: '', busMaps: '',
+      ticketsIt: '', taxiIt: ''
+    },
+    checkoutSteps: []
+  });
+  renderSettingsApts(current);
+  const last = document.getElementById('s-apts-container').lastElementChild;
+  if (last) { last.open = true; last.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+}
+
+function removeSettingsApt(idx) {
+  const current = collectSettingsApts();
+  if (current.length <= 1) { alert('Devi avere almeno un appartamento.'); return; }
+  if (!confirm(`Eliminare Appartamento ${idx + 1}? Le modifiche non salvate verranno perse.`)) return;
+  current.splice(idx, 1);
+  renderSettingsApts(current);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS: APT HOUSE RULES (dynamic)
+// ════════════════════════════════════════════
+function renderAptHouseRules(aptIndex, rules) {
+  const container = document.getElementById(`s-a${aptIndex}-rules`);
+  if (!container) return;
+  container.dataset.count = rules.length;
+  let html = '';
+  rules.forEach((r, j) => {
+    html += `
+      <div class="s-sub-title s-sub-title-row" style="margin-top:12px">
+        <span>Regola ${j + 1}</span>
+        <button class="s-remove-btn" onclick="removeAptHouseRule(${aptIndex}, ${j})">🗑️ Rimuovi</button>
+      </div>
+      <div class="s-field"><label>Icona (emoji)</label><input type="text" id="s-a${aptIndex}-r${j}-icon" value="${escAttr(r.icon || '')}" placeholder="🔇"></div>
+      <div class="s-field"><label>Titolo</label><input type="text" id="s-a${aptIndex}-r${j}-titleIt" value="${escAttr(r.titleIt || '')}"></div>
+      <div class="s-field"><label>Descrizione</label><textarea id="s-a${aptIndex}-r${j}-descIt">${escHtml(r.descIt || '')}</textarea></div>`;
+  });
+  container.innerHTML = html;
+}
+
+function collectAptHouseRules(aptIndex) {
+  const container = document.getElementById(`s-a${aptIndex}-rules`);
+  if (!container) return [];
+  const count = parseInt(container.dataset.count || '0');
+  const rules = [];
+  for (let j = 0; j < count; j++) {
+    const rule = {};
+    ['icon', 'titleIt', 'descIt'].forEach(k => {
+      const el = document.getElementById(`s-a${aptIndex}-r${j}-${k}`);
+      if (el) rule[k] = el.value;
+    });
+    rules.push(rule);
+  }
+  return rules;
+}
+
+function addAptHouseRule(aptIndex) {
+  const current = collectAptHouseRules(aptIndex);
+  current.push({ icon: '🏠', titleIt: '', descIt: '' });
+  renderAptHouseRules(aptIndex, current);
+}
+
+function removeAptHouseRule(aptIndex, ruleIdx) {
+  if (!confirm(`Rimuovere la regola ${ruleIdx + 1}?`)) return;
+  const current = collectAptHouseRules(aptIndex);
+  current.splice(ruleIdx, 1);
+  renderAptHouseRules(aptIndex, current);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS: APT EXTRA SERVICES (dynamic)
+// ════════════════════════════════════════════
+function renderAptExtraServices(aptIndex, services) {
+  const container = document.getElementById(`s-a${aptIndex}-services`);
+  if (!container) return;
+  container.dataset.count = services.length;
+  let html = '';
+  services.forEach((svc, j) => {
+    html += `
+      <div class="s-sub-title s-sub-title-row" style="margin-top:12px">
+        <span>Servizio ${j + 1}</span>
+        <button class="s-remove-btn" onclick="removeAptExtraService(${aptIndex}, ${j})">🗑️ Rimuovi</button>
+      </div>
+      <div class="s-field"><label>Icona (emoji)</label><input type="text" id="s-a${aptIndex}-svc${j}-icon" value="${escAttr(svc.icon || '')}" placeholder="✨"></div>
+      <div class="s-field"><label>Nome</label><input type="text" id="s-a${aptIndex}-svc${j}-nameIt" value="${escAttr(svc.nameIt || '')}"></div>
+      <div class="s-field"><label>Descrizione</label><input type="text" id="s-a${aptIndex}-svc${j}-descIt" value="${escAttr(svc.descIt || '')}"></div>
+`;
+  });
+  container.innerHTML = html;
+}
+
+function collectAptExtraServices(aptIndex) {
+  const container = document.getElementById(`s-a${aptIndex}-services`);
+  if (!container) return [];
+  const count = parseInt(container.dataset.count || '0');
+  const services = [];
+  for (let j = 0; j < count; j++) {
+    const svc = {};
+    ['icon', 'nameIt', 'descIt'].forEach(k => {
+      const el = document.getElementById(`s-a${aptIndex}-svc${j}-${k}`);
+      if (el) svc[k] = el.value;
+    });
+    services.push(svc);
+  }
+  return services;
+}
+
+function addAptExtraService(aptIndex) {
+  const current = collectAptExtraServices(aptIndex);
+  current.push({ icon: '✨', nameIt: '', descIt: '' });
+  renderAptExtraServices(aptIndex, current);
+}
+
+function removeAptExtraService(aptIndex, svcIdx) {
+  if (!confirm(`Rimuovere il servizio ${svcIdx + 1}?`)) return;
+  const current = collectAptExtraServices(aptIndex);
+  current.splice(svcIdx, 1);
+  renderAptExtraServices(aptIndex, current);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS: APT PLACES (dynamic, per-apt)
+// ════════════════════════════════════════════
+function renderAptPlaces(aptIndex, places) {
+  const container = document.getElementById(`s-a${aptIndex}-places`);
+  if (!container) return;
+  container.dataset.count = places.length;
+  let html = '';
+  places.forEach((p, j) => {
+    html += `
+      <div class="s-sub-title s-sub-title-row" style="margin-top:12px">
+        <span>Luogo ${j + 1}</span>
+        <button class="s-remove-btn" onclick="removeAptPlace(${aptIndex}, ${j})">🗑️ Rimuovi</button>
+      </div>
+      <div class="s-field"><label>Emoji</label><input type="text" id="s-a${aptIndex}-pl${j}-emoji" value="${escAttr(p.emoji || '📍')}" placeholder="📍" style="max-width:80px"></div>
+      <div class="s-field"><label>Nome</label><input type="text" id="s-a${aptIndex}-pl${j}-name" value="${escAttr(p.name || '')}"></div>
+      <div class="s-field"><label>Descrizione</label><textarea id="s-a${aptIndex}-pl${j}-descIt">${escHtml(p.descIt || '')}</textarea></div>
+      <div class="s-field"><label>Come arrivarci</label><textarea id="s-a${aptIndex}-pl${j}-howIt">${escHtml(p.howIt || '')}</textarea></div>
+      <div class="s-field"><label>Link Maps</label><input type="url" id="s-a${aptIndex}-pl${j}-maps" value="${escAttr(p.maps || '')}"></div>`;
+  });
+  container.innerHTML = html;
+}
+
+function collectAptPlaces(aptIndex) {
+  const container = document.getElementById(`s-a${aptIndex}-places`);
+  if (!container) return [];
+  const count = parseInt(container.dataset.count || '0');
+  const places = [];
+  for (let j = 0; j < count; j++) {
+    const emojiEl = document.getElementById(`s-a${aptIndex}-pl${j}-emoji`);
+    const p = { emoji: emojiEl ? emojiEl.value : '📍' };
+    ['name', 'descIt', 'howIt', 'maps'].forEach(k => {
+      const el = document.getElementById(`s-a${aptIndex}-pl${j}-${k}`);
+      if (el) p[k] = el.value.trim();
+    });
+    places.push(p);
+  }
+  return places;
+}
+
+function addAptPlace(aptIndex) {
+  const current = collectAptPlaces(aptIndex);
+  current.push({ name: '', emoji: '📍', descIt: '', howIt: '', maps: '#' });
+  renderAptPlaces(aptIndex, current);
+}
+
+function removeAptPlace(aptIndex, placeIdx) {
+  if (!confirm(`Rimuovere il luogo ${placeIdx + 1}?`)) return;
+  const current = collectAptPlaces(aptIndex);
+  current.splice(placeIdx, 1);
+  renderAptPlaces(aptIndex, current);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS: APT RESTAURANTS (dynamic, per-apt)
+// ════════════════════════════════════════════
+function renderAptRests(aptIndex, rests) {
+  const container = document.getElementById(`s-a${aptIndex}-restaurants`);
+  if (!container) return;
+  container.dataset.count = rests.length;
+  let html = '';
+  rests.forEach((r, j) => {
+    html += `
+      <div class="s-sub-title s-sub-title-row" style="margin-top:12px">
+        <span>Ristorante ${j + 1}</span>
+        <button class="s-remove-btn" onclick="removeAptRest(${aptIndex}, ${j})">🗑️ Rimuovi</button>
+      </div>
+      <div class="s-field"><label>Emoji</label><input type="text" id="s-a${aptIndex}-rt${j}-emoji" value="${escAttr(r.emoji || '🍽️')}" placeholder="🍽️" style="max-width:80px"></div>
+      <div class="s-field"><label>Nome</label><input type="text" id="s-a${aptIndex}-rt${j}-name" value="${escAttr(r.name || '')}"></div>
+      <div class="s-field"><label>Tipo</label><input type="text" id="s-a${aptIndex}-rt${j}-tipo" value="${escAttr(r.tipo || '')}"></div>
+      <div class="s-field"><label>Descrizione</label><textarea id="s-a${aptIndex}-rt${j}-descIt">${escHtml(r.descIt || '')}</textarea></div>
+      <div class="s-field"><label>Fascia prezzo</label><input type="text" id="s-a${aptIndex}-rt${j}-price" value="${escAttr(r.price || '')}" placeholder="€ / €€ / €€€"></div>
+      <div class="s-field"><label>Link Maps</label><input type="url" id="s-a${aptIndex}-rt${j}-maps" value="${escAttr(r.maps || '')}"></div>`;
+  });
+  container.innerHTML = html;
+}
+
+function collectAptRests(aptIndex) {
+  const container = document.getElementById(`s-a${aptIndex}-restaurants`);
+  if (!container) return [];
+  const count = parseInt(container.dataset.count || '0');
+  const rests = [];
+  for (let j = 0; j < count; j++) {
+    const emojiEl = document.getElementById(`s-a${aptIndex}-rt${j}-emoji`);
+    const r = { emoji: emojiEl ? emojiEl.value : '🍽️' };
+    ['name', 'tipo', 'descIt', 'price', 'maps'].forEach(k => {
+      const el = document.getElementById(`s-a${aptIndex}-rt${j}-${k}`);
+      if (el) r[k] = el.value.trim();
+    });
+    rests.push(r);
+  }
+  return rests;
+}
+
+function addAptRest(aptIndex) {
+  const current = collectAptRests(aptIndex);
+  current.push({ name: '', emoji: '🍽️', tipo: '', descIt: '', price: '€€', maps: '#' });
+  renderAptRests(aptIndex, current);
+}
+
+function removeAptRest(aptIndex, restIdx) {
+  if (!confirm(`Rimuovere il ristorante ${restIdx + 1}?`)) return;
+  const current = collectAptRests(aptIndex);
+  current.splice(restIdx, 1);
+  renderAptRests(aptIndex, current);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS: APT TRANSPORT (per-apt)
+// ════════════════════════════════════════════
+function collectAptTransport(aptIndex) {
+  return {
+    airportEnabled: document.getElementById(`s-a${aptIndex}-tr-airportEnabled`) ? document.getElementById(`s-a${aptIndex}-tr-airportEnabled`).checked : true,
+    airportIcon: (document.getElementById(`s-a${aptIndex}-tr-airportIcon`) || {}).value || '✈️',
+    airportIt: (document.getElementById(`s-a${aptIndex}-tr-airportIt`) || {}).value || '',
+    airportMaps: (document.getElementById(`s-a${aptIndex}-tr-airportMaps`) || {}).value || '',
+    stationEnabled: document.getElementById(`s-a${aptIndex}-tr-stationEnabled`) ? document.getElementById(`s-a${aptIndex}-tr-stationEnabled`).checked : true,
+    stationIcon: (document.getElementById(`s-a${aptIndex}-tr-stationIcon`) || {}).value || '🚉',
+    stationIt: (document.getElementById(`s-a${aptIndex}-tr-stationIt`) || {}).value || '',
+    stationMaps: (document.getElementById(`s-a${aptIndex}-tr-stationMaps`) || {}).value || '',
+    metroEnabled: document.getElementById(`s-a${aptIndex}-tr-metroEnabled`) ? document.getElementById(`s-a${aptIndex}-tr-metroEnabled`).checked : true,
+    metroIcon: (document.getElementById(`s-a${aptIndex}-tr-metroIcon`) || {}).value || '🚇',
+    metroIt: (document.getElementById(`s-a${aptIndex}-tr-metroIt`) || {}).value || '',
+    metroMaps: (document.getElementById(`s-a${aptIndex}-tr-metroMaps`) || {}).value || '',
+    busEnabled: document.getElementById(`s-a${aptIndex}-tr-busEnabled`) ? document.getElementById(`s-a${aptIndex}-tr-busEnabled`).checked : true,
+    busIcon: (document.getElementById(`s-a${aptIndex}-tr-busIcon`) || {}).value || '🚌',
+    busIt: (document.getElementById(`s-a${aptIndex}-tr-busIt`) || {}).value || '',
+    busMaps: (document.getElementById(`s-a${aptIndex}-tr-busMaps`) || {}).value || '',
+    ticketsIt: (document.getElementById(`s-a${aptIndex}-tr-ticketsIt`) || {}).value || '',
+    taxiIt: (document.getElementById(`s-a${aptIndex}-tr-taxiIt`) || {}).value || ''
+  };
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS: APT CHECKOUT STEPS (dynamic, per-apt)
+// ════════════════════════════════════════════
+function renderAptCheckoutSteps(aptIndex, steps) {
+  const container = document.getElementById(`s-a${aptIndex}-checkoutSteps`);
+  if (!container) return;
+  container.dataset.count = steps.length;
+  let html = '';
+  steps.forEach((step, j) => {
+    html += `
+      <div class="s-sub-title s-sub-title-row" style="margin-top:12px">
+        <span>Passo ${j + 1}</span>
+        <button class="s-remove-btn" onclick="removeAptCheckoutStep(${aptIndex}, ${j})">🗑️ Rimuovi</button>
+      </div>
+      <div class="s-field"><label>Titolo</label><input type="text" id="s-a${aptIndex}-cs${j}-titleIt" value="${escAttr(step.titleIt || '')}"></div>
+      <div class="s-field"><label>Descrizione</label><textarea id="s-a${aptIndex}-cs${j}-descIt">${escHtml(step.descIt || '')}</textarea></div>`;
+  });
+  container.innerHTML = html;
+}
+
+function collectAptCheckoutSteps(aptIndex) {
+  const container = document.getElementById(`s-a${aptIndex}-checkoutSteps`);
+  if (!container) return [];
+  const count = parseInt(container.dataset.count || '0');
+  const steps = [];
+  for (let j = 0; j < count; j++) {
+    const step = {};
+    ['titleIt', 'descIt'].forEach(k => {
+      const el = document.getElementById(`s-a${aptIndex}-cs${j}-${k}`);
+      if (el) step[k] = el.value;
+    });
+    steps.push(step);
+  }
+  return steps;
+}
+
+function addAptCheckoutStep(aptIndex) {
+  const current = collectAptCheckoutSteps(aptIndex);
+  current.push({ titleIt: '', descIt: '' });
+  renderAptCheckoutSteps(aptIndex, current);
+}
+
+function removeAptCheckoutStep(aptIndex, stepIdx) {
+  if (!confirm(`Rimuovere il passo ${stepIdx + 1}?`)) return;
+  const current = collectAptCheckoutSteps(aptIndex);
+  current.splice(stepIdx, 1);
+  renderAptCheckoutSteps(aptIndex, current);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS: CHECKOUT STEPS (dynamic)
+// ════════════════════════════════════════════
+function renderSettingsCheckoutSteps(steps) {
+  const container = document.getElementById('s-checkout-steps');
+  if (!container) return;
+  container.dataset.count = steps.length;
+  let html = '';
+  steps.forEach((step, j) => {
+    html += `
+      <div class="s-sub-title s-sub-title-row" style="margin-top:12px">
+        <span>Passo ${j + 1}</span>
+        <button class="s-remove-btn" onclick="removeSettingsCheckoutStep(${j})">🗑️ Rimuovi</button>
+      </div>
+      <div class="s-field"><label>Titolo</label><input type="text" id="s-cs${j}-titleIt" value="${escAttr(step.titleIt || '')}"></div>
+      <div class="s-field"><label>Descrizione</label><textarea id="s-cs${j}-descIt">${escHtml(step.descIt || '')}</textarea></div>
+`;
+  });
+  container.innerHTML = html;
+}
+
+function collectSettingsCheckoutSteps() {
+  const container = document.getElementById('s-checkout-steps');
+  if (!container) return [];
+  const count = parseInt(container.dataset.count || '0');
+  const steps = [];
+  for (let j = 0; j < count; j++) {
+    const step = {};
+    ['titleIt', 'descIt'].forEach(k => {
+      const el = document.getElementById(`s-cs${j}-${k}`);
+      if (el) step[k] = el.value;
+    });
+    steps.push(step);
+  }
+  return steps;
+}
+
+function addSettingsCheckoutStep() {
+  const current = collectSettingsCheckoutSteps();
+  current.push({ titleIt: '', descIt: '' });
+  renderSettingsCheckoutSteps(current);
+}
+
+function removeSettingsCheckoutStep(idx) {
+  if (!confirm(`Rimuovere il passo ${idx + 1}?`)) return;
+  const current = collectSettingsCheckoutSteps();
+  current.splice(idx, 1);
+  renderSettingsCheckoutSteps(current);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS: DYNAMIC PLACES
+// ════════════════════════════════════════════
+function renderSettingsPlaces(places) {
+  const container = document.getElementById('s-places-fields');
+  container.dataset.count = places.length;
+  container.innerHTML = '';
+  places.forEach((p, i) => {
+    container.innerHTML += `
+      <div class="s-sub-title s-sub-title-row">
+        <span>Luogo ${i + 1}</span>
+        <button class="s-remove-btn" onclick="removeSettingsPlace(${i})">🗑️ Rimuovi</button>
+      </div>
+      <div class="s-field"><label>Emoji</label><input type="text" id="s-p${i}-emoji" value="${escAttr(p.emoji || '📍')}" placeholder="📍" style="max-width:80px"></div>
+      <div class="s-field"><label>Nome</label><input type="text" id="s-p${i}-name" value="${escAttr(p.name || '')}"></div>
+      <div class="s-field"><label>Descrizione</label><textarea id="s-p${i}-descIt">${escHtml(p.descIt || '')}</textarea></div>
+      <div class="s-field"><label>Come arrivarci</label><textarea id="s-p${i}-howIt">${escHtml(p.howIt || '')}</textarea></div>
+      <div class="s-field"><label>Link Maps</label><input type="url" id="s-p${i}-maps" value="${escAttr(p.maps || '')}"></div>
+      ${i < places.length - 1 ? '<div class="s-divider"></div>' : ''}`;
+  });
+}
+
+function collectSettingsPlaces() {
+  const container = document.getElementById('s-places-fields');
+  const count = parseInt(container.dataset.count || '0');
+  const places = [];
+  for (let i = 0; i < count; i++) {
+    const emojiEl = document.getElementById(`s-p${i}-emoji`);
+    const p = { emoji: emojiEl ? emojiEl.value : '📍' };
+    ['name','descIt','howIt','maps'].forEach(k => {
+      const el = document.getElementById(`s-p${i}-${k}`);
+      if (el) p[k] = el.value.trim();
+    });
+    places.push(p);
+  }
+  return places;
+}
+
+function addSettingsPlace() {
+  const current = collectSettingsPlaces();
+  current.push({ name: '', emoji: '📍', descIt: '', howIt: '', maps: '#' });
+  renderSettingsPlaces(current);
+  const container = document.getElementById('s-places-fields');
+  container.scrollIntoView({ behavior: 'smooth', block: 'end' });
+}
+
+function removeSettingsPlace(idx) {
+  const current = collectSettingsPlaces();
+  if (!confirm(`Rimuovere "${current[idx].name || ('Luogo ' + (idx + 1))}"?`)) return;
+  current.splice(idx, 1);
+  renderSettingsPlaces(current);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS: DYNAMIC RESTAURANTS
+// ════════════════════════════════════════════
+function renderSettingsRests(rests) {
+  const container = document.getElementById('s-restaurants-fields');
+  container.dataset.count = rests.length;
+  container.innerHTML = '';
+  rests.forEach((r, i) => {
+    container.innerHTML += `
+      <div class="s-sub-title s-sub-title-row">
+        <span>Ristorante ${i + 1}</span>
+        <button class="s-remove-btn" onclick="removeSettingsRest(${i})">🗑️ Rimuovi</button>
+      </div>
+      <div class="s-field"><label>Emoji</label><input type="text" id="s-r${i}-emoji" value="${escAttr(r.emoji || '🍽️')}" placeholder="🍽️" style="max-width:80px"></div>
+      <div class="s-field"><label>Nome</label><input type="text" id="s-r${i}-name" value="${escAttr(r.name || '')}"></div>
+      <div class="s-field"><label>Tipo</label><input type="text" id="s-r${i}-tipo" value="${escAttr(r.tipo || '')}"></div>
+      <div class="s-field"><label>Descrizione</label><textarea id="s-r${i}-descIt">${escHtml(r.descIt || '')}</textarea></div>
+      <div class="s-field"><label>Fascia prezzo</label><input type="text" id="s-r${i}-price" value="${escAttr(r.price || '')}" placeholder="€ / €€ / €€€"></div>
+      <div class="s-field"><label>Link Maps</label><input type="url" id="s-r${i}-maps" value="${escAttr(r.maps || '')}"></div>
+      ${i < rests.length - 1 ? '<div class="s-divider"></div>' : ''}`;
+  });
+}
+
+function collectSettingsRests() {
+  const container = document.getElementById('s-restaurants-fields');
+  const count = parseInt(container.dataset.count || '0');
+  const rests = [];
+  for (let i = 0; i < count; i++) {
+    const emojiEl = document.getElementById(`s-r${i}-emoji`);
+    const r = { emoji: emojiEl ? emojiEl.value : '🍽️' };
+    ['name','tipo','descIt','price','maps'].forEach(k => {
+      const el = document.getElementById(`s-r${i}-${k}`);
+      if (el) r[k] = el.value.trim();
+    });
+    rests.push(r);
+  }
+  return rests;
+}
+
+function addSettingsRest() {
+  const current = collectSettingsRests();
+  current.push({ name: '', emoji: '��️', tipo: '', descIt: '', price: '€€', maps: '#' });
+  renderSettingsRests(current);
+  const container = document.getElementById('s-restaurants-fields');
+  container.scrollIntoView({ behavior: 'smooth', block: 'end' });
+}
+
+function removeSettingsRest(idx) {
+  const current = collectSettingsRests();
+  if (!confirm(`Rimuovere "${current[idx].name || ('Ristorante ' + (idx + 1))}"?`)) return;
+  current.splice(idx, 1);
+  renderSettingsRests(current);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS: DYNAMIC CONTACTS
+// ════════════════════════════════════════════
+function renderSettingsContacts(contacts) {
+  const container = document.getElementById('s-contacts-fields');
+  container.dataset.count = contacts.length;
+  container.innerHTML = '';
+  let html = '';
+  contacts.forEach((c, i) => {
+    html += `
+      <div class="s-sub-title s-sub-title-row">
+        <span>Contatto ${i + 1}</span>
+        <button class="s-remove-btn" onclick="removeSettingsContact(${i})">🗑️ Rimuovi</button>
+      </div>
+      <div class="s-field"><label>Nome</label><input type="text" id="s-c${i}-name" value="${escAttr(c.name || '')}" placeholder="Nome Contatto"></div>
+      <div class="s-field"><label>Telefono</label><input type="tel" id="s-c${i}-phone" value="${escAttr(c.phone || '')}" placeholder="+39 000 000 0000"></div>
+      ${i < contacts.length - 1 ? '<div class="s-divider"></div>' : ''}`;
+  });
+  container.innerHTML = html;
+}
+
+function collectSettingsContacts() {
+  const container = document.getElementById('s-contacts-fields');
+  const count = parseInt(container.dataset.count || '0');
+  const contacts = [];
+  for (let i = 0; i < count; i++) {
+    const nameEl = document.getElementById(`s-c${i}-name`);
+    const phoneEl = document.getElementById(`s-c${i}-phone`);
+    contacts.push({
+      name: nameEl ? nameEl.value.trim() : '',
+      phone: phoneEl ? phoneEl.value.trim() : ''
+    });
+  }
+  return contacts;
+}
+
+function addSettingsContact() {
+  const current = collectSettingsContacts();
+  current.push({ name: '', phone: '' });
+  renderSettingsContacts(current);
+  const container = document.getElementById('s-contacts-fields');
+  const idx = current.length - 1;
+  const el = document.getElementById(`s-c${idx}-name`);
+  if (el) el.focus();
+}
+
+function removeSettingsContact(idx) {
+  const current = collectSettingsContacts();
+  current.splice(idx, 1);
+  renderSettingsContacts(current);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS PANEL
+// ════════════════════════════════════════════
+
+function populateSettingsForms() {
+  const d = currentData;
+
+  // Info
+  document.getElementById('s-bbName').value = d.bbName;
+  document.getElementById('s-subtitle').value = d.subtitle;
+  document.getElementById('s-cityZone').value = d.cityZone;
+  document.getElementById('s-hostName').value = d.hostName;
+  document.getElementById('s-hostPhone').value = d.hostPhone;
+  document.getElementById('s-welcomeIt').value = d.welcomeIt || '';
+  document.getElementById('s-googleReviewUrl').value = d.googleReviewUrl || '';
+  document.getElementById('s-closingTitleIt').value = d.closingTitleIt || '';
+  document.getElementById('s-closingTextIt').value = d.closingTextIt || '';
+
+  // Apts (dynamic)
+  renderSettingsApts(d.apts);
+
+  // Dynamic contacts
+  renderSettingsContacts(d.extraContacts || []);
+
+  // Nav Labels
+  const nl = d.navLabels || {};
+  document.getElementById('s-nl-homeIcon').value = nl.homeIcon || '';
+  document.getElementById('s-nl-homeIt').value = nl.homeIt || '';
+  document.getElementById('s-nl-stayIcon').value = nl.stayIcon || '';
+  document.getElementById('s-nl-stayIt').value = nl.stayIt || '';
+  document.getElementById('s-nl-placesIcon').value = nl.placesIcon || '';
+  document.getElementById('s-nl-placesIt').value = nl.placesIt || '';
+  document.getElementById('s-nl-foodIcon').value = nl.foodIcon || '';
+  document.getElementById('s-nl-foodIt').value = nl.foodIt || '';
+  document.getElementById('s-nl-transportIcon').value = nl.transportIcon || '';
+  document.getElementById('s-nl-transportIt').value = nl.transportIt || '';
+  document.getElementById('s-nl-departureIcon').value = nl.departureIcon || '';
+  document.getElementById('s-nl-departureIt').value = nl.departureIt || '';
+
+  // Section Titles
+  const st = d.sectionTitles || {};
+  document.getElementById('s-st-stayEyebrowIt').value = st.stayEyebrowIt || '';
+  document.getElementById('s-st-stayTitleIt').value = st.stayTitleIt || '';
+  document.getElementById('s-st-placesEyebrowIt').value = st.placesEyebrowIt || '';
+  document.getElementById('s-st-placesTitleIt').value = st.placesTitleIt || '';
+  document.getElementById('s-st-foodEyebrowIt').value = st.foodEyebrowIt || '';
+  document.getElementById('s-st-foodTitleIt').value = st.foodTitleIt || '';
+  document.getElementById('s-st-transportEyebrowIt').value = st.transportEyebrowIt || '';
+  document.getElementById('s-st-transportTitleIt').value = st.transportTitleIt || '';
+  document.getElementById('s-st-departureEyebrowIt').value = st.departureEyebrowIt || '';
+  document.getElementById('s-st-departureTitleIt').value = st.departureTitleIt || '';
+}
+
+function collectFormData() {
+  const d = deepClone(currentData);
+
+  d.bbName = document.getElementById('s-bbName').value.trim() || d.bbName;
+  d.subtitle = document.getElementById('s-subtitle').value.trim() || d.subtitle;
+  d.cityZone = document.getElementById('s-cityZone').value.trim() || d.cityZone;
+  d.hostName = document.getElementById('s-hostName').value.trim() || d.hostName;
+  d.hostPhone = document.getElementById('s-hostPhone').value.trim() || d.hostPhone;
+  d.welcomeIt = document.getElementById('s-welcomeIt').value;
+  d.googleReviewUrl = document.getElementById('s-googleReviewUrl').value.trim();
+  d.closingTitleIt = document.getElementById('s-closingTitleIt').value.trim();
+  d.closingTextIt = document.getElementById('s-closingTextIt').value.trim();
+
+  // Dynamic apts
+  d.apts = collectSettingsApts();
+
+  // Dynamic contacts
+  d.extraContacts = collectSettingsContacts();
+
+  // Nav Labels
+  d.navLabels = {
+    homeIt:         document.getElementById('s-nl-homeIt').value.trim() || 'Home',
+    homeIcon:       document.getElementById('s-nl-homeIcon').value.trim() || '🏠',
+    stayIt:         document.getElementById('s-nl-stayIt').value.trim() || 'Soggiorno',
+    stayIcon:       document.getElementById('s-nl-stayIcon').value.trim() || '🛋️',
+    placesIt:       document.getElementById('s-nl-placesIt').value.trim() || 'Luoghi',
+    placesIcon:     document.getElementById('s-nl-placesIcon').value.trim() || '🗺️',
+    foodIt:         document.getElementById('s-nl-foodIt').value.trim() || 'Mangiare',
+    foodIcon:       document.getElementById('s-nl-foodIcon').value.trim() || '🍽️',
+    transportIt:    document.getElementById('s-nl-transportIt').value.trim() || 'Muoversi',
+    transportIcon:  document.getElementById('s-nl-transportIcon').value.trim() || '🚇',
+    departureIt:    document.getElementById('s-nl-departureIt').value.trim() || 'Partenza',
+    departureIcon:  document.getElementById('s-nl-departureIcon').value.trim() || '🧳'
+  };
+
+  // Section Titles
+  d.sectionTitles = {
+    stayEyebrowIt:      document.getElementById('s-st-stayEyebrowIt').value.trim() || 'Il Tuo Appartamento',
+    stayTitleIt:        document.getElementById('s-st-stayTitleIt').value.trim() || 'Soggiorno',
+    placesEyebrowIt:    document.getElementById('s-st-placesEyebrowIt').value.trim() || 'Scopri la Città',
+    placesTitleIt:      document.getElementById('s-st-placesTitleIt').value.trim() || 'Luoghi',
+    foodEyebrowIt:      document.getElementById('s-st-foodEyebrowIt').value.trim() || 'Dove Mangiare',
+    foodTitleIt:        document.getElementById('s-st-foodTitleIt').value.trim() || 'Mangiare',
+    transportEyebrowIt: document.getElementById('s-st-transportEyebrowIt').value.trim() || 'In Città',
+    transportTitleIt:   document.getElementById('s-st-transportTitleIt').value.trim() || 'Muoversi',
+    departureEyebrowIt: document.getElementById('s-st-departureEyebrowIt').value.trim() || 'È Ora di Partire',
+    departureTitleIt:   document.getElementById('s-st-departureTitleIt').value.trim() || 'Partenza'
+  };
+
+  return d;
+}
+
+function saveAndApply() {
+  const d = collectFormData();
+  currentData = d;
+  saveData(d);
+  renderLanding();
+  closeSettings();
+}
+
+function resetData() {
+  if (!confirm('Ripristinare i dati predefiniti? Tutte le modifiche verranno perse.')) return;
+  currentData = deepClone(DEFAULT_DATA);
+  saveData(currentData);
+  renderLanding();
+  closeSettings();
+}
+
+function exportJSON() {
+  const d = collectFormData();
+  const json = JSON.stringify(d, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'bnb-guide-data.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function importJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const imported = JSON.parse(e.target.result);
+      currentData = mergeWithDefaults(imported, DEFAULT_DATA);
+      saveData(currentData);
+      renderLanding();
+      populateSettingsForms();
+      alert('Dati importati con successo!');
+    } catch(err) {
+      alert('Errore nel file JSON. Verificare il formato.');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+async function exportHTML() {
+  const d = collectFormData();
+  try {
+    const resp = await fetch(location.origin + location.pathname);
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const html = await resp.text();
+    const startMarker = '/* DEFAULT_DATA_START */';
+    const endMarker = '/* DEFAULT_DATA_END */';
+    const startIdx = html.indexOf(startMarker);
+    const endIdx = html.indexOf(endMarker);
+    if (startIdx === -1 || endIdx === -1) {
+      alert('Impossibile trovare i dati nel file HTML. Ricarica la pagina e riprova.');
+      return;
+    }
+    const newSection = startMarker + '\nconst DEFAULT_DATA = ' + JSON.stringify(d, null, 2) + ';\n' + endMarker;
+    const updated = html.substring(0, startIdx) + newSection + html.substring(endIdx + endMarker.length);
+    const blob = new Blob([updated], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'index.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch(err) {
+    alert('Errore nella generazione del file HTML: ' + err.message + '\nAssicurati di usare il sito online (non file://).');
+  }
+}
+
+// ════════════════════════════════════════════
+//  UTILITY: HTML escaping
+// ════════════════════════════════════════════
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function escAttr(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function renderRichText(text) {
+  if (!text) return '';
+  let s = escHtml(text);
+  s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/\n/g, '<br>');
+  return s;
+}
+
+// ════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════
+(function init() {
+  currentData = loadData();
+  renderLanding();
+
+  // Global keydown for PIN modal — intentional: single-page app, listener persists for the app lifetime
+  document.addEventListener('keydown', function(e) {
+    if (!document.getElementById('pin-modal').classList.contains('open')) return;
+    if (e.key >= '0' && e.key <= '9') { e.preventDefault(); pinKey(e.key); }
+    else if (e.key === 'Backspace') { e.preventDefault(); pinBackspace(); }
+    else if (e.key === 'Escape') closePinModal();
+  });
+})();
+</script>
+</body>
+</html>

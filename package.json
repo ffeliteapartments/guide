@@ -1,0 +1,25 @@
+{
+  "name": "guestguide-bnb",
+  "version": "1.0.0",
+  "description": "Una **Guest Guide interattiva** per il tuo Bed & Breakfast — un singolo file `index.html` da deployare su GitHub Pages, con supporto bilingue IT/EN e un pannello di personalizzazione integrato.",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/augustof2/guestguide-bnb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/augustof2/guestguide-bnb/issues"
+  },
+  "homepage": "https://github.com/augustof2/guestguide-bnb#readme",
+  "devDependencies": {
+    "javascript-obfuscator": "^5.4.1"
+  }
+}

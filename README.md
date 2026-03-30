@@ -98,19 +98,38 @@ Il repository include un workflow GitHub Actions che pubblica automaticamente il
 5. Usa **📋 Esporta JSON** per fare un backup delle impostazioni
 6. Usa **🗑️ Reset** per tornare ai valori predefiniti
 
-### Metodo 2: Modifica Diretta del File HTML
+### Metodo 2: Modifica Diretta del File Sorgente
 
-Apri `index.html` in un editor di testo e modifica l'oggetto `DEFAULT_DATA` all'inizio del tag `<script>`:
+Modifica `src/index.html` (il sorgente leggibile) e poi rigenera `index.html` con:
 
-```javascript
-const DEFAULT_DATA = {
-  bbName: "Il Nome del Tuo B&B",
-  subtitle: "Guest Guide",
-  cityZone: "La Tua Città · Quartiere",
-  hostName: "Mario Rossi",
-  hostPhone: "+39 333 123 4567",
-  // ... altri campi
-};
+```bash
+npm install       # solo la prima volta
+npm run build     # genera index.html offuscato
+```
+
+> ⚠️ **Non modificare `index.html` direttamente** — viene sovrascritto ad ogni build.  
+> Tutte le modifiche vanno fatte in `src/index.html`.
+
+---
+
+## 🔒 Sicurezza e Offuscamento
+
+Il progetto include un sistema di build che produce un `index.html` **protetto e offuscato**:
+
+- **JavaScript offuscato** — il codice JS viene trasformato con [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator): nomi di variabili e funzioni rimpiazzati con identificatori esadecimali, stringhe cifrate con RC4, control flow appiattito.
+- **PIN admin con SHA-256** — il PIN di accesso al pannello di personalizzazione viene conservato come hash SHA-256 nel `localStorage`, non in chiaro.
+- **Content Security Policy** — meta tag CSP che limita le sorgenti di script, stili e font; blocca il caricamento in iframe (`frame-ancestors 'none'`).
+- **Protezione navigazione** — tasto destro disabilitato, scorciatoie da tastiera per DevTools (F12, Ctrl+Shift+I/J/C) e Visualizza sorgente (Ctrl+U) bloccate.
+
+### Flusso di lavoro consigliato
+
+```
+src/index.html   ←── modifica qui (sorgente leggibile)
+       │
+   npm run build
+       │
+       ▼
+index.html       ←── deployato (offuscato + sicuro)
 ```
 
 ---
@@ -119,7 +138,11 @@ const DEFAULT_DATA = {
 
 ```
 guestguide-bnb/
-├── index.html                    ← tutto il codice (HTML + CSS + JS inline)
+├── src/
+│   └── index.html                ← sorgente leggibile (modifica qui)
+├── index.html                    ← output offuscato (generato da build.js)
+├── build.js                      ← script di build/offuscamento
+├── package.json                  ← dipendenze (javascript-obfuscator)
 ├── .nojekyll                     ← disabilita Jekyll su GitHub Pages
 └── .github/workflows/deploy.yml ← auto-deploy su GitHub Pages
 ```
@@ -130,7 +153,7 @@ guestguide-bnb/
 
 - HTML5, CSS3, JavaScript vanilla
 - Google Fonts (Playfair Display + Jost)
-- Nessuna dipendenza esterna oltre ai font
+- [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator) per la protezione del codice
 - `localStorage` per il salvataggio delle personalizzazioni
 
 ---
