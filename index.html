@@ -1954,8 +1954,12 @@
         <div class="s-sub-title">Pubblica su GitHub Pages</div>
         <p style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.5">Inserisci un <strong>GitHub Personal Access Token</strong> con permesso <code>repo</code> (o <code>contents: write</code> per i fine-grained token) per aggiornare il file online. Il token viene salvato solo su questo dispositivo.</p>
         <div class="s-field"><label>GitHub Token</label><input type="password" id="s-gh-token" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off"></div>
-        <div class="s-field"><label>Repository (owner/repo)</label><input type="text" id="s-gh-repo" placeholder="augustof2/guestguide-bnb"></div>
+        <div class="s-field"><label>Repository (owner/repo)</label><input type="text" id="s-gh-repo" placeholder="augustof2/guestguide-bnb" oninput="updateSiteUrlDisplay()"></div>
         <div class="s-field"><label>Branch</label><input type="text" id="s-gh-branch" placeholder="main"></div>
+        <div id="s-site-url-container" style="display:none;margin-top:8px;padding:10px;background:var(--card);border-radius:10px;border:1px solid var(--border)">
+          <div style="font-size:11px;color:var(--text2);margin-bottom:4px">🌐 Link del sito pubblicato</div>
+          <a id="s-site-url-link" href="#" target="_blank" rel="noopener" style="font-size:13px;color:var(--gold);word-break:break-all;text-decoration:none;font-weight:600"></a>
+        </div>
         <div id="s-gh-msg" style="font-size:12px;min-height:18px;margin-top:4px"></div>
         <button class="s-btn" onclick="saveGitHubSettings()" style="margin-top:8px">💾 Salva Impostazioni GitHub</button>
       </div>
@@ -3806,8 +3810,12 @@ function populateSettingsForms() {
   document.getElementById('s-st-departureEyebrowIt').value = st.departureEyebrowIt || '';
   // GitHub settings
   document.getElementById('s-gh-token').value  = localStorage.getItem('bnb_github_token')  || '';
-  document.getElementById('s-gh-repo').value   = localStorage.getItem('bnb_github_repo')   || 'augustof2/guestguide-bnb';
+  // Prefer the repo detected from the current URL (always correct, even after a GitHub rename).
+  // Fall back to the stored value only when not on GitHub Pages (e.g. custom domain / localhost).
+  const detectedRepo = detectRepoFromUrl();
+  document.getElementById('s-gh-repo').value   = detectedRepo || localStorage.getItem('bnb_github_repo') || '';
   document.getElementById('s-gh-branch').value = localStorage.getItem('bnb_github_branch') || 'main';
+  updateSiteUrlDisplay();
 }
 
 function collectFormData() {
@@ -3948,6 +3956,43 @@ async function exportHTML() {
   } catch(err) {
     alert('Errore nella generazione del file HTML: ' + err.message + '\nAssicurati di usare il sito online (non file://).');
   }
+}
+
+function detectRepoFromUrl() {
+  // Works on GitHub Pages: {owner}.github.io/{repo}/ or {owner}.github.io/ (org page)
+  const host = location.hostname; // e.g. ffeliteapartments.github.io
+  const path = location.pathname; // e.g. /guide/
+  const ghMatch = host.match(/^(?:www\.)?([^.]+)\.github\.io$/i);
+  if (!ghMatch) return null;
+  const owner = ghMatch[1];
+  const parts = path.split('/').filter(Boolean);
+  if (parts.length > 0) {
+    return `${owner}/${parts[0]}`;
+  }
+  return `${owner}/${owner}.github.io`;
+}
+
+function updateSiteUrlDisplay() {
+  const repo = (document.getElementById('s-gh-repo').value || '').trim();
+  const container = document.getElementById('s-site-url-container');
+  const link = document.getElementById('s-site-url-link');
+  if (!repo || !repo.includes('/')) {
+    container.style.display = 'none';
+    return;
+  }
+  const [owner, repoName] = repo.split('/');
+  if (!owner || !repoName) {
+    container.style.display = 'none';
+    return;
+  }
+  // GitHub Pages URL: org.github.io pages repos have no subpath
+  const isOrgPage = repoName.toLowerCase() === owner.toLowerCase() + '.github.io';
+  const siteUrl = isOrgPage
+    ? `https://${owner}.github.io/`
+    : `https://${owner}.github.io/${repoName}/`;
+  link.href = siteUrl;
+  link.textContent = siteUrl;
+  container.style.display = '';
 }
 
 function saveGitHubSettings() {
