@@ -27,6 +27,26 @@ Una **Guest Guide interattiva** per il tuo Bed & Breakfast — un singolo file `
 
 ---
 
+## 🌐 Come rendere visibili le tue personalizzazioni a tutti
+
+Le personalizzazioni fatte tramite il pannello ⚙️ sono salvate nel tuo browser (`localStorage`). Per pubblicarle online in modo che **tutti** vedano la versione aggiornata, segui questi passi:
+
+**1. Personalizza il sito** — Apri `https://augustof2.github.io/guestguide-bnb/`, clicca ⚙️ e modifica tutti i campi. Poi clicca **💾 Salva e Applica**.
+
+**2. Scarica l'HTML aggiornato** — Nel pannello ⚙️, clicca il pulsante **📥 Scarica HTML Aggiornato**. Verrà scaricato un file `index.html` con i tuoi dati incorporati.
+
+**3. Carica su GitHub** — Vai su `https://github.com/augustof2/guestguide-bnb`, clicca sul file `index.html`, poi su ✏️ **Edit**, e incolla il contenuto del file scaricato. Oppure, se usi Git:
+```bash
+# Copia il file scaricato nella cartella del repo, poi:
+git add index.html
+git commit -m "Aggiorna dati B&B"
+git push
+```
+
+**4. Attendi il deploy** — Il workflow si avvia automaticamente. Dopo 1-2 minuti il sito sarà live con i tuoi dati per tutti gli ospiti.
+
+---
+
 ![Landing Page](https://github.com/user-attachments/assets/ee2fe4ec-a0c4-4ac8-afba-e66ebaec33bb)
 
 ---
