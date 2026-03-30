@@ -2079,7 +2079,23 @@ const LABELS = {
 // PIN state
 let pinBuffer = '';
 const PIN_KEY = 'bnb_admin_pin';
-function getStoredPin() { return localStorage.getItem(PIN_KEY) || '1234'; }
+
+async function hashPin(pin) {
+  const data = new TextEncoder().encode(pin);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function getStoredPinHash() {
+  const stored = localStorage.getItem(PIN_KEY);
+  // If not set or still a plain 4-digit PIN (legacy), hash on the fly
+  if (!stored || /^\d{4}$/.test(stored)) {
+    const hash = await hashPin(stored || '1234');
+    if (stored) localStorage.setItem(PIN_KEY, hash); // persist migration
+    return hash;
+  }
+  return stored;
+}
 
 // ════════════════════════════════════════════
 //  DATA HELPERS
@@ -2760,8 +2776,10 @@ function updatePinDots() {
   }
 }
 
-function checkPin() {
-  if (pinBuffer === getStoredPin()) {
+async function checkPin() {
+  const hash = await hashPin(pinBuffer);
+  const storedHash = await getStoredPinHash();
+  if (hash === storedHash) {
     closePinModal();
     _openSettingsPanel();
   } else {
@@ -2783,17 +2801,19 @@ function closeSettings() {
   document.body.style.overflow = '';
 }
 
-function changePin() {
+async function changePin() {
   const current = document.getElementById('s-pin-current').value;
   const newPin = document.getElementById('s-pin-new').value;
   const confirm2 = document.getElementById('s-pin-confirm').value;
   const msg = document.getElementById('s-pin-msg');
   const showErr = t => { msg.style.color = 'var(--accent)'; msg.textContent = '❌ ' + t; };
   const showOk = t => { msg.style.color = 'var(--teal)'; msg.textContent = '✅ ' + t; };
-  if (current !== getStoredPin()) { showErr('PIN attuale non corretto.'); return; }
+  const currentHash = await hashPin(current);
+  const storedHash = await getStoredPinHash();
+  if (currentHash !== storedHash) { showErr('PIN attuale non corretto.'); return; }
   if (!/^\d{4}$/.test(newPin)) { showErr('Il nuovo PIN deve essere di esattamente 4 cifre numeriche.'); return; }
   if (newPin !== confirm2) { showErr('I due PIN non coincidono. Riprova.'); return; }
-  localStorage.setItem(PIN_KEY, newPin);
+  localStorage.setItem(PIN_KEY, await hashPin(newPin));
   document.getElementById('s-pin-current').value = '';
   document.getElementById('s-pin-new').value = '';
   document.getElementById('s-pin-confirm').value = '';
@@ -3698,7 +3718,6 @@ function renderRichText(text) {
 // ════════════════════════════════════════════
 (function init() {
   currentData = loadData();
-
   renderLanding();
 
   // Global keydown for PIN modal — intentional: single-page app, listener persists for the app lifetime
