@@ -1954,7 +1954,7 @@
         <div class="s-sub-title">Pubblica su GitHub Pages</div>
         <p style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.5">Inserisci un <strong>GitHub Personal Access Token</strong> con permesso <code>repo</code> (o <code>contents: write</code> per i fine-grained token) per aggiornare il file online. Il token viene salvato solo su questo dispositivo.</p>
         <div class="s-field"><label>GitHub Token</label><input type="password" id="s-gh-token" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off"></div>
-        <div class="s-field"><label>Repository (owner/repo)</label><input type="text" id="s-gh-repo" placeholder="augustof2/guestguide-bnb"></div>
+        <div class="s-field"><label>Repository (owner/repo)</label><input type="text" id="s-gh-repo" placeholder="augustof2/ffeliteapartments"></div>
         <div class="s-field"><label>Branch</label><input type="text" id="s-gh-branch" placeholder="main"></div>
         <div id="s-gh-msg" style="font-size:12px;min-height:18px;margin-top:4px"></div>
         <button class="s-btn" onclick="saveGitHubSettings()" style="margin-top:8px">💾 Salva Impostazioni GitHub</button>
@@ -3808,7 +3808,7 @@ function populateSettingsForms() {
   document.getElementById('s-st-departureEyebrowIt').value = st.departureEyebrowIt || '';
   // GitHub settings
   document.getElementById('s-gh-token').value  = localStorage.getItem('bnb_github_token')  || '';
-  document.getElementById('s-gh-repo').value   = localStorage.getItem('bnb_github_repo')   || 'augustof2/guestguide-bnb';
+  document.getElementById('s-gh-repo').value   = localStorage.getItem('bnb_github_repo')   || 'augustof2/ffeliteapartments';
   document.getElementById('s-gh-branch').value = localStorage.getItem('bnb_github_branch') || 'main';
 }
 
@@ -3967,7 +3967,7 @@ async function publishToGitHub() {
   }
   const [owner, repoName] = repo.split('/');
   if (!owner || !repoName) {
-    alert('Il campo Repository deve avere il formato owner/repo (es. augustof2/guestguide-bnb).');
+    alert('Il campo Repository deve avere il formato owner/repo (es. augustof2/ffeliteapartments).');
     return;
   }
   const btn = document.getElementById('btn-publish-online');

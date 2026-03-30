@@ -35,7 +35,7 @@ Le personalizzazioni fatte tramite il pannello ⚙️ sono salvate nel tuo brows
 
 **2. Scarica l'HTML aggiornato** — Nel pannello ⚙️, clicca il pulsante **📥 Scarica HTML Aggiornato**. Verrà scaricato un file `index.html` con i tuoi dati incorporati.
 
-**3. Carica su GitHub** — Vai su `https://github.com/augustof2/guestguide-bnb`, clicca sul file `index.html`, poi su ✏️ **Edit**, e incolla il contenuto del file scaricato. Oppure, se usi Git:
+**3. Carica su GitHub** — Vai su `https://github.com/augustof2/ffeliteapartments`, clicca sul file `index.html`, poi su ✏️ **Edit**, e incolla il contenuto del file scaricato. Oppure, se usi Git:
 ```bash
 # Copia il file scaricato nella cartella del repo, poi:
 git add index.html
@@ -118,7 +118,7 @@ const DEFAULT_DATA = {
 ## 📂 Struttura del Progetto
 
 ```
-guestguide-bnb/
+ffeliteapartments/
 ├── index.html                    ← tutto il codice (HTML + CSS + JS inline)
 ├── .nojekyll                     ← disabilita Jekyll su GitHub Pages
 └── .github/workflows/deploy.yml ← auto-deploy su GitHub Pages
