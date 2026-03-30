@@ -1066,6 +1066,12 @@
     text-decoration: underline;
     padding: 6px;
   }
+  .pin-forgot {
+    display: block;
+    margin-top: 2px;
+    font-size: 11px;
+    opacity: .7;
+  }
 
   /* ── SETTINGS: DYNAMIC BUTTONS ───────────────────── */
   .s-remove-btn {
@@ -1690,6 +1696,7 @@
       <button class="pin-key" onclick="pinBackspace()">⌫</button>
     </div>
     <button class="pin-cancel" onclick="closePinModal()">Annulla</button>
+    <button class="pin-cancel pin-forgot" onclick="forgotPin()">Non ricordo il PIN</button>
   </div>
 </div>
 
@@ -2479,6 +2486,17 @@ function checkPin() {
     for (let i = 0; i < 4; i++) document.getElementById('pd' + i).classList.add('error');
     setTimeout(() => { pinBuffer = ''; updatePinDots(); }, 600);
   }
+}
+
+function forgotPin() {
+  if (!confirm('Resettare il PIN al valore predefinito (1234)?')) return;
+  localStorage.removeItem(PIN_KEY);
+  pinBuffer = '';
+  updatePinDots();
+  const err = document.getElementById('pin-error');
+  err.style.color = 'var(--teal)';
+  err.textContent = '✅ PIN resettato a 1234.';
+  setTimeout(() => { err.style.color = ''; err.textContent = ''; closePinModal(); }, 1800);
 }
 
 function _openSettingsPanel() {
