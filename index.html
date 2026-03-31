@@ -1138,14 +1138,29 @@
   }
 
   @media (min-width: 1024px) {
-    .app-shell { max-width: 900px; }
-    .bottom-nav { max-width: 900px; }
+    .app-shell { max-width: 100%; }
+    .bottom-nav { max-width: 100%; }
     #settings-panel { max-width: 100%; }
     .landing-title { font-size: 58px; }
     .section-title { font-size: 30px; }
-    .landing-hero { padding: 60px 60px 28px; }
-    .landing-intro { padding: 0 60px 36px; }
-    .apt-cards { padding: 0 60px; }
+    /* Landing: hero top-left, cards truly centered in the viewport */
+    #landing { justify-content: center; align-items: center; padding: 0; }
+    .landing-topbar { display: none; }
+    .landing-hero {
+      position: absolute;
+      top: 0; left: 0;
+      padding: 48px 60px 32px;
+      max-width: 520px;
+      width: auto;
+      align-self: auto;
+    }
+    .apt-cards {
+      padding: 0 60px;
+      max-width: 960px;
+      width: 100%;
+      align-self: auto;
+      justify-content: center;
+    }
     .section-pad { padding: 24px 48px; }
     .tab-header { padding: 36px 48px 0; }
     .home-hero { padding: 48px 48px 36px; }
@@ -1157,7 +1172,7 @@
     .place-card { margin-bottom: 20px; }
     .restaurant-card { margin-bottom: 20px; }
     .supermercato-card { margin-bottom: 20px; }
-    .gear-btn { right: max(20px, calc((100vw - 900px) / 2 + 20px)); }
+    .gear-btn { right: 20px; }
   }
 
   /* ── LANGUAGE SELECTION CARDS (landing) ─────────── */
