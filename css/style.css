@@ -1634,11 +1634,6 @@ html.theme-minimal {
 @keyframes slideFromRight { from { transform: translateX(28px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 @keyframes slideUp { from { transform: translateY(18px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-/* ── PULL TO REFRESH ── */
-#ptr-indicator { position: fixed; top: -60px; left: 50%; transform: translateX(-50%); z-index: 9000; background: var(--card); border: 1px solid var(--border); border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; box-shadow: 0 4px 20px rgba(0,0,0,.3); transition: top 0.2s ease; pointer-events: none; }
-#ptr-indicator.visible { top: 16px; }
-#ptr-indicator.spinning { animation: spin 0.8s linear infinite; }
-
 /* ── OFFLINE INDICATOR ── */
 #offline-banner { display: none; position: fixed; top: 0; left: 0; right: 0; background: var(--accent); color: #fff; text-align: center; padding: 8px 16px; font-size: 0.85rem; z-index: 9998; font-family: Jost, sans-serif; }
 #offline-banner.show { display: block; }

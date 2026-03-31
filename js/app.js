@@ -957,45 +957,6 @@ function initOfflineIndicator() {
 }
 
 // ════════════════════════════════════════════
-//  PULL TO REFRESH
-// ════════════════════════════════════════════
-function initPullToRefresh() {
-  let startY = 0;
-  let pulling = false;
-  const PTR_THRESHOLD = 80;
-  const indicator = document.getElementById('ptr-indicator');
-  if (!indicator) return;
-
-  document.addEventListener('touchstart', function(e) {
-    if (window.scrollY === 0) {
-      startY = e.touches[0].clientY;
-      pulling = true;
-    }
-  }, { passive: true });
-
-  document.addEventListener('touchmove', function(e) {
-    if (!pulling) return;
-    const dist = e.touches[0].clientY - startY;
-    if (dist > 20) indicator.classList.add('visible');
-  }, { passive: true });
-
-  document.addEventListener('touchend', function(e) {
-    if (!pulling) return;
-    const dist = e.changedTouches[0].clientY - startY;
-    if (dist > PTR_THRESHOLD) {
-      indicator.classList.add('spinning');
-      setTimeout(() => {
-        indicator.classList.remove('visible', 'spinning');
-        location.reload();
-      }, 600);
-    } else {
-      indicator.classList.remove('visible', 'spinning');
-    }
-    pulling = false;
-  }, { passive: true });
-}
-
-// ════════════════════════════════════════════
 //  SWIPE GESTURES
 // ════════════════════════════════════════════
 function initSwipeGestures() {
@@ -1060,6 +1021,5 @@ function init() {
   });
 
   initOfflineIndicator();
-  initPullToRefresh();
   initSwipeGestures();
 }
