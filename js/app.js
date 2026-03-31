@@ -1,4 +1,18 @@
 // ════════════════════════════════════════════
+//  UNCONFIGURED DATA CHECK
+// ════════════════════════════════════════════
+function checkUnconfigured() {
+  const banner = document.getElementById('setup-banner');
+  if (!banner) return;
+  const d = currentData;
+  const firstApt = d.apts && d.apts[0];
+  const isDefault = d.bbName === 'Il Tuo B&B' ||
+    (firstApt && firstApt.wifi === 'NomeRete') ||
+    (firstApt && firstApt.wifiPass === 'password123');
+  banner.style.display = isDefault ? 'block' : 'none';
+}
+
+// ════════════════════════════════════════════
 //  RENDER LANDING
 // ════════════════════════════════════════════
 function renderLanding() {
@@ -53,6 +67,7 @@ function renderLanding() {
   });
 
   document.title = `${d.bbName} — ${d.subtitle}`;
+  checkUnconfigured();
 }
 
 // ════════════════════════════════════════════
@@ -78,6 +93,8 @@ function goBack() {
   document.getElementById('guide').classList.remove('active');
   document.getElementById('landing').style.display = '';
   document.getElementById('gear-btn').classList.remove('hidden');
+  document.getElementById('wa-fab').classList.remove('visible');
+  document.title = `${currentData.bbName} — ${currentData.subtitle}`;
 }
 
 // ════════════════════════════════════════════
@@ -86,6 +103,9 @@ function goBack() {
 function renderApp(aptIndex) {
   const d = currentData;
   const apt = d.apts[aptIndex] || d.apts[0];
+
+  // Update document title
+  document.title = `${apt.name} — ${d.bbName} — Guest Guide`;
 
   // Apply static i18n strings to data-i18n elements
   applyI18n();
@@ -103,7 +123,9 @@ function renderApp(aptIndex) {
   document.getElementById('h-address').textContent = apt.addressShort || apt.address;
   document.getElementById('s-checkin').textContent = apt.checkin;
   document.getElementById('s-checkout').textContent = apt.checkout;
-  document.getElementById('s-wifi').textContent = apt.wifi;
+  // Guard: hide default placeholder WiFi name
+  const wifiDisplay = (apt.wifi === 'NomeRete' || apt.wifi === 'NomeRete2') ? '' : apt.wifi;
+  document.getElementById('s-wifi').textContent = wifiDisplay;
   const sMaps = document.getElementById('s-maps');
   sMaps.href = apt.mapsLink || '#';
   sMaps.textContent = t('openMaps');
@@ -117,8 +139,13 @@ function renderApp(aptIndex) {
   document.getElementById('st-checkin').textContent = apt.checkin;
   document.getElementById('st-checkout').textContent = apt.checkout;
   document.getElementById('st-guests').textContent = langField(apt, 'maxGuests');
-  document.getElementById('st-wifi-name').textContent = apt.wifi;
-  document.getElementById('st-wifi-pass').textContent = apt.wifiPass;
+  // Guard: hide default placeholder WiFi name and password
+  const isDefaultWifi = apt.wifi === 'NomeRete' || apt.wifi === 'NomeRete2';
+  const isDefaultPass = apt.wifiPass === 'password123' || apt.wifiPass === 'password456';
+  document.getElementById('st-wifi-name').textContent = isDefaultWifi ? '' : apt.wifi;
+  document.getElementById('st-wifi-pass').textContent = isDefaultPass ? '' : apt.wifiPass;
+  const copyBtn = document.getElementById('copy-wifi-btn');
+  if (copyBtn) copyBtn.style.display = isDefaultPass ? 'none' : '';
 
   const stMaps = document.getElementById('st-maps');
   stMaps.href = apt.mapsLink || '#';
@@ -204,8 +231,18 @@ function renderApp(aptIndex) {
 
   // SOS
   document.getElementById('sos-host-name').textContent = d.hostName;
-  document.getElementById('sos-host-phone').textContent = '📞 ' + (d.hostPhone || '');
-  document.getElementById('sos-host-call').href = 'tel:' + (d.hostPhone || '').replace(/\s/g, '');
+  // Guard: hide default placeholder phone
+  const isDefaultPhone = d.hostPhone === '+39 000 000 0000';
+  const phoneEl = document.getElementById('sos-host-phone');
+  const callEl = document.getElementById('sos-host-call');
+  if (isDefaultPhone) {
+    phoneEl.textContent = '';
+    callEl.style.display = 'none';
+  } else {
+    phoneEl.textContent = '📞 ' + (d.hostPhone || '');
+    callEl.style.display = '';
+    callEl.href = 'tel:' + (d.hostPhone || '').replace(/\s/g, '');
+  }
   renderExtraContacts(d.extraContacts || []);
 
   // Google Review Button
@@ -301,6 +338,11 @@ function renderPlaces(places) {
     const how  = langField(p, 'how');
     const howLabel  = t('howToArrive');
     const mapsLabel = t('guideHere');
+    const wazeLabel = t('wazeBtn');
+    const hasValidMaps = p.maps && p.maps !== '#';
+    const wazeBtn = hasValidMaps
+      ? `<a class="maps-btn waze-btn" href="https://waze.com/ul?q=${encodeURIComponent(p.name)}" target="_blank" rel="noopener noreferrer">🗺️ ${wazeLabel}</a>`
+      : '';
     const card = document.createElement('div');
     card.className = 'place-card';
     card.innerHTML = `
@@ -313,7 +355,10 @@ function renderPlaces(places) {
         <div class="place-how-label">${escHtml(howLabel)}</div>
         ${renderRichText(how)}
       </div>
-      <a class="maps-btn" href="${escAttr(p.maps || '#')}" target="_blank" rel="noopener noreferrer">${mapsLabel}</a>
+      <div class="maps-btn-group">
+        <a class="maps-btn" href="${escAttr(p.maps || '#')}" target="_blank" rel="noopener noreferrer">${mapsLabel}</a>
+        ${wazeBtn}
+      </div>
     `;
     container.appendChild(card);
   });
@@ -325,6 +370,11 @@ function renderFood(restaurants, apt) {
   restaurants.forEach(r => {
     const desc = langField(r, 'desc');
     const mapsLabel = t('viewOnMaps');
+    const wazeLabel = t('wazeBtn');
+    const hasValidMaps = r.maps && r.maps !== '#';
+    const wazeBtn = hasValidMaps
+      ? `<a class="maps-btn waze-btn" href="https://waze.com/ul?q=${encodeURIComponent(r.name)}" target="_blank" rel="noopener noreferrer">🗺️ ${wazeLabel}</a>`
+      : '';
     const card = document.createElement('div');
     card.className = 'restaurant-card';
     card.innerHTML = `
@@ -337,7 +387,10 @@ function renderFood(restaurants, apt) {
         <span class="rest-price">${escHtml(r.price || '')}</span>
       </div>
       <p class="rest-desc">${renderRichText(desc)}</p>
-      <a class="maps-btn" href="${escAttr(r.maps || '#')}" target="_blank" rel="noopener noreferrer">${mapsLabel}</a>
+      <div class="maps-btn-group">
+        <a class="maps-btn" href="${escAttr(r.maps || '#')}" target="_blank" rel="noopener noreferrer">${mapsLabel}</a>
+        ${wazeBtn}
+      </div>
     `;
     container.appendChild(card);
   });
@@ -392,12 +445,18 @@ function renderTransport(transport) {
   });
 
   // Biglietti
+  const ticketsText = langField(transport, 'tickets') || '';
+  const ticketsCard = document.getElementById('tr-tickets-card');
   const ticketsEl = document.getElementById('tr-tickets-desc');
-  if (ticketsEl) ticketsEl.innerHTML = renderRichText(langField(transport, 'tickets') || '');
+  if (ticketsEl) ticketsEl.innerHTML = renderRichText(ticketsText);
+  if (ticketsCard) ticketsCard.style.display = ticketsText ? '' : 'none';
 
   // Taxi & App
+  const taxiText = langField(transport, 'taxi') || '';
+  const taxiCard = document.getElementById('tr-taxi-card');
   const taxiEl = document.getElementById('tr-taxi-desc');
-  if (taxiEl) taxiEl.innerHTML = renderRichText(langField(transport, 'taxi') || '');
+  if (taxiEl) taxiEl.innerHTML = renderRichText(taxiText);
+  if (taxiCard) taxiCard.style.display = taxiText ? '' : 'none';
 }
 
 // ════════════════════════════════════════════
@@ -840,10 +899,12 @@ function updateWaFab() {
   const fab = document.getElementById('wa-fab');
   if (!fab) return;
   const phone = ((currentData && currentData.hostPhone) || '').replace(/[\s\-\(\)]/g, '').replace(/^\+/, '');
-  if (!phone) { fab.style.display = 'none'; return; }
+  if (!phone || currentData.hostPhone === '+39 000 000 0000') { fab.style.display = 'none'; fab.classList.remove('visible'); return; }
   const aptName = (currentData && currentData.apts && currentData.apts[currentAptIndex]) ? currentData.apts[currentAptIndex].name : '';
   const msg = encodeURIComponent('Ciao! Sono un ospite di ' + aptName + ', avrei bisogno di assistenza.');
   fab.onclick = function() { window.open('https://wa.me/' + phone + '?text=' + msg, '_blank'); };
+  fab.style.display = '';
+  setTimeout(() => fab.classList.add('visible'), 50);
 }
 
 // ════════════════════════════════════════════
@@ -987,6 +1048,27 @@ function initSwipeGestures() {
 }
 
 // ════════════════════════════════════════════
+//  SCROLL TO TOP
+// ════════════════════════════════════════════
+function scrollToTop() {
+  const content = document.getElementById('guide-content');
+  if (content) content.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function initScrollTopBtn() {
+  const content = document.getElementById('guide-content');
+  const btn = document.getElementById('scroll-top-btn');
+  if (!content || !btn) return;
+  content.addEventListener('scroll', function() {
+    if (content.scrollTop > 200) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  }, { passive: true });
+}
+
+// ════════════════════════════════════════════
 //  INIT
 // ════════════════════════════════════════════
 function init() {
@@ -1022,4 +1104,5 @@ function init() {
 
   initOfflineIndicator();
   initSwipeGestures();
+  initScrollTopBtn();
 }

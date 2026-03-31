@@ -132,6 +132,35 @@ async function publishOnline() {
     }
     setStep('step-upload', 'done');
     setStep('step-deploy', 'active');
+
+    // 8. Patch CACHE_VERSION in sw.js
+    try {
+      const SW_FILE = 'sw.js';
+      const SW_API = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${SW_FILE}`;
+      const swGetResp = await fetch(`${SW_API}?ref=${BRANCH}`, {
+        headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+      });
+      if (swGetResp.ok) {
+        const swFileData = await swGetResp.json();
+        const swRaw = decodeURIComponent(escape(atob(swFileData.content.replace(/\n/g, ''))));
+        const newVersion = new Date().toISOString().slice(0, 10) + '-v' + Date.now();
+        const swUpdated = swRaw.replace(
+          /const CACHE_VERSION = '[^']+';/,
+          `const CACHE_VERSION = '${newVersion}';`
+        );
+        await fetch(SW_API, {
+          method: 'PUT',
+          headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: '🔄 Aggiorna cache SW [auto]',
+            content: btoa(unescape(encodeURIComponent(swUpdated))),
+            sha: swFileData.sha,
+            branch: BRANCH
+          })
+        });
+      }
+    } catch(swErr) { /* Non-fatal: SW cache patch failed */ }
+
     setTimeout(() => { setStep('step-deploy', 'done'); }, 1500);
 
     clearInterval(timerInterval);
@@ -1039,7 +1068,50 @@ function collectFormData() {
   return d;
 }
 
+// ════════════════════════════════════════════
+//  FORM VALIDATION
+// ════════════════════════════════════════════
+function validateSettingsForm() {
+  const errors = [];
+
+  // Validazione URL
+  const urlFields = ['s-googleReviewUrl'];
+  const aptCount = parseInt(document.getElementById('s-apts-container').dataset.count || '0');
+  for (let i = 0; i < aptCount; i++) {
+    urlFields.push(`s-a${i}-mapsLink`);
+    ['airport', 'station', 'metro', 'bus'].forEach(tr => {
+      urlFields.push(`s-a${i}-tr-${tr}Maps`);
+    });
+  }
+  urlFields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.value.trim() && !el.value.trim().match(/^https?:\/\//)) {
+      el.style.borderColor = 'var(--accent)';
+      const labelEl = el.closest('.s-field') && el.closest('.s-field').querySelector('label');
+      errors.push(`Il campo "${labelEl ? labelEl.textContent : id}" deve essere un URL valido (https://...)`);
+    } else if (el) {
+      el.style.borderColor = '';
+    }
+  });
+
+  // Validazione telefono
+  const phoneEl = document.getElementById('s-hostPhone');
+  if (phoneEl && phoneEl.value.trim() && !/^[\+\d\s\-\(\)]+$/.test(phoneEl.value.trim())) {
+    phoneEl.style.borderColor = 'var(--accent)';
+    errors.push('Il numero di telefono host non è valido.');
+  } else if (phoneEl) {
+    phoneEl.style.borderColor = '';
+  }
+
+  return errors;
+}
+
 function saveAndApply() {
+  const validationErrors = validateSettingsForm();
+  if (validationErrors.length > 0) {
+    showToast('⚠️ ' + validationErrors[0], 'error');
+    return;
+  }
   if (currentRole === 'host') {
     if (!confirm('Vuoi salvare le modifiche? Le vedranno tutti gli ospiti.')) return;
     const d = collectFormData();
@@ -1081,8 +1153,8 @@ function saveTokenForHost() {
     return;
   }
   try {
-    localStorage.setItem('bnb_host_publish_token', btoa(token));
-    showToast('✅ Token salvato per l\'host! Ora potrà usare "🚀 Pubblica Ora".', 'success');
+    sessionStorage.setItem('bnb_host_publish_token', token);
+    showToast('✅ Token salvato per la sessione corrente!', 'success');
   } catch (e) {
     showToast('❌ Errore nel salvataggio del token.', 'error');
   }
@@ -1092,15 +1164,7 @@ async function hostPublishNow() {
   const btn = document.getElementById('host-publish-btn');
 
   // Prova a recuperare il token pre-salvato dall'admin
-  const storedToken = localStorage.getItem('bnb_host_publish_token');
-  let token = '';
-  try {
-    token = storedToken ? atob(storedToken) : '';
-  } catch (e) {
-    showToast('⚠️ Token salvato non valido. Contatta l\'amministratore per riconfigurarlo.', 'error');
-    localStorage.removeItem('bnb_host_publish_token');
-    return;
-  }
+  const token = sessionStorage.getItem('bnb_host_publish_token') || '';
 
   if (!token) {
     // Fallback: nessun token configurato, usa il vecchio metodo di invio email/JSON
@@ -1352,11 +1416,11 @@ async function changeRecoveryWord() {
 // ════════════════════════════════════════════
 function removeGithubToken() {
   sessionStorage.removeItem('bnb_github_token');
-  localStorage.removeItem('bnb_host_publish_token');
+  sessionStorage.removeItem('bnb_host_publish_token');
   const field = document.getElementById('s-github-token');
   if (field) field.value = '';
   const msg = document.getElementById('s-publish-msg');
-  if (msg) { msg.style.color = 'var(--teal)'; msg.textContent = '✅ Token rimosso (anche per l\'host).'; setTimeout(() => { msg.textContent = ''; }, 2000); }
+  if (msg) { msg.style.color = 'var(--teal)'; msg.textContent = '✅ Token rimosso.'; setTimeout(() => { msg.textContent = ''; }, 2000); }
 }
 
 

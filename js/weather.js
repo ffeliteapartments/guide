@@ -72,7 +72,7 @@ async function renderWeatherWidget(containerId, lat, lon, lang) {
       if (!daily.time[i]) break;
       const d = new Date(daily.time[i]);
       const wmo = daily.weathercode[i];
-      days.push(`<div class="weather-day"><div class="weather-day-name">${dayNames[d.getDay()]}</div><div class="weather-day-emoji">${WMO_CODES[wmo]||'🌤️'}</div><div class="weather-day-temp"><span class="temp-max">${Math.round(daily.temperature_2m_max[i])}°</span><span class="temp-min">${Math.round(daily.temperature_2m_min[i])}°</span></div></div>`);
+      days.push(`<div class="weather-day"><div class="weather-day-name">${dayNames[d.getDay()]}</div><div class="weather-day-emoji">${WMO_CODES[wmo]||'🌤️'}</div><div class="weather-day-temp"><span class="temp-max">${Math.round(daily.temperature_2m_max[i])}°C</span><span class="temp-min">${Math.round(daily.temperature_2m_min[i])}°C</span></div></div>`);
     }
 
     container.innerHTML = `

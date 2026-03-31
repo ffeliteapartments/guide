@@ -28,6 +28,11 @@
 <!-- Offline indicator -->
 <div id="offline-banner">📵 Sei offline — la guida funziona comunque</div>
 
+<!-- Setup Banner (unconfigured data warning) -->
+<div id="setup-banner" style="display:none">
+  ⚙️ Benvenuto! Configura il tuo B&amp;B cliccando il pulsante ⚙️ — gli ospiti vedranno i dati demo finché non personalizzi la guida.
+</div>
+
 <div class="app-shell">
 
 <!-- ════════════════════════════════════════════
@@ -315,25 +320,21 @@
         <div id="transport-container"><!-- populated by JS --></div>
 
         <!-- Biglietti -->
-        <div class="transport-card">
+        <div class="transport-card" id="tr-tickets-card">
           <div class="transport-header">
             <span class="transport-icon">🎫</span>
             <span class="transport-title" data-i18n="tickets">Biglietti</span>
           </div>
-          <p class="transport-desc" id="tr-tickets-desc">
-            Biglietto singolo: ~€1,50 (valido 90 minuti). Abbonamento giornaliero: ~€5,00.
-          </p>
+          <p class="transport-desc" id="tr-tickets-desc"></p>
         </div>
 
         <!-- Taxi -->
-        <div class="transport-card">
+        <div class="transport-card" id="tr-taxi-card">
           <div class="transport-header">
             <span class="transport-icon">🚖</span>
             <span class="transport-title" data-i18n="taxiApp">Taxi &amp; App</span>
           </div>
-          <p class="transport-desc" id="tr-taxi-desc">
-            Taxi ufficiali disponibili in piazza e in stazione. App: Uber, FREE NOW, Bolt.
-          </p>
+          <p class="transport-desc" id="tr-taxi-desc"></p>
         </div>
 
         <!-- Emergencies -->
@@ -444,6 +445,7 @@
     </button>
   </nav>
   <button class="wa-fab" id="wa-fab" aria-label="WhatsApp">💬</button>
+  <button class="scroll-top-btn" id="scroll-top-btn" onclick="scrollToTop()" aria-label="Torna su" title="Torna su">↑</button>
 </div><!-- /guide -->
 
 <!-- ════════════════════════════════════════════
