@@ -2082,9 +2082,9 @@ const DEFAULT_DATA = {
         { name: "Bar Centrale", emoji: "☕", tipo: "Bar · Colazione", descIt: "Il bar perfetto per la colazione: cappuccino e cornetto.", descEn: "The perfect bar for breakfast: cappuccino and croissant.", price: "€", maps: "#" },
         { name: "Osteria del Porto", emoji: "🍷", tipo: "Osteria · Cucina di pesce", descIt: "Specialità di pesce fresco. Atmosfera accogliente.", descEn: "Fresh fish specialities. Welcoming atmosphere.", price: "€€€", maps: "#" }
       ],
-      supermarketIt: "Supermercato più vicino a ~300 metri. Orari: Lun–Sab 8:00–20:00, Dom 9:00–13:00.",
-      supermarketEn: "Nearest supermarket ~300 metres away. Hours: Mon–Sat 8:00–20:00, Sun 9:00–13:00.",
-      supermarketMaps: "",
+      supermarkets: [
+        { name: "Supermercato", emoji: "🛒", tipo: "", descIt: "Supermercato più vicino a ~300 metri. Orari: Lun–Sab 8:00–20:00, Dom 9:00–13:00.", descEn: "Nearest supermarket ~300 metres away. Hours: Mon–Sat 8:00–20:00, Sun 9:00–13:00.", price: "", maps: "" }
+      ],
       checkoutSteps: [
         { titleIt: "Raccogliete i vostri effetti personali", titleEn: "Collect your personal belongings", descIt: "Controllate tutti i cassetti, armadi e il bagno per non dimenticare nulla.", descEn: "Check all drawers, wardrobes and the bathroom so you don't forget anything." },
         { titleIt: "Lasciate le chiavi", titleEn: "Leave the keys", descIt: "Depositate le chiavi nel luogo indicato dall'host al momento del check-in.", descEn: "Leave the keys in the place indicated by the host at check-in." },
@@ -2166,9 +2166,9 @@ const DEFAULT_DATA = {
         { name: "Bar Centrale", emoji: "☕", tipo: "Bar · Colazione", descIt: "Il bar perfetto per la colazione: cappuccino e cornetto.", descEn: "The perfect bar for breakfast: cappuccino and croissant.", price: "€", maps: "#" },
         { name: "Osteria del Porto", emoji: "🍷", tipo: "Osteria · Cucina di pesce", descIt: "Specialità di pesce fresco. Atmosfera accogliente.", descEn: "Fresh fish specialities. Welcoming atmosphere.", price: "€€€", maps: "#" }
       ],
-      supermarketIt: "Supermercato più vicino a ~300 metri. Orari: Lun–Sab 8:00–20:00, Dom 9:00–13:00.",
-      supermarketEn: "Nearest supermarket ~300 metres away. Hours: Mon–Sat 8:00–20:00, Sun 9:00–13:00.",
-      supermarketMaps: "",
+      supermarkets: [
+        { name: "Supermercato", emoji: "🛒", tipo: "", descIt: "Supermercato più vicino a ~300 metri. Orari: Lun–Sab 8:00–20:00, Dom 9:00–13:00.", descEn: "Nearest supermarket ~300 metres away. Hours: Mon–Sat 8:00–20:00, Sun 9:00–13:00.", price: "", maps: "" }
+      ],
       checkoutSteps: [
         { titleIt: "Raccogliete i vostri effetti personali", titleEn: "Collect your personal belongings", descIt: "Controllate tutti i cassetti, armadi e il bagno per non dimenticare nulla.", descEn: "Check all drawers, wardrobes and the bathroom so you don't forget anything." },
         { titleIt: "Lasciate le chiavi", titleEn: "Leave the keys", descIt: "Depositate le chiavi nel luogo indicato dall'host al momento del check-in.", descEn: "Leave the keys in the place indicated by the host at check-in." },
@@ -2408,8 +2408,9 @@ const PUBLISHED_DATA = {
           "maps": "https://maps.app.goo.gl/iKoK5QjAvGYN6EaP7?g_st=ic"
         }
       ],
-      "supermarketIt": "Conad",
-      "supermarketMaps": "https://maps.app.goo.gl/zsLP9HziFEhAcCKE6?g_st=ic",
+      "supermarkets": [
+        { "name": "Conad", "emoji": "🛒", "tipo": "", "descIt": "", "descEn": "", "price": "", "maps": "https://maps.app.goo.gl/zsLP9HziFEhAcCKE6?g_st=ic" }
+      ],
       "transport": {
         "airportEnabled": true,
         "airportIcon": "✈️",
@@ -2554,8 +2555,20 @@ function loadData() {
         stored.apts.forEach(apt => {
           if (apt.places === undefined && stored.places !== undefined) apt.places = stored.places;
           if (apt.restaurants === undefined && stored.restaurants !== undefined) apt.restaurants = stored.restaurants;
-          if (apt.supermarketIt === undefined && stored.supermarketIt !== undefined) apt.supermarketIt = stored.supermarketIt;
-          if (apt.supermarketMaps === undefined && stored.supermarketMaps !== undefined) apt.supermarketMaps = stored.supermarketMaps;
+          if (apt.supermarkets === undefined) {
+            if (stored.supermarkets !== undefined) {
+              apt.supermarkets = stored.supermarkets;
+            } else if (stored.supermarketIt !== undefined || stored.supermarketEn !== undefined || stored.supermarketMaps !== undefined || apt.supermarketIt !== undefined) {
+              // Migrate old string fields to array
+              const descIt = apt.supermarketIt || stored.supermarketIt || '';
+              const descEn = apt.supermarketEn || stored.supermarketEn || '';
+              const maps   = apt.supermarketMaps || stored.supermarketMaps || '';
+              apt.supermarkets = descIt || descEn || maps
+                ? [{ name: 'Supermercato', emoji: '🛒', tipo: '', descIt, descEn, price: '', maps }]
+                : [];
+              delete apt.supermarketIt; delete apt.supermarketEn; delete apt.supermarketMaps;
+            }
+          }
           if (apt.transport === undefined && stored.transport !== undefined) apt.transport = stored.transport;
           if (apt.checkoutSteps === undefined && stored.checkoutSteps !== undefined) apt.checkoutSteps = stored.checkoutSteps;
         });
@@ -2904,24 +2917,26 @@ function renderFood(restaurants, apt) {
   });
 
   // Supermercato
-  const superLabel = t('supermarket');
-  const superDesc  = langField(apt, 'supermarket') || (currentLang === 'en' ? 'Nearest supermarket ~300 metres. Hours: Mon–Sat 8:00–20:00, Sun 9:00–13:00.' : 'Supermercato più vicino a ~300 metri. Orari: Lun–Sab 8:00–20:00, Dom 9:00–13:00.');
-  const superMaps  = (apt && apt.supermarketMaps) || '';
-  const superMapsLabel = t('viewOnMaps');
-  const superMapsBtn = superMaps ? `<a class="maps-btn" href="${escAttr(superMaps)}" target="_blank" rel="noopener">${superMapsLabel}</a>` : '';
-  const superCard = document.createElement('div');
-  superCard.className = 'supermercato-card';
-  superCard.innerHTML = `
-    <div class="superm-row">
-      <div class="superm-icon">🛒</div>
-      <div class="superm-body">
-        <div class="superm-title">${superLabel}</div>
-        <div class="superm-desc">${renderRichText(superDesc)}</div>
+  const supermarkets = (apt && apt.supermarkets) || [];
+  const mapsLabelSuper = t('viewOnMaps');
+  supermarkets.forEach(s => {
+    const desc = langField(s, 'desc');
+    const card = document.createElement('div');
+    card.className = 'restaurant-card';
+    card.innerHTML = `
+      <div class="rest-header">
+        <span class="rest-icon">${s.emoji || '🛒'}</span>
+        <div class="rest-body">
+          <div class="rest-name">${escHtml(s.name || '')}</div>
+          <div class="rest-tipo">${escHtml(s.tipo || '')}</div>
+        </div>
+        <span class="rest-price">${escHtml(s.price || '')}</span>
       </div>
-    </div>
-    ${superMapsBtn}
-  `;
-  container.appendChild(superCard);
+      <p class="rest-desc">${renderRichText(desc)}</p>
+      ${s.maps ? `<a class="maps-btn" href="${escAttr(s.maps)}" target="_blank" rel="noopener noreferrer">${mapsLabelSuper}</a>` : ''}
+    `;
+    container.appendChild(card);
+  });
 }
 
 function renderTransport(transport) {
@@ -3342,9 +3357,9 @@ function renderSettingsApts(apts) {
         <div id="s-a${i}-restaurants" data-count="0"></div>
         <button class="s-add-btn" style="margin-top:8px" onclick="addAptRest(${i})">➕ Aggiungi Ristorante</button>
         <div class="s-divider"></div>
-        <div class="s-sub-title">🛒 Supermercato</div>
-        <div class="s-field"><label>Descrizione</label><textarea id="s-a${i}-supermarketIt" placeholder="Supermercato più vicino a ~300 metri...">${escHtml(apt.supermarketIt || '')}</textarea></div>
-        <div class="s-field"><label>Link Google Maps</label><input type="url" id="s-a${i}-supermarketMaps" value="${escAttr(apt.supermarketMaps || '')}" placeholder="https://maps.google.com/..."></div>
+        <div class="s-sub-title">🛒 Supermercati</div>
+        <div id="s-a${i}-supermarkets" data-count="0"></div>
+        <button class="s-add-btn" style="margin-top:8px" onclick="addAptSupermarket(${i})">➕ Aggiungi Supermercato</button>
         <div class="s-divider"></div>
         <div class="s-sub-title">🚇 Trasporti</div>
         <div class="s-fields">
@@ -3400,6 +3415,7 @@ function renderSettingsApts(apts) {
     renderAptExtraServices(i, apt.extraServices || []);
     renderAptPlaces(i, apt.places || []);
     renderAptRests(i, apt.restaurants || []);
+    renderAptSupermarkets(i, apt.supermarkets || []);
     renderAptCheckoutSteps(i, apt.checkoutSteps || []);
   });
 }
@@ -3418,10 +3434,7 @@ function collectSettingsApts() {
     apt.extraServices = collectAptExtraServices(i);
     apt.places = collectAptPlaces(i);
     apt.restaurants = collectAptRests(i);
-    const superEl = document.getElementById(`s-a${i}-supermarketIt`);
-    apt.supermarketIt = superEl ? superEl.value.trim() : '';
-    const superMapsEl = document.getElementById(`s-a${i}-supermarketMaps`);
-    apt.supermarketMaps = superMapsEl ? superMapsEl.value.trim() : '';
+    apt.supermarkets = collectAptSupermarkets(i);
     apt.transport = collectAptTransport(i);
     apt.checkoutSteps = collectAptCheckoutSteps(i);
     apts.push(apt);
@@ -3444,7 +3457,7 @@ function addSettingsApt() {
     extraServices: [],
     places: [],
     restaurants: [],
-    supermarketIt: '', supermarketMaps: '',
+    supermarkets: [],
     transport: {
       airportEnabled: true, airportIcon: '✈️', airportIt: '', airportMaps: '',
       stationEnabled: true, stationIcon: '🚉', stationIt: '', stationMaps: '',
@@ -3708,6 +3721,61 @@ function removeAptRest(aptIndex, restIdx) {
   const current = collectAptRests(aptIndex);
   current.splice(restIdx, 1);
   renderAptRests(aptIndex, current);
+}
+
+// ════════════════════════════════════════════
+//  SETTINGS: APT SUPERMARKETS (per-apt)
+// ════════════════════════════════════════════
+function renderAptSupermarkets(aptIndex, supermarkets) {
+  const container = document.getElementById(`s-a${aptIndex}-supermarkets`);
+  if (!container) return;
+  container.dataset.count = supermarkets.length;
+  let html = '';
+  supermarkets.forEach((s, j) => {
+    html += `
+      <div class="s-sub-title s-sub-title-row" style="margin-top:12px">
+        <span>Supermercato ${j + 1}</span>
+        <button class="s-remove-btn" onclick="removeAptSupermarket(${aptIndex}, ${j})">🗑️ Rimuovi</button>
+      </div>
+      <div class="s-field"><label>Emoji</label><input type="text" id="s-a${aptIndex}-sm${j}-emoji" value="${escAttr(s.emoji || '🛒')}" placeholder="🛒" style="max-width:80px"></div>
+      <div class="s-field"><label>Nome</label><input type="text" id="s-a${aptIndex}-sm${j}-name" value="${escAttr(s.name || '')}"></div>
+      <div class="s-field"><label>Tipo</label><input type="text" id="s-a${aptIndex}-sm${j}-tipo" value="${escAttr(s.tipo || '')}"></div>
+      <div class="s-field"><label>Descrizione 🇮🇹</label><textarea id="s-a${aptIndex}-sm${j}-descIt" onblur="autoTranslateField('s-a${aptIndex}-sm${j}-descIt','s-a${aptIndex}-sm${j}-descEn')">${escHtml(s.descIt || '')}</textarea></div>
+      <div class="s-field"><label>Descrizione 🇬🇧</label><textarea id="s-a${aptIndex}-sm${j}-descEn">${escHtml(s.descEn || '')}</textarea></div>
+      <div class="s-field"><label>Fascia prezzo</label><input type="text" id="s-a${aptIndex}-sm${j}-price" value="${escAttr(s.price || '')}" placeholder="€ / €€ / €€€"></div>
+      <div class="s-field"><label>Link Maps</label><input type="url" id="s-a${aptIndex}-sm${j}-maps" value="${escAttr(s.maps || '')}"></div>`;
+  });
+  container.innerHTML = html;
+}
+
+function collectAptSupermarkets(aptIndex) {
+  const container = document.getElementById(`s-a${aptIndex}-supermarkets`);
+  if (!container) return [];
+  const count = parseInt(container.dataset.count || '0');
+  const supermarkets = [];
+  for (let j = 0; j < count; j++) {
+    const emojiEl = document.getElementById(`s-a${aptIndex}-sm${j}-emoji`);
+    const s = { emoji: emojiEl ? emojiEl.value : '🛒' };
+    ['name', 'tipo', 'descIt', 'descEn', 'price', 'maps'].forEach(k => {
+      const el = document.getElementById(`s-a${aptIndex}-sm${j}-${k}`);
+      if (el) s[k] = el.value.trim();
+    });
+    supermarkets.push(s);
+  }
+  return supermarkets;
+}
+
+function addAptSupermarket(aptIndex) {
+  const current = collectAptSupermarkets(aptIndex);
+  current.push({ name: '', emoji: '🛒', tipo: '', descIt: '', descEn: '', price: '', maps: '' });
+  renderAptSupermarkets(aptIndex, current);
+}
+
+function removeAptSupermarket(aptIndex, smIdx) {
+  if (!confirm(`Rimuovere il supermercato ${smIdx + 1}?`)) return;
+  const current = collectAptSupermarkets(aptIndex);
+  current.splice(smIdx, 1);
+  renderAptSupermarkets(aptIndex, current);
 }
 
 // ════════════════════════════════════════════
