@@ -4048,6 +4048,17 @@ function renderRichText(text) {
     else if (e.key === 'Backspace') { e.preventDefault(); pinBackspace(); }
     else if (e.key === 'Escape') closePinModal();
   });
+
+  // ── Disable right-click and common devtools shortcuts ──
+  document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+  document.addEventListener('keydown', function(e) {
+    // F12
+    if (e.key === 'F12') { e.preventDefault(); return; }
+    // Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C (DevTools)
+    if ((e.ctrlKey || e.metaKey) && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) { e.preventDefault(); return; }
+    // Ctrl+U (view source)
+    if ((e.ctrlKey || e.metaKey) && e.key.toUpperCase() === 'U') { e.preventDefault(); return; }
+  });
 })();
 </script>
 </body>
