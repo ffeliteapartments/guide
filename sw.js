@@ -1,4 +1,5 @@
-const CACHE_NAME = 'bnb-guide-v2';
+const CACHE_VERSION = '2026-03-31-v1';
+const CACHE_NAME = 'bnb-guide-' + CACHE_VERSION;
 const STATIC_ASSETS = [
   './',
   './index.html',

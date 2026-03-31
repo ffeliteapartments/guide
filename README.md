@@ -21,7 +21,7 @@ Una **Guest Guide interattiva** per il tuo Bed & Breakfast — un singolo file `
 
 **Passo 3 — Aspetta 1-2 minuti e apri il link**
 - Vai su **Actions** (menu in alto) e attendi che il deployment finisca (cerchio verde ✅)
-- Il sito sarà live su: **`https://www.ffeliteapartments.github.io/`**
+- Il sito sarà live su: **`https://ffeliteapartments.github.io/guide`**
 
 > 💡 Dopo aver aperto il sito, clicca il pulsante **⚙️** in basso a destra per personalizzare nome, appartamenti, WiFi, luoghi e tutto il resto — senza toccare il codice.
 
@@ -31,11 +31,11 @@ Una **Guest Guide interattiva** per il tuo Bed & Breakfast — un singolo file `
 
 Le personalizzazioni fatte tramite il pannello ⚙️ sono salvate nel tuo browser (`localStorage`). Per pubblicarle online in modo che **tutti** vedano la versione aggiornata, segui questi passi:
 
-**1. Personalizza il sito** — Apri `https://www.ffeliteapartments.github.io/`, clicca ⚙️ e modifica tutti i campi. Poi clicca **💾 Salva e Applica**.
+**1. Personalizza il sito** — Apri `https://ffeliteapartments.github.io/guide`, clicca ⚙️ e modifica tutti i campi. Poi clicca **💾 Salva e Applica**.
 
 **2. Scarica l'HTML aggiornato** — Nel pannello ⚙️, clicca il pulsante **📥 Scarica HTML Aggiornato**. Verrà scaricato un file `index.html` con i tuoi dati incorporati.
 
-**3. Carica su GitHub** — Vai su `https://github.com/augustof2/guestguide-bnb`, clicca sul file `index.html`, poi su ✏️ **Edit**, e incolla il contenuto del file scaricato. Oppure, se usi Git:
+**3. Carica su GitHub** — Vai su `https://github.com/ffeliteapartments/guide`, clicca sul file `index.html`, poi su ✏️ **Edit**, e incolla il contenuto del file scaricato. Oppure, se usi Git:
 ```bash
 # Copia il file scaricato nella cartella del repo, poi:
 git add index.html
@@ -80,7 +80,7 @@ Il repository include un workflow GitHub Actions che pubblica automaticamente il
 2. In **Source**, seleziona **GitHub Actions**
 3. Clicca **Save**
 4. Il sito si pubblicherà automaticamente ad ogni push su `main`
-5. Sarà live su `https://www.ffeliteapartments.github.io/`
+5. Sarà live su `https://ffeliteapartments.github.io/guide`
 
 > **Nota:** Se vedi ancora una pagina vuota o un errore 404 subito dopo il merge, attendi 1-2 minuti che il deployment finisca, poi ricarica la pagina.
 
@@ -91,7 +91,7 @@ Il repository include un workflow GitHub Actions che pubblica automaticamente il
 ### Pannello HOST (PIN) — Per l'host del B&B
 1. Apri il sito nel browser
 2. Clicca il pulsante **⚙️** in basso a destra nella landing page
-3. Inserisci il **PIN a 4 cifre** (default: `1234`)
+3. Inserisci il **PIN a 4 cifre** (il PIN iniziale è impostato dall'amministratore al primo accesso)
 4. Modifica i campi nel pannello semplificato:
    - 🏡 **Info B&B** — nome, sottotitolo, città, host, telefono
    - 🏠 **Appartamenti** — indirizzo, WiFi, check-in/out, Maps, regole
@@ -107,7 +107,7 @@ Il repository include un workflow GitHub Actions che pubblica automaticamente il
 ### Pannello ADMIN (Login) — Per l'amministratore tecnico
 1. Apri il sito nel browser
 2. Clicca il pulsante **⚙️**, poi **🛡️ Accesso Admin**
-3. Inserisci username e password (default: `admin` / `admin`)
+3. Inserisci username e password (le credenziali sono configurate dall'amministratore al setup iniziale)
 4. Hai accesso a **tutte** le sezioni, incluse:
    - 🎨 **Aspetto** — cambio tema chiaro/scuro
    - 🏷️ **Etichette Navigazione** — personalizza tutte le label
@@ -134,8 +134,18 @@ const DEFAULT_DATA = {
 
 ```
 guide/
-├── index.html                    ← tutto il codice (HTML + CSS + JS inline)
-├── LICENSE                       ← licenza MIT
+├── index.html                    ← struttura HTML e shell dell'app
+├── css/
+│   └── style.css                 ← tutti gli stili
+├── js/
+│   ├── app.js                    ← logica principale e rendering
+│   ├── data.js                   ← dati di default, i18n, utilità
+│   ├── settings.js               ← pannello impostazioni e pubblicazione
+│   ├── weather.js                ← widget meteo (open-meteo API)
+│   └── sw-register.js            ← registrazione Service Worker
+├── sw.js                         ← Service Worker (PWA offline)
+├── manifest.json                 ← PWA manifest
+├── LICENSE                       ← licenza proprietaria commerciale
 ├── .nojekyll                     ← disabilita Jekyll su GitHub Pages
 └── .github/workflows/deploy.yml ← auto-deploy su GitHub Pages
 ```
@@ -147,14 +157,14 @@ guide/
 Il pannello ⚙️ è protetto da **due metodi di accesso** che aprono **pannelli diversi**:
 
 ### 🏡 Ruolo HOST — Accesso con PIN
-- **Come accedere:** Inserisci il PIN a 4 cifre (default: `1234`)
+- **Come accedere:** Inserisci il PIN a 4 cifre (il PIN iniziale è impostato dall'amministratore al primo accesso)
 - **Cosa vede:** Pannello semplificato ⚙️ con solo le sezioni utili:
   - 🏡 Info B&B, 🏠 Appartamenti, 🧳 Partenza, 🗺️ Luoghi, 🍽️ Ristoranti, 🚇 Trasporti, 📞 Contatti Extra, 🔐 Cambio PIN
 - **Azioni disponibili:** 💾 Salva e Applica, 📧 Invia Modifiche, 👁️ Anteprima
 - **NON vede:** Reset, Pubblica Online, GitHub Token, cambio credenziali admin, QR Code, etichette navigazione
 
 ### 🛡️ Ruolo ADMIN — Accesso con Login
-- **Come accedere:** Clicca "🛡️ Accesso Admin" nel modal PIN, poi inserisci username e password (default: `admin` / `admin`)
+- **Come accedere:** Clicca "🛡️ Accesso Admin" nel modal PIN, poi inserisci username e password (le credenziali sono configurate dall'amministratore al setup iniziale)
 - **Cosa vede:** Pannello completo con **tutte** le sezioni e funzionalità
 - **Azioni disponibili:** 💾 Salva e Applica, 🗑️ Reset, 👁️ Anteprima, 🚀 Pubblica Online
 
@@ -189,6 +199,23 @@ Ogni appartamento ha un **QR Code univoco** che punta direttamente alla sua guid
 - Stampare tutti i QR con "🖨️ Stampa Tutti i QR"
 
 Gli ospiti scansionano il QR e accedono direttamente alla guida dell'appartamento corretto, saltando la landing page.
+
+---
+
+## 💼 Licenza Commerciale
+
+Questo software è distribuito sotto **licenza proprietaria commerciale**.
+Ogni licenza è valida per **un singolo sito/dominio**.
+
+Per acquistare una licenza o per richiedere supporto:
+📧 **ffeliteapartments@gmail.com**
+💬 **[WhatsApp](https://wa.me/393450307922)**
+
+L'acquisto include:
+- ✅ Licenza d'uso per 1 struttura ricettiva
+- ✅ Pannello di personalizzazione completo (no codice richiesto)
+- ✅ Supporto tecnico iniziale via WhatsApp
+- ✅ Aggiornamenti gratuiti per 12 mesi
 
 ---
 
