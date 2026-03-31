@@ -208,6 +208,10 @@ function renderSettingsApts(apts) {
         <div class="s-field"><label>Check-in (orario)</label><input type="text" id="s-a${i}-checkin" value="${escAttr(apt.checkin || '')}" placeholder="15:00"></div>
         <div class="s-field"><label>Check-out (orario)</label><input type="text" id="s-a${i}-checkout" value="${escAttr(apt.checkout || '')}" placeholder="10:00"></div>
         <div class="s-divider"></div>
+        <div class="s-sub-title">🌤️ Meteo</div>
+        <div class="s-field"><label>Latitudine (per widget meteo)</label><input type="text" id="s-a${i}-lat" value="${escAttr(apt.lat || '')}" placeholder="41.9028 (Roma)"></div>
+        <div class="s-field"><label>Longitudine (per widget meteo)</label><input type="text" id="s-a${i}-lon" value="${escAttr(apt.lon || '')}" placeholder="12.4964 (Roma)"></div>
+        <div class="s-divider"></div>
         <div class="s-sub-title">📍 Come raggiungerci</div>
         <div class="s-field"><label>Come raggiungerci 🇮🇹</label><textarea id="s-a${i}-howToReachIt" placeholder="Dalla stazione centrale..." onblur="autoTranslateField('s-a${i}-howToReachIt','s-a${i}-howToReachEn')">${escHtml(apt.howToReachIt || '')}</textarea></div>
         <div class="s-field"><label>Come raggiungerci 🇬🇧</label><textarea id="s-a${i}-howToReachEn">${escHtml(apt.howToReachEn || '')}</textarea></div>
@@ -323,7 +327,7 @@ function collectSettingsApts() {
   const apts = [];
   for (let i = 0; i < count; i++) {
     const apt = {};
-    ['name','address','addressShort','mapsLink','maxGuests','maxGuestsEn','wifi','wifiPass','checkin','checkout',
+    ['name','address','addressShort','mapsLink','maxGuests','maxGuestsEn','wifi','wifiPass','checkin','checkout','lat','lon',
      'howToReachIt','howToReachEn','howToAccessIt','howToAccessEn','parkingIt','parkingEn',
      'bedroomTagsIt','bedroomTagsEn','kitchenTagsIt','kitchenTagsEn','bathroomTagsIt','bathroomTagsEn'].forEach(k => {
       const el = document.getElementById(`s-a${i}-${k}`);
@@ -350,6 +354,7 @@ function addSettingsApt() {
     maxGuests: '4 persone', maxGuestsEn: '4 people',
     wifi: '', wifiPass: '',
     checkin: '15:00', checkout: '10:00',
+    lat: '', lon: '',
     howToReachIt: '', howToReachEn: '', howToAccessIt: '', howToAccessEn: '', parkingIt: '', parkingEn: '',
     houseRules: [],
     bedroomTagsIt: '', bedroomTagsEn: '', kitchenTagsIt: '', kitchenTagsEn: '', bathroomTagsIt: '', bathroomTagsEn: '',
@@ -990,6 +995,17 @@ function populateSettingsForms() {
   const ghField = document.getElementById('s-github-token');
   if (ghField) ghField.value = ghToken;
 
+  // QR Base URL
+  const qrBaseUrlField = document.getElementById('s-qrBaseUrl');
+  if (qrBaseUrlField) qrBaseUrlField.value = d.qrBaseUrl || '';
+
+  // Support WhatsApp
+  const supportPhone = (d.supportPhone || '+393450307922').replace(/\D/g, '');
+  const waBtn = document.getElementById('s-support-wa-btn');
+  if (waBtn) waBtn.setAttribute('href', 'https://wa.me/' + supportPhone);
+  const supportPhoneField = document.getElementById('s-supportPhone');
+  if (supportPhoneField) supportPhoneField.value = d.supportPhone || '+393450307922';
+
   // QR codes
   renderQrSection();
 }
@@ -1005,6 +1021,8 @@ function collectFormData() {
   d.welcomeIt = document.getElementById('s-welcomeIt').value;
   d.welcomeEn = document.getElementById('s-welcomeEn').value;
   d.googleReviewUrl = document.getElementById('s-googleReviewUrl').value.trim();
+  d.qrBaseUrl = (document.getElementById('s-qrBaseUrl') || {}).value || '';
+  d.supportPhone = (document.getElementById('s-supportPhone') || {}).value || '+393450307922';
   d.closingTitleIt = document.getElementById('s-closingTitleIt').value.trim();
   d.closingTitleEn = document.getElementById('s-closingTitleEn').value.trim();
   d.closingTextIt = document.getElementById('s-closingTextIt').value.trim();
@@ -1291,7 +1309,9 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
 //  QR CODE SECTION
 // ════════════════════════════════════════════
 function getGuideBaseUrl() {
-  return window.location.origin + window.location.pathname;
+  return (currentData && currentData.qrBaseUrl && currentData.qrBaseUrl.trim())
+    ? currentData.qrBaseUrl.trim()
+    : window.location.origin + window.location.pathname;
 }
 
 function renderQrSection() {

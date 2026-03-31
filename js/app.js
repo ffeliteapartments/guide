@@ -66,8 +66,23 @@ function renderLanding() {
     container.appendChild(card);
   });
 
-  document.title = `${d.bbName} — ${d.subtitle}`;
+  updateMetaTags(d);
   checkUnconfigured();
+}
+
+function updateMetaTags(d) {
+  const setMeta = (sel, attr, val) => {
+    const el = document.querySelector(sel);
+    if (el) el.setAttribute(attr, val);
+  };
+  const title = `${d.bbName} — ${d.subtitle || 'Guest Guide'}`;
+  const desc  = `La guida digitale interattiva per gli ospiti di ${d.bbName}${d.cityZone ? ' · ' + d.cityZone : ''}.`;
+  document.title = title;
+  setMeta('meta[property="og:title"]',       'content', title);
+  setMeta('meta[property="og:description"]', 'content', desc);
+  setMeta('meta[name="twitter:title"]',      'content', title);
+  setMeta('meta[name="twitter:description"]','content', desc);
+  setMeta('meta[name="apple-mobile-web-app-title"]', 'content', d.bbName || 'Guest Guide');
 }
 
 // ════════════════════════════════════════════
@@ -172,7 +187,7 @@ function renderApp(aptIndex) {
   if (bedroomTagsEl) {
     const bedroomRaw = langField(apt, 'bedroomTags') || '';
     bedroomTagsEl.innerHTML = bedroomRaw
-      ? bedroomRaw.split(',').map(tt => tt.trim()).filter(Boolean).map(tt => `<span class="tag">${escHtml(tt)}</span>`).join('')
+      ? bedroomRaw.split(',').map(tt => tt.trim()).filter(Boolean).map(tt => `<span class="tag tag-bedroom">${escHtml(tt)}</span>`).join('')
       : '';
   }
 
@@ -181,7 +196,7 @@ function renderApp(aptIndex) {
   if (kitchenTagsEl) {
     const kitchenRaw = langField(apt, 'kitchenTags') || '';
     kitchenTagsEl.innerHTML = kitchenRaw
-      ? kitchenRaw.split(',').map(tt => tt.trim()).filter(Boolean).map(tt => `<span class="tag">${escHtml(tt)}</span>`).join('')
+      ? kitchenRaw.split(',').map(tt => tt.trim()).filter(Boolean).map(tt => `<span class="tag tag-kitchen">${escHtml(tt)}</span>`).join('')
       : '';
   }
 
@@ -190,7 +205,7 @@ function renderApp(aptIndex) {
   if (bathroomTagsEl) {
     const bathroomRaw = langField(apt, 'bathroomTags') || '';
     bathroomTagsEl.innerHTML = bathroomRaw
-      ? bathroomRaw.split(',').map(tt => tt.trim()).filter(Boolean).map(tt => `<span class="tag">${escHtml(tt)}</span>`).join('')
+      ? bathroomRaw.split(',').map(tt => tt.trim()).filter(Boolean).map(tt => `<span class="tag tag-bathroom">${escHtml(tt)}</span>`).join('')
       : '';
   }
 

@@ -1,6 +1,27 @@
 # 🏨 GuestGuide B&B
 
+![License](https://img.shields.io/badge/license-Commercial-gold) ![PWA](https://img.shields.io/badge/PWA-ready-blue) ![Languages](https://img.shields.io/badge/languages-IT%20%2F%20EN-green) ![No Code](https://img.shields.io/badge/setup-no--code-brightgreen)
+
 Una **Guest Guide interattiva** per il tuo Bed & Breakfast — un singolo file `index.html` da deployare su GitHub Pages, con supporto bilingue IT/EN e un pannello di personalizzazione integrato.
+
+---
+
+## 📸 Demo Live
+
+👉 **[Prova la demo: ffeliteapartments.github.io/guide](https://ffeliteapartments.github.io/guide)**
+
+---
+
+## ✨ Perché scegliere GuestGuide
+
+- 📱 **Nessuna app da installare** — gli ospiti aprono il link dal browser, su qualsiasi telefono
+- ⚙️ **Configurazione completa senza toccare il codice** — nome, WiFi, regole, luoghi, ristoranti: tutto dal pannello ⚙️
+- 🔌 **Funziona offline** grazie alla tecnologia PWA — perfetto per ospiti senza dati mobili
+- 🖨️ **QR Code stampabili per ogni appartamento** — generati automaticamente, pronti da appendere in camera
+- 🌐 **Cambio lingua istantaneo IT/EN** — l'ospite sceglie la propria lingua in un tap
+- 🌤️ **Meteo in tempo reale** per la location dell'appartamento
+- 🔄 **Aggiornamenti in tempo reale via pannello admin** — ogni modifica è live in pochi minuti
+- 🏠 **Multi-appartamento** — gestisci più unità dallo stesso pannello
 
 ---
 
@@ -202,20 +223,27 @@ Gli ospiti scansionano il QR e accedono direttamente alla guida dell'appartament
 
 ---
 
-## 💼 Licenza Commerciale
+## 💼 Licenza e Acquisto
 
 Questo software è distribuito sotto **licenza proprietaria commerciale**.
 Ogni licenza è valida per **un singolo sito/dominio**.
 
-Per acquistare una licenza o per richiedere supporto:
-📧 **ffeliteapartments@gmail.com**
-💬 **[WhatsApp](https://wa.me/393450307922)**
+### Cosa è incluso
 
-L'acquisto include:
-- ✅ Licenza d'uso per 1 struttura ricettiva
-- ✅ Pannello di personalizzazione completo (no codice richiesto)
-- ✅ Supporto tecnico iniziale via WhatsApp
-- ✅ Aggiornamenti gratuiti per 12 mesi
+| ✅ Incluso | ❌ Non incluso |
+|---|---|
+| Licenza d'uso per 1 struttura ricettiva | Hosting (usa GitHub Pages gratuito) |
+| Pannello admin completo (no codice) | Dominio personalizzato (opzionale, gratuito su GitHub Pages) |
+| Supporto tecnico iniziale via WhatsApp | Personalizzazioni custom avanzate |
+| Aggiornamenti gratuiti per 12 mesi | |
+| Multi-appartamento illimitato | |
+| QR Code generati automaticamente | |
+| PWA + funzionamento offline | |
+
+### Acquista o richiedi supporto
+
+📧 **ffeliteapartments@gmail.com**  
+💬 **[WhatsApp](https://wa.me/393450307922)**
 
 ---
 

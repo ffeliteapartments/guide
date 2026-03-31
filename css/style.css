@@ -672,6 +672,15 @@ html.theme-minimal {
     color: var(--text2);
     font-weight: 500;
   }
+  .tag-bedroom {
+    border-left: 3px solid #4a90d9;
+  }
+  .tag-kitchen {
+    border-left: 3px solid #5cb85c;
+  }
+  .tag-bathroom {
+    border-left: 3px solid #f0a500;
+  }
 
   .service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
   .service-item {
@@ -1365,7 +1374,8 @@ html.theme-minimal {
     margin-bottom: 4px;
   }
   .apt-card-superhost {
-    background: var(--gold);
+    background: linear-gradient(90deg, var(--gold) 30%, #f0d080 50%, var(--gold) 70%);
+    background-size: 200% auto;
     color: var(--bg);
     border-radius: 20px;
     padding: 6px 14px;
@@ -1375,6 +1385,7 @@ html.theme-minimal {
     flex-shrink: 0;
     align-self: flex-start;
     white-space: nowrap;
+    animation: superhost-shimmer 3s linear infinite;
   }
   .apt-card-addr {
     font-size: 13px;
@@ -1509,6 +1520,10 @@ html.theme-minimal {
 @keyframes wa-pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.08); }
+}
+@keyframes superhost-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
 }
 
 /* ── SCROLL TO TOP BUTTON ─────────────────────── */
