@@ -45,22 +45,22 @@ function renderLanding() {
         <div class="apt-card-superhost">${escHtml(t('superhost'))}</div>
       </div>
       <div class="lang-cards">
-        <div class="lang-card" onclick="openGuide(${i},'it')">
+        <button class="lang-card" onclick="openGuide(${i},'it')">
           <span class="lang-card-flag">🇮🇹</span>
           <div class="lang-card-body">
             <div class="lang-card-title">${escHtml(t('langBtnItTitle'))}</div>
             <div class="lang-card-sub">${escHtml(t('langBtnItSub'))}</div>
           </div>
           <span class="lang-card-arrow">›</span>
-        </div>
-        <div class="lang-card" onclick="openGuide(${i},'en')">
+        </button>
+        <button class="lang-card" onclick="openGuide(${i},'en')">
           <span class="lang-card-flag">🇬🇧</span>
           <div class="lang-card-body">
             <div class="lang-card-title">${escHtml(t('langBtnEnTitle'))}</div>
             <div class="lang-card-sub">${escHtml(t('langBtnEnSub'))}</div>
           </div>
           <span class="lang-card-arrow">›</span>
-        </div>
+        </button>
       </div>
     `;
     container.appendChild(card);

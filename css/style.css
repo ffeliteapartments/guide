@@ -1418,6 +1418,11 @@ body, .app-shell, .apt-card, .stat-card, .welcome-card,
     align-items: center;
     gap: 10px;
     transition: border-color .2s, transform .15s, box-shadow .15s;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
   }
   .lang-card:hover, .lang-card:active {
     border-color: var(--gold);
@@ -1650,6 +1655,10 @@ body, .app-shell, .apt-card, .stat-card, .welcome-card,
   text-align: center;
   font-size: 11px;
   color: var(--text2);
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
 }
 .theme-option.active span { color: var(--gold); font-weight: 600; }
 .theme-preview {
