@@ -4,6 +4,10 @@
 const GuestAnalytics = (function () {
   const KEY = 'gg_analytics';
 
+  // Perf: in-memory cache to avoid redundant JSON.parse/stringify on every event
+  let _cache = null;
+  let _saveTimer = null;
+
   function _load() {
     try {
       const raw = localStorage.getItem(KEY);
@@ -11,8 +15,26 @@ const GuestAnalytics = (function () {
     } catch (e) { return null; }
   }
 
-  function _save(data) {
-    try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {}
+  function _saveNow() {
+    if (_cache) {
+      try { localStorage.setItem(KEY, JSON.stringify(_cache)); } catch (e) {}
+    }
+  }
+
+  // Perf: debounce writes to localStorage — coalesce rapid successive calls
+  function _debounceSave() {
+    if (_saveTimer) clearTimeout(_saveTimer);
+    _saveTimer = setTimeout(_saveNow, 500);
+  }
+
+  // Flush pending writes when user leaves the page
+  if (typeof document !== 'undefined') {
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden' && _cache) {
+        if (_saveTimer) clearTimeout(_saveTimer);
+        _saveNow();
+      }
+    });
   }
 
   function _empty() {
@@ -34,7 +56,8 @@ const GuestAnalytics = (function () {
   }
 
   function getData() {
-    return _load() || _empty();
+    if (!_cache) _cache = _load() || _empty();
+    return _cache;
   }
 
   function trackVisit() {
@@ -46,14 +69,14 @@ const GuestAnalytics = (function () {
     const dev = _getDevice();
     if (!d.deviceCounts) d.deviceCounts = { mobile: 0, tablet: 0, desktop: 0 };
     d.deviceCounts[dev] = (d.deviceCounts[dev] || 0) + 1;
-    _save(d);
+    _debounceSave();
   }
 
   function trackPageView(tabName) {
     const d = getData();
     if (!d.pageViews) d.pageViews = {};
     d.pageViews[tabName] = (d.pageViews[tabName] || 0) + 1;
-    _save(d);
+    _debounceSave();
   }
 
   function trackLang(lang) {
@@ -61,10 +84,12 @@ const GuestAnalytics = (function () {
     if (!d.langCounts) d.langCounts = { it: 0, en: 0 };
     const key = (lang === 'en') ? 'en' : 'it';
     d.langCounts[key] = (d.langCounts[key] || 0) + 1;
-    _save(d);
+    _debounceSave();
   }
 
   function reset() {
+    _cache = null;
+    if (_saveTimer) clearTimeout(_saveTimer);
     localStorage.removeItem(KEY);
   }
 

@@ -103,7 +103,8 @@ function switchLang() {
   const newLang = currentLang === 'it' ? 'en' : 'it';
   setLang(newLang);
   if (typeof GuestAnalytics !== 'undefined') GuestAnalytics.trackLang(newLang);
-  renderApp(currentAptIndex);
+  // Perf: only update language-dependent text, skip full DOM rebuild & weather re-fetch
+  updateLanguageOnly(currentAptIndex);
 }
 
 function goBack() {
@@ -339,19 +340,161 @@ function renderApp(aptIndex) {
     const icon = btn.querySelector('.nav-icon');
     if (icon && navIconMap[tab]) icon.textContent = navIconMap[tab];
   });
-  document.querySelectorAll('.quick-nav-card').forEach(card => {
-    const onclick = card.getAttribute('onclick') || '';
-    const match = onclick.match(/switchTab\('([^']+)'\)/);
-    if (match) {
-      const tab = match[1];
-      const label = card.querySelector('.quick-nav-label');
-      if (label && navLabelMap[tab]) label.textContent = navLabelMap[tab];
-      const icon = card.querySelector('.quick-nav-icon');
-      if (icon && navIconMap[tab]) icon.textContent = navIconMap[tab];
-    }
+  // Perf: use data-tab attribute instead of regex parsing of onclick
+  document.querySelectorAll('.quick-nav-card[data-tab]').forEach(card => {
+    const tab = card.dataset.tab;
+    const label = card.querySelector('.quick-nav-label');
+    if (label && navLabelMap[tab]) label.textContent = navLabelMap[tab];
+    const icon = card.querySelector('.quick-nav-icon');
+    if (icon && navIconMap[tab]) icon.textContent = navIconMap[tab];
   });
 
   // Update section headers (language-aware)
+  const st = d.sectionTitles || DEFAULT_DATA.sectionTitles;
+  const sectionHeaderMap = [
+    { tab: 'stay',      eyebrow: currentLang === 'en' ? (st.stayEyebrowEn      || t('stayEyebrow'))      : (st.stayEyebrowIt      || t('stayEyebrow')),      title: currentLang === 'en' ? (st.stayTitleEn      || t('stayTitle'))      : (st.stayTitleIt      || t('stayTitle')) },
+    { tab: 'places',    eyebrow: currentLang === 'en' ? (st.placesEyebrowEn    || t('placesEyebrow'))    : (st.placesEyebrowIt    || t('placesEyebrow')),    title: currentLang === 'en' ? (st.placesTitleEn    || t('placesTitle'))    : (st.placesTitleIt    || t('placesTitle')) },
+    { tab: 'food',      eyebrow: currentLang === 'en' ? (st.foodEyebrowEn      || t('foodEyebrow'))      : (st.foodEyebrowIt      || t('foodEyebrow')),      title: currentLang === 'en' ? (st.foodTitleEn      || t('foodTitle'))      : (st.foodTitleIt      || t('foodTitle')) },
+    { tab: 'transport', eyebrow: currentLang === 'en' ? (st.transportEyebrowEn || t('transportEyebrow')) : (st.transportEyebrowIt || t('transportEyebrow')), title: currentLang === 'en' ? (st.transportTitleEn || t('transportTitle')) : (st.transportTitleIt || t('transportTitle')) },
+    { tab: 'departure', eyebrow: currentLang === 'en' ? (st.departureEyebrowEn || t('departureEyebrow')) : (st.departureEyebrowIt || t('departureEyebrow')), title: currentLang === 'en' ? (st.departureTitleEn || t('departureTitle')) : (st.departureTitleIt || t('departureTitle')) }
+  ];
+  sectionHeaderMap.forEach(({ tab, eyebrow, title }) => {
+    const tabEl = document.getElementById('tab-' + tab);
+    if (!tabEl) return;
+    const eyebrowEl = tabEl.querySelector('.section-eyebrow');
+    const titleEl = tabEl.querySelector('.section-title');
+    if (eyebrowEl) eyebrowEl.textContent = eyebrow;
+    if (titleEl) titleEl.textContent = title;
+  });
+}
+
+// ════════════════════════════════════════════
+//  LANGUAGE-ONLY UPDATE (avoids full DOM rebuild)
+// ════════════════════════════════════════════
+function updateLanguageOnly(aptIndex) {
+  const d = currentData;
+  const apt = d.apts[aptIndex] || d.apts[0];
+
+  // Apply static i18n strings
+  applyI18n();
+
+  // Lang toggle button
+  const langBtn = document.getElementById('lang-toggle-btn');
+  if (langBtn) langBtn.textContent = t('langToggle');
+
+  // Home tab text
+  document.getElementById('w-title').textContent = t('welcome');
+  document.getElementById('w-text-it').innerHTML = renderRichText(langField(d, 'welcome') || '');
+
+  // Stay tab text
+  document.getElementById('st-guests').textContent = langField(apt, 'maxGuests');
+  document.getElementById('st-how-reach').innerHTML = renderRichText(langField(apt, 'howToReach') || '');
+  document.getElementById('st-how-access').innerHTML = renderRichText(langField(apt, 'howToAccess') || '');
+  document.getElementById('st-parking').innerHTML = renderRichText(langField(apt, 'parking') || '');
+  const sMaps = document.getElementById('s-maps');
+  if (sMaps) sMaps.textContent = t('openMaps');
+
+  // House Rules (language-dependent text)
+  const rulesList = document.getElementById('st-rules-list');
+  rulesList.innerHTML = '';
+  (apt.houseRules || []).forEach(r => {
+    const li = document.createElement('li');
+    li.className = 'rule-item';
+    const title = langField(r, 'title');
+    const desc = langField(r, 'desc');
+    li.innerHTML = `<span class="rule-icon">${escHtml(r.icon || '')}</span><div><div class="rule-title">${escHtml(title || '')}</div><div class="rule-desc">${renderRichText(desc || '')}</div></div>`;
+    rulesList.appendChild(li);
+  });
+
+  // Tags (language-dependent)
+  const bedroomTagsEl = document.getElementById('st-bedroom-tags');
+  if (bedroomTagsEl) {
+    const bedroomRaw = langField(apt, 'bedroomTags') || '';
+    bedroomTagsEl.innerHTML = bedroomRaw
+      ? bedroomRaw.split(',').map(tt => tt.trim()).filter(Boolean).map(tt => `<span class="tag tag-bedroom">${escHtml(tt)}</span>`).join('')
+      : '';
+  }
+  const kitchenTagsEl = document.getElementById('st-kitchen-tags');
+  if (kitchenTagsEl) {
+    const kitchenRaw = langField(apt, 'kitchenTags') || '';
+    kitchenTagsEl.innerHTML = kitchenRaw
+      ? kitchenRaw.split(',').map(tt => tt.trim()).filter(Boolean).map(tt => `<span class="tag tag-kitchen">${escHtml(tt)}</span>`).join('')
+      : '';
+  }
+  const bathroomTagsEl = document.getElementById('st-bathroom-tags');
+  if (bathroomTagsEl) {
+    const bathroomRaw = langField(apt, 'bathroomTags') || '';
+    bathroomTagsEl.innerHTML = bathroomRaw
+      ? bathroomRaw.split(',').map(tt => tt.trim()).filter(Boolean).map(tt => `<span class="tag tag-bathroom">${escHtml(tt)}</span>`).join('')
+      : '';
+  }
+
+  // Extra Services (language text)
+  const servicesEl = document.getElementById('st-extra-services');
+  if (servicesEl) {
+    servicesEl.innerHTML = '';
+    (apt.extraServices || []).forEach(svc => {
+      const name = langField(svc, 'name') || '';
+      const desc = langField(svc, 'desc') || '';
+      const a = document.createElement('a');
+      a.className = 'service-item';
+      a.href = '#';
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        requestService(svc);
+      });
+      a.innerHTML = `
+        <div class="service-icon">${escHtml(svc.icon || '✨')}</div>
+        <div class="service-name">${escHtml(name)}</div>
+        <div class="service-desc">${escHtml(desc)}</div>
+        <div class="service-wa-hint">${escHtml(t('waHint'))}</div>`;
+      servicesEl.appendChild(a);
+    });
+  }
+
+  // Re-render language-dependent lists
+  renderPlaces(apt.places || []);
+  renderFood(apt.restaurants || [], apt);
+  renderTransport(apt.transport || {});
+  renderCheckinSteps(d.checkinSteps || []);
+  renderDeparture(d, apt.checkoutSteps || []);
+  renderReviews(d.reviews || []);
+
+  // Nav labels
+  const nl = d.navLabels || DEFAULT_DATA.navLabels;
+  const navLabelMap = {
+    home:      currentLang === 'en' ? (nl.homeEn      || t('navHome'))      : (nl.homeIt      || t('navHome')),
+    stay:      currentLang === 'en' ? (nl.stayEn      || t('navStay'))      : (nl.stayIt      || t('navStay')),
+    places:    currentLang === 'en' ? (nl.placesEn    || t('navPlaces'))    : (nl.placesIt    || t('navPlaces')),
+    food:      currentLang === 'en' ? (nl.foodEn      || t('navFood'))      : (nl.foodIt      || t('navFood')),
+    transport: currentLang === 'en' ? (nl.transportEn || t('navTransport')) : (nl.transportIt || t('navTransport')),
+    departure: currentLang === 'en' ? (nl.departureEn || t('navDeparture')) : (nl.departureIt || t('navDeparture'))
+  };
+  const navIconMap = {
+    home:      nl.homeIcon      || DEFAULT_DATA.navLabels.homeIcon,
+    stay:      nl.stayIcon      || DEFAULT_DATA.navLabels.stayIcon,
+    places:    nl.placesIcon    || DEFAULT_DATA.navLabels.placesIcon,
+    food:      nl.foodIcon      || DEFAULT_DATA.navLabels.foodIcon,
+    transport: nl.transportIcon || DEFAULT_DATA.navLabels.transportIcon,
+    departure: nl.departureIcon || DEFAULT_DATA.navLabels.departureIcon
+  };
+  document.querySelectorAll('.nav-item[data-tab]').forEach(btn => {
+    const tab = btn.getAttribute('data-tab');
+    const label = btn.querySelector('.nav-label');
+    if (label && navLabelMap[tab]) label.textContent = navLabelMap[tab];
+    const icon = btn.querySelector('.nav-icon');
+    if (icon && navIconMap[tab]) icon.textContent = navIconMap[tab];
+  });
+  // Perf: use data-tab attribute instead of regex parsing of onclick
+  document.querySelectorAll('.quick-nav-card[data-tab]').forEach(card => {
+    const tab = card.dataset.tab;
+    const label = card.querySelector('.quick-nav-label');
+    if (label && navLabelMap[tab]) label.textContent = navLabelMap[tab];
+    const icon = card.querySelector('.quick-nav-icon');
+    if (icon && navIconMap[tab]) icon.textContent = navIconMap[tab];
+  });
+
+  // Section headers
   const st = d.sectionTitles || DEFAULT_DATA.sectionTitles;
   const sectionHeaderMap = [
     { tab: 'stay',      eyebrow: currentLang === 'en' ? (st.stayEyebrowEn      || t('stayEyebrow'))      : (st.stayEyebrowIt      || t('stayEyebrow')),      title: currentLang === 'en' ? (st.stayTitleEn      || t('stayTitle'))      : (st.stayTitleIt      || t('stayTitle')) },
