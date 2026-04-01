@@ -40,6 +40,11 @@ function _swBannerLang() {
 }
 
 function showUpdateBanner(worker) {
+  // If the user just clicked "Update", skip showing the banner on the first reload
+  if (sessionStorage.getItem('sw_just_updated')) {
+    sessionStorage.removeItem('sw_just_updated');
+    return;
+  }
   if (document.getElementById('sw-update-banner')) return;
   const lang = _swBannerLang();
   const isEn = lang === 'en';
@@ -52,6 +57,7 @@ function showUpdateBanner(worker) {
 
   document.getElementById('sw-close-btn').addEventListener('click', function() { banner.remove(); });
   document.getElementById('sw-update-btn').addEventListener('click', () => {
+    sessionStorage.setItem('sw_just_updated', '1');
     if (worker) {
       // Dice al nuovo SW di attivarsi → trigga controllerchange → reload
       worker.postMessage({ type: 'SKIP_WAITING' });

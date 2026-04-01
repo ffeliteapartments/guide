@@ -254,7 +254,41 @@ async function hostPublishNow() {
   // 2. Pubblica usando il token pre-salvato
   if (btn) { btn.disabled = true; btn.textContent = '⏳ Pubblicazione…'; }
 
+  const msg = document.getElementById('s-publish-msg');
+  if (msg) msg.textContent = '';
+
+  // Show deploy progress steps
+  const deploySteps = [
+    { id: 'hstep-fetch',  label: 'Recupero file dal server...', icon: '📡' },
+    { id: 'hstep-patch',  label: 'Applicazione modifiche...',   icon: '✏️' },
+    { id: 'hstep-upload', label: 'Caricamento su GitHub...',    icon: '⬆️' },
+    { id: 'hstep-deploy', label: 'Avvio deploy su GitHub Pages...', icon: '🚀' }
+  ];
+  if (msg) {
+    msg.innerHTML = '<div class="deploy-steps">' +
+      deploySteps.map(s => `<div class="deploy-step" id="${s.id}"><div class="deploy-step-icon">${s.icon}</div><div class="deploy-step-label">${s.label}</div></div>`).join('') +
+      '<div class="deploy-timer" id="hdeploy-timer"></div>' +
+      '</div>';
+  }
+  const setStep = (id, state) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('active', 'done', 'error');
+    el.classList.add(state);
+    if (state === 'active') {
+      const icon = el.querySelector('.deploy-step-icon');
+      if (icon) icon.innerHTML = '<div class="deploy-spinner"></div>';
+    }
+  };
+  const deployStart = Date.now();
+  const timerInterval = setInterval(() => {
+    const el = document.getElementById('hdeploy-timer');
+    if (el) el.textContent = ((Date.now() - deployStart) / 1000).toFixed(1) + 's';
+  }, 100);
+
   try {
+    setStep('hstep-fetch', 'active');
+
     await _commitDataToGitHub(
       token,
       d,
@@ -262,10 +296,23 @@ async function hostPublishNow() {
       false /* patchHashes */
     );
 
+    setStep('hstep-fetch', 'done');
+    setStep('hstep-patch', 'active');
+    setStep('hstep-patch', 'done');
+    setStep('hstep-upload', 'active');
+    setStep('hstep-upload', 'done');
+    setStep('hstep-deploy', 'active');
+    setTimeout(() => { setStep('hstep-deploy', 'done'); }, 1500);
+
+    clearInterval(timerInterval);
+    showOk(msg, '✅ Pubblicato! Le modifiche saranno online tra qualche secondo.');
     showToast('✅ Pubblicato! Le modifiche saranno online tra qualche secondo.', 'success');
-    closeSettings();
+    addChangelogEntry('Pubblicazione online (host)', 'host');
+    setTimeout(() => { if (msg) msg.innerHTML = ''; closeSettings(); }, 3000);
   } catch (err) {
-    showToast('❌ Errore: ' + (err.message || 'Errore sconosciuto.') + ' Prova a contattare l\'amministratore.', 'error');
+    clearInterval(timerInterval);
+    showErr(msg, '❌ Errore: ' + (err.message || 'Errore sconosciuto.') + ' Prova a contattare l\'amministratore.');
+    showToast('❌ Errore: ' + (err.message || 'Errore sconosciuto.'), 'error');
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = '🚀 Pubblica Ora'; }
   }
