@@ -1,11 +1,20 @@
 if ('serviceWorker' in navigator) {
+  let refreshing = false;
+  // Quando il nuovo SW prende il controllo, ricarica la pagina
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!refreshing) {
+      refreshing = true;
+      location.reload();
+    }
+  });
+
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').then(reg => {
       reg.addEventListener('updatefound', () => {
         const newWorker = reg.installing;
         newWorker.addEventListener('statechange', () => {
           if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-            showUpdateBanner();
+            showUpdateBanner(newWorker);
           }
         });
       });
@@ -13,12 +22,17 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-function showUpdateBanner() {
+function showUpdateBanner(worker) {
   if (document.getElementById('sw-update-banner')) return;
   const banner = document.createElement('div');
   banner.id = 'sw-update-banner';
-  banner.innerHTML = '🔄 Nuova versione disponibile! <button class="sw-banner-btn-update" onclick="location.reload()">Aggiorna</button><button class="sw-banner-btn-close" onclick="this.parentElement.remove()">✕</button>';
+  banner.innerHTML = '🔄 Nuova versione disponibile! <button class="sw-banner-btn-update" id="sw-update-btn">Aggiorna</button><button class="sw-banner-btn-close" onclick="this.parentElement.remove()">✕</button>';
   document.body.appendChild(banner);
+
+  document.getElementById('sw-update-btn').addEventListener('click', () => {
+    // Dice al nuovo SW di attivarsi → trigga controllerchange → reload
+    worker.postMessage({ type: 'SKIP_WAITING' });
+  });
 }
 
 // Call init after all scripts are loaded.
