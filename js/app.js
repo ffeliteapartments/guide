@@ -45,7 +45,7 @@ function renderLanding() {
         <div class="apt-card-superhost">${escHtml(t('superhost'))}</div>
       </div>
       <div class="lang-cards">
-        <div class="lang-card" onclick="openGuide(${i},'it')">
+        <div class="lang-card" data-action="openGuide" data-apt="${i}" data-lang="it">
           <span class="lang-card-flag">🇮🇹</span>
           <div class="lang-card-body">
             <div class="lang-card-title">${escHtml(t('langBtnItTitle'))}</div>
@@ -53,7 +53,7 @@ function renderLanding() {
           </div>
           <span class="lang-card-arrow">›</span>
         </div>
-        <div class="lang-card" onclick="openGuide(${i},'en')">
+        <div class="lang-card" data-action="openGuide" data-apt="${i}" data-lang="en">
           <span class="lang-card-flag">🇬🇧</span>
           <div class="lang-card-body">
             <div class="lang-card-title">${escHtml(t('langBtnEnTitle'))}</div>
@@ -856,8 +856,12 @@ function checkPin() {
     }, 1000);
     return;
   }
-  hashPin(pinBuffer).then(hash => {
-    if (hash === getStoredPinHash()) {
+  verifyPin(pinBuffer, getStoredPinHash()).then(async ok => {
+    if (ok) {
+      // Upgrade legacy SHA-256 hash to PBKDF2 on first successful login
+      if (/^[a-f0-9]{64}$/.test(getStoredPinHash())) {
+        localStorage.setItem(PIN_KEY, await hashPin(pinBuffer));
+      }
       resetRateLimit('pin');
       currentRole = 'host';
       closePinModal();
@@ -902,9 +906,9 @@ async function submitRecovery() {
   const inp = document.getElementById('recovery-word-input');
   const word = inp ? inp.value : '';
   if (!word) return;
-  const wordHash = await hashPin(word);
   const errEl = document.getElementById('recovery-error');
-  if (wordHash !== getStoredRecoveryHash()) {
+  const ok = await verifyPin(word, getStoredRecoveryHash());
+  if (!ok) {
     errEl.style.color = 'var(--accent)';
     errEl.textContent = '❌ Parola segreta errata.';
     setTimeout(() => { errEl.textContent = ''; }, 2000);
@@ -964,8 +968,7 @@ async function changePin() {
   const newPin = document.getElementById('s-pin-new').value;
   const confirm2 = document.getElementById('s-pin-confirm').value;
   const msg = document.getElementById('s-pin-msg');
-  const currentHash = await hashPin(current);
-  if (currentHash !== getStoredPinHash()) { showErr(msg, 'PIN attuale non corretto.'); return; }
+  if (!await verifyPin(current, getStoredPinHash())) { showErr(msg, 'PIN attuale non corretto.'); return; }
   if (!/^\d{4}$/.test(newPin)) { showErr(msg, 'Il nuovo PIN deve essere di esattamente 4 cifre numeriche.'); return; }
   if (newPin !== confirm2) { showErr(msg, 'I due PIN non coincidono. Riprova.'); return; }
   const newHash = await hashPin(newPin);
@@ -1015,9 +1018,16 @@ async function submitLogin() {
     errEl.textContent = '❌ Inserisci username e password.';
     return;
   }
-  const userHash = await hashPin(user);
-  const passHash = await hashPin(pass);
-  if (userHash === getStoredUserHash() && passHash === getStoredPassHash()) {
+  const userOk = await verifyPin(user, getStoredUserHash());
+  const passOk = await verifyPin(pass, getStoredPassHash());
+  if (userOk && passOk) {
+    // Upgrade legacy SHA-256 hashes to PBKDF2 on first successful login
+    if (/^[a-f0-9]{64}$/.test(getStoredUserHash())) {
+      localStorage.setItem(USER_KEY, await hashPin(user));
+    }
+    if (/^[a-f0-9]{64}$/.test(getStoredPassHash())) {
+      localStorage.setItem(PASS_KEY, await hashPin(pass));
+    }
     resetRateLimit('admin');
     currentRole = 'admin';
     closePinModal();
@@ -1041,9 +1051,9 @@ async function changeCredentials() {
   const confirmPass = document.getElementById('s-pass-confirm').value;
   const msg = document.getElementById('s-cred-msg');
   if (!currentUser || !currentPass) { showErr(msg, 'Inserisci le credenziali attuali.'); return; }
-  const currentUserHash = await hashPin(currentUser);
-  const currentPassHash = await hashPin(currentPass);
-  if (currentUserHash !== getStoredUserHash() || currentPassHash !== getStoredPassHash()) {
+  const userOk = await verifyPin(currentUser, getStoredUserHash());
+  const passOk = await verifyPin(currentPass, getStoredPassHash());
+  if (!userOk || !passOk) {
     showErr(msg, 'Credenziali attuali non corrette.');
     return;
   }
@@ -1065,10 +1075,13 @@ async function changeCredentials() {
 }
 
 // ════════════════════════════════════════════
-//  PIN MIGRATION (plain → SHA-256)
+//  PIN MIGRATION (plain 4-digit → PBKDF2)
+//  SHA-256 → PBKDF2 migration happens naturally on first successful login
+//  (verifyPin accepts both formats and callers re-hash after verification).
 // ════════════════════════════════════════════
 async function migratePinIfNeeded() {
   const stored = localStorage.getItem(PIN_KEY);
+  // Migrate plain 4-digit PINs stored before any hashing was introduced
   if (stored && /^\d{4}$/.test(stored)) {
     const hash = await hashPin(stored);
     localStorage.setItem(PIN_KEY, hash);
@@ -1328,10 +1341,40 @@ function initScrollTopBtn() {
 }
 
 // ════════════════════════════════════════════
+//  DYNAMIC MANIFEST (C8)
+// ════════════════════════════════════════════
+function updateDynamicManifest() {
+  const d = currentData;
+  if (!d || !d.bbName || d.bbName === 'Il Tuo B&B') return; // keep static manifest for unconfigured
+  const manifest = {
+    name: (d.bbName || 'Guest Guide') + ' — Guida',
+    short_name: d.bbName || 'Guida',
+    start_url: './',
+    scope: './',
+    lang: 'it',
+    display: 'standalone',
+    background_color: '#1a3238',
+    theme_color: '#1a3238',
+    description: 'Guida digitale per gli ospiti di ' + (d.bbName || ''),
+    categories: ['travel', 'utilities'],
+    icons: [
+      { src: 'icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
+      { src: 'icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
+      { src: 'icon.svg', sizes: '512x512', type: 'image/svg+xml', purpose: 'any' }
+    ]
+  };
+  const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.getElementById('manifest-link');
+  if (link) link.setAttribute('href', url);
+}
+
+// ════════════════════════════════════════════
 //  INIT
 // ════════════════════════════════════════════
 function init() {
   currentData = loadData();
+  updateDynamicManifest();
 
   // Splash screen
   const splash = document.getElementById('splash-screen');
@@ -1383,4 +1426,212 @@ function init() {
   initOfflineIndicator();
   initSwipeGestures();
   initScrollTopBtn();
+  initEventListeners();
+}
+
+// ════════════════════════════════════════════
+//  CSP-SAFE EVENT BINDING (C5)
+//  Replaces all inline onclick handlers removed from index.html.
+// ════════════════════════════════════════════
+function initEventListeners() {
+  // ── Header / nav ─────────────────────────
+  var gearBtn = document.getElementById('gear-btn');
+  if (gearBtn) gearBtn.addEventListener('click', openSettings);
+
+  var backBtn = document.querySelector('.back-btn');
+  if (backBtn) backBtn.addEventListener('click', goBack);
+
+  var langBtn = document.getElementById('lang-toggle-btn');
+  if (langBtn) langBtn.addEventListener('click', switchLang);
+
+  // ── Landing page apt cards (lang-card) ───
+  var landing = document.getElementById('landing');
+  if (landing) {
+    landing.addEventListener('click', function(e) {
+      var card = e.target.closest('[data-action="openGuide"]');
+      if (!card) return;
+      var apt  = parseInt(card.dataset.apt, 10);
+      var lang = card.dataset.lang || 'it';
+      openGuide(apt, lang);
+    });
+  }
+
+  // ── Quick-nav cards (data-tab attribute) ─
+  document.querySelectorAll('.quick-nav-card[data-tab]').forEach(function(card) {
+    card.addEventListener('click', function() { switchTab(this.dataset.tab); });
+  });
+
+  // ── Copy WiFi button ──────────────────────
+  var copyWifiBtn = document.getElementById('copy-wifi-btn');
+  if (copyWifiBtn) copyWifiBtn.addEventListener('click', copyWifi);
+
+  // ── Bottom nav bar (data-tab attribute) ──
+  document.querySelectorAll('.nav-item[data-tab]').forEach(function(btn) {
+    btn.addEventListener('click', function() { switchTab(this.dataset.tab); });
+  });
+
+  // ── Scroll-to-top button ──────────────────
+  var scrollTopBtn = document.getElementById('scroll-top-btn');
+  if (scrollTopBtn) scrollTopBtn.addEventListener('click', scrollToTop);
+
+  // ── Settings panel controls ───────────────
+  var closeSettingsBtn = document.querySelector('#settings-panel .close-btn');
+  if (closeSettingsBtn) closeSettingsBtn.addEventListener('click', closeSettings);
+
+  var saveApplyBtn = document.evaluate('//button[contains(@class,"s-btn") and contains(.,"Salva e Applica")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (saveApplyBtn) saveApplyBtn.addEventListener('click', saveAndApply);
+
+  var resetDataBtn = document.evaluate('//button[contains(@class,"s-btn") and contains(@class,"danger") and contains(@class,"admin-only") and contains(.,"Reset")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (resetDataBtn) resetDataBtn.addEventListener('click', resetData);
+
+  var previewModeBtn = document.evaluate('//button[contains(@class,"s-btn") and contains(.,"Anteprima")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (previewModeBtn) previewModeBtn.addEventListener('click', previewMode);
+
+  var publishBtn = document.getElementById('publish-btn');
+  if (publishBtn) publishBtn.addEventListener('click', publishOnline);
+
+  var hostPublishBtn = document.getElementById('host-publish-btn');
+  if (hostPublishBtn) hostPublishBtn.addEventListener('click', hostPublishNow);
+
+  // ── Theme options (data-theme attribute) ──
+  document.querySelectorAll('.theme-option[data-theme]').forEach(function(el) {
+    el.addEventListener('click', function() { selectTheme(this.dataset.theme); });
+  });
+
+  // ── Settings section add/action buttons ──
+  var addAptBtn = document.evaluate('//button[contains(@class,"s-add-btn") and contains(.,"Aggiungi Appartamento")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (addAptBtn) addAptBtn.addEventListener('click', addSettingsApt);
+
+  var addReviewBtn = document.evaluate('//button[contains(@class,"s-add-btn") and contains(.,"Aggiungi Recensione")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (addReviewBtn) addReviewBtn.addEventListener('click', addSettingsReview);
+
+  var addContactBtn = document.evaluate('//button[contains(@class,"s-add-btn") and contains(.,"Aggiungi Contatto")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (addContactBtn) addContactBtn.addEventListener('click', addSettingsContact);
+
+  var addCheckinBtn = document.evaluate('//button[contains(@class,"s-add-btn") and contains(.,"Aggiungi Step Check-in")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (addCheckinBtn) addCheckinBtn.addEventListener('click', addSettingsCheckinStep);
+
+  // ── Security section buttons ──────────────
+  var changePinBtn = document.evaluate('//button[contains(@class,"s-btn") and contains(.,"Cambia PIN")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (changePinBtn) changePinBtn.addEventListener('click', changePin);
+
+  var changeCredBtn = document.evaluate('//button[contains(@class,"s-btn") and contains(.,"Cambia Credenziali")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (changeCredBtn) changeCredBtn.addEventListener('click', changeCredentials);
+
+  var changeRecoveryBtn = document.evaluate('//button[contains(@class,"s-btn") and contains(.,"Cambia Parola di Recovery")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (changeRecoveryBtn) changeRecoveryBtn.addEventListener('click', changeRecoveryWord);
+
+  var removeTokenBtn = document.evaluate('//button[contains(@class,"s-btn") and contains(.,"Rimuovi Token")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (removeTokenBtn) removeTokenBtn.addEventListener('click', removeGithubToken);
+
+  var saveTokenBtn = document.evaluate('//button[contains(@class,"s-btn") and contains(.,"Salva Token per Host")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (saveTokenBtn) saveTokenBtn.addEventListener('click', saveTokenForHost);
+
+  // ── QR / Changelog / CNAME / Analytics ───
+  var qrPrintBtn = document.querySelector('.qr-print-btn');
+  if (qrPrintBtn) qrPrintBtn.addEventListener('click', printAllQr);
+
+  var clearChangelogBtn = document.evaluate('//button[contains(@class,"s-btn") and contains(.,"Cancella Storico")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (clearChangelogBtn) clearChangelogBtn.addEventListener('click', clearChangelog);
+
+  var copyCnameBtn = document.evaluate('//button[contains(@class,"s-btn") and contains(.,"Copia Record CNAME")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (copyCnameBtn) copyCnameBtn.addEventListener('click', copyCnameRecord);
+
+  var resetAnalyticsBtn = document.evaluate('//button[contains(@class,"s-btn") and contains(.,"Reset Analytics")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (resetAnalyticsBtn) resetAnalyticsBtn.addEventListener('click', resetAnalytics);
+
+  // ── Preview banner ────────────────────────
+  var previewSaveBtn = document.evaluate('//button[contains(@class,"preview-banner-btn") and contains(.,"Salva")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (previewSaveBtn) previewSaveBtn.addEventListener('click', previewSave);
+
+  var previewCancelBtn = document.evaluate('//button[contains(@class,"preview-banner-btn") and contains(.,"Annulla")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (previewCancelBtn) previewCancelBtn.addEventListener('click', previewCancel);
+
+  // ── PIN pad ───────────────────────────────
+  document.querySelectorAll('.pin-key').forEach(function(btn) {
+    var digit = btn.textContent.trim();
+    if (digit === '⌫') {
+      btn.addEventListener('click', pinBackspace);
+    } else {
+      btn.addEventListener('click', function() { pinKey(digit); });
+    }
+  });
+
+  var closePinBtn = document.querySelector('.pin-cancel:not(.pin-forgot):not(.pin-login-btn)');
+  if (closePinBtn) closePinBtn.addEventListener('click', closePinModal);
+
+  var forgotPinBtn = document.querySelector('.pin-forgot');
+  if (forgotPinBtn) forgotPinBtn.addEventListener('click', forgotPin);
+
+  var openLoginBtn = document.querySelector('.pin-login-btn');
+  if (openLoginBtn) openLoginBtn.addEventListener('click', openLoginForm);
+
+  // ── Login form ────────────────────────────
+  var submitLoginBtn = document.querySelector('.login-submit-btn');
+  if (submitLoginBtn) submitLoginBtn.addEventListener('click', submitLogin);
+
+  var closeLoginBtn = document.querySelector('#login-view .pin-cancel');
+  if (closeLoginBtn) closeLoginBtn.addEventListener('click', closeLoginForm);
+
+  // ── Recovery form ─────────────────────────
+  var submitRecoveryBtn = document.evaluate('//button[contains(@class,"login-submit-btn") and contains(.,"Verifica")]',
+    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (submitRecoveryBtn) submitRecoveryBtn.addEventListener('click', submitRecovery);
+
+  var closeRecoveryBtn = document.querySelector('#recovery-view .pin-cancel');
+  if (closeRecoveryBtn) closeRecoveryBtn.addEventListener('click', closeRecoveryView);
+
+  // ── Font preload → stylesheet ─────────────
+  var fontLink = document.querySelector('link[rel="preload"][as="style"]');
+  if (fontLink) { fontLink.onload = function() { this.onload = null; this.rel = 'stylesheet'; }; }
+
+  // ── Event delegation for dynamically-rendered settings buttons ────────────
+  // Handles data-action buttons generated by renderSettingsApts(), renderAptHouseRules(), etc.
+  var settingsPanel = document.getElementById('settings-panel');
+  if (settingsPanel) {
+    settingsPanel.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-action]');
+      if (!btn) return;
+      var action = btn.dataset.action;
+      var apt    = btn.dataset.apt !== undefined ? parseInt(btn.dataset.apt, 10) : undefined;
+      var idx    = btn.dataset.idx !== undefined ? parseInt(btn.dataset.idx, 10) : undefined;
+      switch (action) {
+        // settings-apartments.js
+        case 'removeSettingsApt':       e.stopPropagation(); removeSettingsApt(apt); break;
+        case 'addAptHouseRule':         addAptHouseRule(apt); break;
+        case 'addAptExtraService':      addAptExtraService(apt); break;
+        case 'addAptPlace':             addAptPlace(apt); break;
+        case 'addAptRest':              addAptRest(apt); break;
+        case 'addAptSupermarket':       addAptSupermarket(apt); break;
+        case 'addAptCheckoutStep':      addAptCheckoutStep(apt); break;
+        case 'removeAptHouseRule':      removeAptHouseRule(apt, idx); break;
+        case 'removeAptExtraService':   removeAptExtraService(apt, idx); break;
+        case 'removeAptPlace':          removeAptPlace(apt, idx); break;
+        case 'removeAptRest':           removeAptRest(apt, idx); break;
+        case 'removeAptSupermarket':    removeAptSupermarket(apt, idx); break;
+        case 'removeAptCheckoutStep':   removeAptCheckoutStep(apt, idx); break;
+        // settings-ui.js
+        case 'removeSettingsCheckinStep': removeSettingsCheckinStep(idx); break;
+        case 'removeSettingsContact':     removeSettingsContact(idx); break;
+        case 'removeSettingsReview':      removeSettingsReview(idx); break;
+      }
+    });
+  }
 }

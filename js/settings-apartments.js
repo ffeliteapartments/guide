@@ -10,7 +10,7 @@ function renderSettingsApts(apts) {
     const section = document.createElement('details');
     section.className = 's-section';
     const delBtn = canDel
-      ? `<button class="s-remove-btn" onclick="event.stopPropagation(); removeSettingsApt(${i})">🗑️ Elimina</button>`
+      ? `<button class="s-remove-btn" data-action="removeSettingsApt" data-apt="${i}">🗑️ Elimina</button>`
       : '';
     section.innerHTML = `
       <summary class="s-section-title"><span class="s-section-title-inner">🏠 Appartamento ${i + 1}${delBtn}</span></summary>
@@ -44,7 +44,7 @@ function renderSettingsApts(apts) {
         <div class="s-divider"></div>
         <div class="s-sub-title">🏠 Regole della casa</div>
         <div id="s-a${i}-rules" data-count="0"></div>
-        <button class="s-add-btn" style="margin-top:8px" onclick="addAptHouseRule(${i})">➕ Aggiungi Regola</button>
+        <button class="s-add-btn" style="margin-top:8px" data-action="addAptHouseRule" data-apt="${i}">➕ Aggiungi Regola</button>
         <div class="s-divider"></div>
         <div class="s-sub-title">🛌 Camera da Letto — Dotazioni (comma-separato)</div>
         <div class="s-field"><label>Dotazioni camera 🇮🇹</label><input type="text" id="s-a${i}-bedroomTagsIt" value="${escHtml(apt.bedroomTagsIt || '')}" placeholder="Letto matrimoniale,Armadio,Biancheria..." onblur="autoTranslateField('s-a${i}-bedroomTagsIt','s-a${i}-bedroomTagsEn')"></div>
@@ -60,19 +60,19 @@ function renderSettingsApts(apts) {
         <div class="s-divider"></div>
         <div class="s-sub-title">✨ Servizi Extra</div>
         <div id="s-a${i}-services" data-count="0"></div>
-        <button class="s-add-btn" style="margin-top:8px" onclick="addAptExtraService(${i})">➕ Aggiungi Servizio</button>
+        <button class="s-add-btn" style="margin-top:8px" data-action="addAptExtraService" data-apt="${i}">➕ Aggiungi Servizio</button>
         <div class="s-divider"></div>
         <div class="s-sub-title">🗺️ Luoghi da Visitare</div>
         <div id="s-a${i}-places" data-count="0"></div>
-        <button class="s-add-btn" style="margin-top:8px" onclick="addAptPlace(${i})">➕ Aggiungi Luogo</button>
+        <button class="s-add-btn" style="margin-top:8px" data-action="addAptPlace" data-apt="${i}">➕ Aggiungi Luogo</button>
         <div class="s-divider"></div>
         <div class="s-sub-title">🍽️ Ristoranti</div>
         <div id="s-a${i}-restaurants" data-count="0"></div>
-        <button class="s-add-btn" style="margin-top:8px" onclick="addAptRest(${i})">➕ Aggiungi Ristorante</button>
+        <button class="s-add-btn" style="margin-top:8px" data-action="addAptRest" data-apt="${i}">➕ Aggiungi Ristorante</button>
         <div class="s-divider"></div>
         <div class="s-sub-title">🛒 Supermercati</div>
         <div id="s-a${i}-supermarkets" data-count="0"></div>
-        <button class="s-add-btn" style="margin-top:8px" onclick="addAptSupermarket(${i})">➕ Aggiungi Supermercato</button>
+        <button class="s-add-btn" style="margin-top:8px" data-action="addAptSupermarket" data-apt="${i}">➕ Aggiungi Supermercato</button>
         <div class="s-divider"></div>
         <div class="s-sub-title">🚇 Trasporti</div>
         <div class="s-fields">
@@ -127,7 +127,7 @@ function renderSettingsApts(apts) {
         <div class="s-divider"></div>
         <div class="s-sub-title">🧳 Istruzioni Check-out</div>
         <div id="s-a${i}-checkoutSteps" data-count="0"></div>
-        <button class="s-add-btn" style="margin-top:8px" onclick="addAptCheckoutStep(${i})">➕ Aggiungi Passo</button>
+        <button class="s-add-btn" style="margin-top:8px" data-action="addAptCheckoutStep" data-apt="${i}">➕ Aggiungi Passo</button>
       </div>`;
     container.appendChild(section);
     renderAptHouseRules(i, apt.houseRules || []);
@@ -335,7 +335,7 @@ function renderAptHouseRules(aptIndex, rules) {
     html += `
       <div class="s-sub-title s-sub-title-row" style="margin-top:12px">
         <span>Regola ${j + 1}</span>
-        <button class="s-remove-btn" onclick="removeAptHouseRule(${aptIndex}, ${j})">🗑️ Rimuovi</button>
+        <button class="s-remove-btn" data-action="removeAptHouseRule" data-apt="${aptIndex}" data-idx="${j}">🗑️ Rimuovi</button>
       </div>
       <div class="s-field"><label>Icona (emoji)</label><input type="text" id="s-a${aptIndex}-r${j}-icon" value="${escHtml(r.icon || '')}" placeholder="🔇"></div>
       <div class="s-field"><label>Titolo 🇮🇹</label><input type="text" id="s-a${aptIndex}-r${j}-titleIt" value="${escHtml(r.titleIt || '')}" onblur="autoTranslateField('s-a${aptIndex}-r${j}-titleIt','s-a${aptIndex}-r${j}-titleEn')"></div>
@@ -387,7 +387,7 @@ function renderAptExtraServices(aptIndex, services) {
     html += `
       <div class="s-sub-title s-sub-title-row" style="margin-top:12px">
         <span>Servizio ${j + 1}</span>
-        <button class="s-remove-btn" onclick="removeAptExtraService(${aptIndex}, ${j})">🗑️ Rimuovi</button>
+        <button class="s-remove-btn" data-action="removeAptExtraService" data-apt="${aptIndex}" data-idx="${j}">🗑️ Rimuovi</button>
       </div>
       <div class="s-field"><label>Icona (emoji)</label><input type="text" id="s-a${aptIndex}-svc${j}-icon" value="${escHtml(svc.icon || '')}" placeholder="✨"></div>
       <div class="s-field"><label>Nome 🇮🇹</label><input type="text" id="s-a${aptIndex}-svc${j}-nameIt" value="${escHtml(svc.nameIt || '')}" onblur="autoTranslateField('s-a${aptIndex}-svc${j}-nameIt','s-a${aptIndex}-svc${j}-nameEn')"></div>
@@ -440,7 +440,7 @@ function renderAptPlaces(aptIndex, places) {
     html += `
       <div class="s-sub-title s-sub-title-row" style="margin-top:12px">
         <span>Luogo ${j + 1}</span>
-        <button class="s-remove-btn" onclick="removeAptPlace(${aptIndex}, ${j})">🗑️ Rimuovi</button>
+        <button class="s-remove-btn" data-action="removeAptPlace" data-apt="${aptIndex}" data-idx="${j}">🗑️ Rimuovi</button>
       </div>
       <div class="s-field"><label>Emoji</label><input type="text" id="s-a${aptIndex}-pl${j}-emoji" value="${escHtml(p.emoji || '📍')}" placeholder="📍" style="max-width:80px"></div>
       <div class="s-field"><label>Nome</label><input type="text" id="s-a${aptIndex}-pl${j}-name" value="${escHtml(p.name || '')}"></div>
@@ -495,7 +495,7 @@ function renderAptRests(aptIndex, rests) {
     html += `
       <div class="s-sub-title s-sub-title-row" style="margin-top:12px">
         <span>Ristorante ${j + 1}</span>
-        <button class="s-remove-btn" onclick="removeAptRest(${aptIndex}, ${j})">🗑️ Rimuovi</button>
+        <button class="s-remove-btn" data-action="removeAptRest" data-apt="${aptIndex}" data-idx="${j}">🗑️ Rimuovi</button>
       </div>
       <div class="s-field"><label>Emoji</label><input type="text" id="s-a${aptIndex}-rt${j}-emoji" value="${escHtml(r.emoji || '🍽️')}" placeholder="🍽️" style="max-width:80px"></div>
       <div class="s-field"><label>Nome</label><input type="text" id="s-a${aptIndex}-rt${j}-name" value="${escHtml(r.name || '')}"></div>
@@ -550,7 +550,7 @@ function renderAptSupermarkets(aptIndex, supermarkets) {
     html += `
       <div class="s-sub-title s-sub-title-row" style="margin-top:12px">
         <span>Supermercato ${j + 1}</span>
-        <button class="s-remove-btn" onclick="removeAptSupermarket(${aptIndex}, ${j})">🗑️ Rimuovi</button>
+        <button class="s-remove-btn" data-action="removeAptSupermarket" data-apt="${aptIndex}" data-idx="${j}">🗑️ Rimuovi</button>
       </div>
       <div class="s-field"><label>Emoji</label><input type="text" id="s-a${aptIndex}-sm${j}-emoji" value="${escHtml(s.emoji || '🛒')}" placeholder="🛒" style="max-width:80px"></div>
       <div class="s-field"><label>Nome</label><input type="text" id="s-a${aptIndex}-sm${j}-name" value="${escHtml(s.name || '')}"></div>

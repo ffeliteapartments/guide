@@ -14,7 +14,7 @@ function renderAptCheckoutSteps(aptIndex, steps) {
     html += `
       <div class="s-sub-title s-sub-title-row" style="margin-top:12px">
         <span>Passo ${j + 1}</span>
-        <button class="s-remove-btn" onclick="removeAptCheckoutStep(${aptIndex}, ${j})">🗑️ Rimuovi</button>
+        <button class="s-remove-btn" data-action="removeAptCheckoutStep" data-apt="${aptIndex}" data-idx="${j}">🗑️ Rimuovi</button>
       </div>
       <div class="s-field"><label>Titolo 🇮🇹</label><input type="text" id="s-a${aptIndex}-cs${j}-titleIt" value="${escHtml(step.titleIt || '')}" onblur="autoTranslateField('s-a${aptIndex}-cs${j}-titleIt','s-a${aptIndex}-cs${j}-titleEn')"></div>
       <div class="s-field"><label>Titolo 🇬🇧</label><input type="text" id="s-a${aptIndex}-cs${j}-titleEn" value="${escHtml(step.titleEn || '')}"></div>
@@ -65,7 +65,7 @@ function renderSettingsCheckinSteps(steps) {
     html += `
       <div class="s-sub-title s-sub-title-row" style="margin-top:12px">
         <span>Step ${j + 1}</span>
-        <button class="s-remove-btn" onclick="removeSettingsCheckinStep(${j})">🗑️ Rimuovi</button>
+        <button class="s-remove-btn" data-action="removeSettingsCheckinStep" data-idx="${j}">🗑️ Rimuovi</button>
       </div>
       <div class="s-field"><label>Emoji</label><input type="text" id="s-ci${j}-icon" value="${escHtml(step.icon || '')}" style="max-width:80px"></div>
       <div class="s-field"><label>Titolo 🇮🇹</label><input type="text" id="s-ci${j}-titleIt" value="${escHtml(step.titleIt || '')}" onblur="autoTranslateField('s-ci${j}-titleIt','s-ci${j}-titleEn')"></div>
@@ -120,7 +120,7 @@ function renderSettingsContacts(contacts) {
     html += `
       <div class="s-sub-title s-sub-title-row">
         <span>Contatto ${i + 1}</span>
-        <button class="s-remove-btn" onclick="removeSettingsContact(${i})">🗑️ Rimuovi</button>
+        <button class="s-remove-btn" data-action="removeSettingsContact" data-idx="${i}">🗑️ Rimuovi</button>
       </div>
       <div class="s-field"><label>Nome</label><input type="text" id="s-c${i}-name" value="${escHtml(c.name || '')}" placeholder="Nome Contatto"></div>
       <div class="s-field"><label>Telefono</label><input type="tel" id="s-c${i}-phone" value="${escHtml(c.phone || '')}" placeholder="+39 000 000 0000"></div>
@@ -402,6 +402,7 @@ function saveAndApply() {
     currentData = d;
     saveData(d);
     renderLanding();
+    updateDynamicManifest();
     settingsDirty = false;
     // Stay in settings panel - show toast feedback
     showToast("✅ Salvato! Ricorda di cliccare '🚀 Pubblica Ora' per aggiornare il sito online.", 'success');
@@ -412,6 +413,7 @@ function saveAndApply() {
     currentData = d;
     saveData(d);
     renderLanding();
+    updateDynamicManifest();
     settingsDirty = false;
     // Stay in settings panel - show toast feedback
     showToast('✅ Salvato con successo!', 'success');
@@ -610,7 +612,7 @@ function _buildReviewItem(r, idx) {
   wrap.innerHTML =
     '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">' +
       '<strong style="font-size:12px;color:var(--gold)">Recensione #' + (idx+1) + '</strong>' +
-      '<button onclick="removeSettingsReview(' + idx + ')" style="background:transparent;border:none;color:var(--accent);cursor:pointer;font-size:16px">✕</button>' +
+      '<button data-action="removeSettingsReview" data-idx="' + idx + '" style="background:transparent;border:none;color:var(--accent);cursor:pointer;font-size:16px">✕</button>' +
     '</div>' +
     '<div class="s-field"><label>Nome Ospite</label><input type="text" class="rev-author" placeholder="es. Maria R." value="' + escHtml(r.author || '') + '"></div>' +
     '<div class="s-field"><label>Stelle</label><select class="rev-stars">' +

@@ -13,16 +13,16 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="FF Elite Apartments — Guida Ospite">
 <meta name="twitter:description" content="La guida digitale interattiva per gli ospiti di FF Elite Apartments a Roma.">
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" id="manifest-link" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Guida FF Elite">
 <meta name="theme-color" content="#1a3238">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.open-meteo.com https://api.github.com https://api.mymemory.translated.net;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.open-meteo.com https://api.github.com https://api.mymemory.translated.net;">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" as="style">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -67,16 +67,16 @@
 </div>
 
 <!-- Gear button (landing only) -->
-<button class="gear-btn" id="gear-btn" onclick="openSettings()" title="Personalizzazione">⚙️</button>
+<button class="gear-btn" id="gear-btn" title="Personalizzazione">⚙️</button>
 
 <!-- ════════════════════════════════════════════
      GUIDE PAGE
 ════════════════════════════════════════════ -->
 <div id="guide">
   <div class="guide-header">
-    <button class="back-btn" onclick="goBack()" aria-label="Torna indietro">←</button>
+    <button class="back-btn" aria-label="Torna indietro">←</button>
     <div class="guide-apt-name" id="guide-apt-name">Appartamento 1</div>
-    <button class="lang-toggle-btn" id="lang-toggle-btn" onclick="switchLang()">🇬🇧 EN</button>
+    <button class="lang-toggle-btn" id="lang-toggle-btn">🇬🇧 EN</button>
   </div>
 
   <div class="guide-content" id="guide-content">
@@ -126,7 +126,7 @@
 
       <div class="quick-nav">
         <div class="quick-nav-title" data-i18n="exploreGuide">Esplora la guida</div>
-        <button class="quick-nav-card" data-tab="stay" onclick="switchTab('stay')">
+        <button class="quick-nav-card" data-tab="stay">
           <div class="quick-nav-icon">🛋️</div>
           <div class="quick-nav-body">
             <div class="quick-nav-label">Soggiorno</div>
@@ -134,7 +134,7 @@
           </div>
           <div class="quick-nav-arrow">›</div>
         </button>
-        <button class="quick-nav-card" data-tab="places" onclick="switchTab('places')">
+        <button class="quick-nav-card" data-tab="places">
           <div class="quick-nav-icon">🗺️</div>
           <div class="quick-nav-body">
             <div class="quick-nav-label">Luoghi</div>
@@ -142,7 +142,7 @@
           </div>
           <div class="quick-nav-arrow">›</div>
         </button>
-        <button class="quick-nav-card" data-tab="food" onclick="switchTab('food')">
+        <button class="quick-nav-card" data-tab="food">
           <div class="quick-nav-icon">🍽️</div>
           <div class="quick-nav-body">
             <div class="quick-nav-label">Mangiare</div>
@@ -150,7 +150,7 @@
           </div>
           <div class="quick-nav-arrow">›</div>
         </button>
-        <button class="quick-nav-card" data-tab="transport" onclick="switchTab('transport')">
+        <button class="quick-nav-card" data-tab="transport">
           <div class="quick-nav-icon">🚇</div>
           <div class="quick-nav-body">
             <div class="quick-nav-label">Muoversi</div>
@@ -158,7 +158,7 @@
           </div>
           <div class="quick-nav-arrow">›</div>
         </button>
-        <button class="quick-nav-card" data-tab="departure" onclick="switchTab('departure')">
+        <button class="quick-nav-card" data-tab="departure">
           <div class="quick-nav-icon">🧳</div>
           <div class="quick-nav-body">
             <div class="quick-nav-label">Partenza</div>
@@ -234,7 +234,7 @@
           <div class="wifi-network" id="st-wifi-name">NomeRete</div>
           <div class="wifi-pass-row">
             <div class="wifi-pass-text" id="st-wifi-pass">password123</div>
-            <button class="copy-btn" id="copy-wifi-btn" onclick="copyWifi()" title="Copia password">📋</button>
+            <button class="copy-btn" id="copy-wifi-btn" title="Copia password">📋</button>
           </div>
         </div>
 
@@ -423,33 +423,33 @@
 
   <!-- Bottom Navigation -->
   <nav class="bottom-nav" id="bottom-nav" role="tablist" aria-label="Navigazione guida">
-    <button class="nav-item active" id="nav-home" role="tab" data-tab="home" aria-controls="tab-home" aria-selected="true" onclick="switchTab('home')">
+    <button class="nav-item active" id="nav-home" role="tab" data-tab="home" aria-controls="tab-home" aria-selected="true">
       <span class="nav-icon">🏠</span>
       <span class="nav-label">Home</span>
     </button>
-    <button class="nav-item" id="nav-stay" role="tab" data-tab="stay" aria-controls="tab-stay" aria-selected="false" onclick="switchTab('stay')">
+    <button class="nav-item" id="nav-stay" role="tab" data-tab="stay" aria-controls="tab-stay" aria-selected="false">
       <span class="nav-icon">🛋️</span>
       <span class="nav-label">Soggiorno</span>
     </button>
-    <button class="nav-item" id="nav-places" role="tab" data-tab="places" aria-controls="tab-places" aria-selected="false" onclick="switchTab('places')">
+    <button class="nav-item" id="nav-places" role="tab" data-tab="places" aria-controls="tab-places" aria-selected="false">
       <span class="nav-icon">🗺️</span>
       <span class="nav-label">Luoghi</span>
     </button>
-    <button class="nav-item" id="nav-food" role="tab" data-tab="food" aria-controls="tab-food" aria-selected="false" onclick="switchTab('food')">
+    <button class="nav-item" id="nav-food" role="tab" data-tab="food" aria-controls="tab-food" aria-selected="false">
       <span class="nav-icon">🍽️</span>
       <span class="nav-label">Mangiare</span>
     </button>
-    <button class="nav-item" id="nav-transport" role="tab" data-tab="transport" aria-controls="tab-transport" aria-selected="false" onclick="switchTab('transport')">
+    <button class="nav-item" id="nav-transport" role="tab" data-tab="transport" aria-controls="tab-transport" aria-selected="false">
       <span class="nav-icon">🚇</span>
       <span class="nav-label">Muoversi</span>
     </button>
-    <button class="nav-item" id="nav-departure" role="tab" data-tab="departure" aria-controls="tab-departure" aria-selected="false" onclick="switchTab('departure')">
+    <button class="nav-item" id="nav-departure" role="tab" data-tab="departure" aria-controls="tab-departure" aria-selected="false">
       <span class="nav-icon">🧳</span>
       <span class="nav-label">Partenza</span>
     </button>
   </nav>
   <button class="wa-fab" id="wa-fab" aria-label="WhatsApp">💬</button>
-  <button class="scroll-top-btn" id="scroll-top-btn" onclick="scrollToTop()" aria-label="Torna su" title="Torna su">↑</button>
+  <button class="scroll-top-btn" id="scroll-top-btn" aria-label="Torna su" title="Torna su">↑</button>
 </div><!-- /guide -->
 
 <!-- ════════════════════════════════════════════
@@ -458,15 +458,15 @@
 <div id="settings-panel">
   <div class="settings-header">
     <div class="settings-title">⚙️ Personalizzazione</div>
-    <button class="close-btn" onclick="closeSettings()" aria-label="Chiudi">✕</button>
+    <button class="close-btn" aria-label="Chiudi">✕</button>
   </div>
 
   <div class="settings-actions">
-    <button class="s-btn primary" onclick="saveAndApply()">💾 Salva e Applica</button>
-    <button class="s-btn danger admin-only" onclick="resetData()">🗑️ Reset</button>
-    <button class="s-btn" onclick="previewMode()">👁️ Anteprima</button>
-    <button class="s-btn admin-only" id="publish-btn" onclick="publishOnline()" style="grid-column:1/-1;background:var(--teal);border-color:var(--teal);color:#fff">🚀 Pubblica Online</button>
-    <button class="s-btn host-only" id="host-publish-btn" onclick="hostPublishNow()" style="grid-column:1/-1;background:var(--teal);border-color:var(--teal);color:#fff">🚀 Pubblica Ora</button>
+    <button class="s-btn primary">💾 Salva e Applica</button>
+    <button class="s-btn danger admin-only">🗑️ Reset</button>
+    <button class="s-btn">👁️ Anteprima</button>
+    <button class="s-btn admin-only" id="publish-btn" style="grid-column:1/-1;background:var(--teal);border-color:var(--teal);color:#fff">🚀 Pubblica Online</button>
+    <button class="s-btn host-only" id="host-publish-btn" style="grid-column:1/-1;background:var(--teal);border-color:var(--teal);color:#fff">🚀 Pubblica Ora</button>
   </div>
 
   <div class="settings-body">
@@ -505,23 +505,23 @@
       <div class="s-fields">
         <div class="s-sub-title">Tema Colori</div>
         <div class="theme-selector">
-          <div class="theme-option" data-theme="dark" onclick="selectTheme('dark')">
+          <div class="theme-option" data-theme="dark">
             <div class="theme-preview" style="background:#1a3238;border-color:#c9a84c"><span style="color:#c9a84c">Aa</span></div>
             <span>Scuro</span>
           </div>
-          <div class="theme-option" data-theme="light" onclick="selectTheme('light')">
+          <div class="theme-option" data-theme="light">
             <div class="theme-preview" style="background:#f8f6f1;border-color:#b8962e"><span style="color:#b8962e">Aa</span></div>
             <span>Chiaro</span>
           </div>
-          <div class="theme-option" data-theme="roma" onclick="selectTheme('roma')">
+          <div class="theme-option" data-theme="roma">
             <div class="theme-preview" style="background:#2c1810;border-color:#d4a04a"><span style="color:#d4a04a">Aa</span></div>
             <span>Roma</span>
           </div>
-          <div class="theme-option" data-theme="romantic" onclick="selectTheme('romantic')">
+          <div class="theme-option" data-theme="romantic">
             <div class="theme-preview" style="background:#f9f0ed;border-color:#c4887a"><span style="color:#c4887a">Aa</span></div>
             <span>Romantico</span>
           </div>
-          <div class="theme-option" data-theme="minimal" onclick="selectTheme('minimal')">
+          <div class="theme-option" data-theme="minimal">
             <div class="theme-preview" style="background:#ffffff;border-color:#c0392b"><span style="color:#c0392b">Aa</span></div>
             <span>Minimal</span>
           </div>
@@ -533,7 +533,7 @@
     <div id="s-apts-container" data-count="0">
       <!-- generated by JS -->
     </div>
-    <button class="s-add-btn" onclick="addSettingsApt()">➕ Aggiungi Appartamento</button>
+    <button class="s-add-btn">➕ Aggiungi Appartamento</button>
 
     <!-- Partenza -->
     <details class="s-section">
@@ -629,7 +629,7 @@
         <p style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.5">Aggiungi le migliori recensioni dei tuoi ospiti. Appariranno nella Home della guida.</p>
         <!-- generated by JS -->
       </div>
-      <button class="s-add-btn" onclick="addSettingsReview()">➕ Aggiungi Recensione</button>
+      <button class="s-add-btn">➕ Aggiungi Recensione</button>
     </details>
 
     <!-- Contatti extra -->
@@ -639,7 +639,7 @@
         <p class="host-only" style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.5">Aggiungi numeri utili come taxi, farmacia, ecc.</p>
         <!-- generated by JS -->
       </div>
-      <button class="s-add-btn" onclick="addSettingsContact()">➕ Aggiungi Contatto</button>
+      <button class="s-add-btn">➕ Aggiungi Contatto</button>
     </details>
 
     <!-- PIN Sicurezza -->
@@ -652,7 +652,7 @@
         <div class="s-field"><label>Nuovo PIN (4 cifre)</label><input type="password" id="s-pin-new" placeholder="••••" maxlength="4" inputmode="numeric"></div>
         <div class="s-field"><label>Conferma nuovo PIN</label><input type="password" id="s-pin-confirm" placeholder="••••" maxlength="4" inputmode="numeric"></div>
         <div id="s-pin-msg" style="font-size:12px;min-height:18px;margin-top:4px"></div>
-        <button class="s-btn" onclick="changePin()" style="margin-top:8px">🔐 Cambia PIN</button>
+        <button class="s-btn" style="margin-top:8px">🔐 Cambia PIN</button>
         <div class="admin-only">
           <div class="s-divider"></div>
           <div class="s-sub-title">🔑 Cambia Username / Password</div>
@@ -663,20 +663,20 @@
           <div class="s-field"><label>Nuova Password</label><input type="password" id="s-pass-new" placeholder="••••" autocomplete="off"></div>
           <div class="s-field"><label>Conferma Password</label><input type="password" id="s-pass-confirm" placeholder="••••" autocomplete="off"></div>
           <div id="s-cred-msg" style="font-size:12px;min-height:18px;margin-top:4px"></div>
-          <button class="s-btn" onclick="changeCredentials()" style="margin-top:8px">🔑 Cambia Credenziali</button>
+          <button class="s-btn" style="margin-top:8px">🔑 Cambia Credenziali</button>
           <div class="s-divider"></div>
           <div class="s-sub-title">🔑 Parola Segreta di Recovery</div>
           <p style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.5">La parola segreta permette di resettare il PIN in caso di smarrimento. La parola segreta è stata configurata dall'amministratore al setup iniziale.</p>
           <div class="s-field"><label>Parola attuale</label><input type="password" id="s-recovery-current" placeholder="••••••••" autocomplete="off"></div>
           <div class="s-field"><label>Nuova parola segreta</label><input type="password" id="s-recovery-new" placeholder="••••••••" autocomplete="off"></div>
           <div id="s-recovery-msg" style="font-size:12px;min-height:18px;margin-top:4px"></div>
-          <button class="s-btn" onclick="changeRecoveryWord()" style="margin-top:8px">🔑 Cambia Parola di Recovery</button>
+          <button class="s-btn" style="margin-top:8px">🔑 Cambia Parola di Recovery</button>
           <div class="s-divider"></div>
           <div class="s-sub-title">🚀 Pubblica Online</div>
           <p style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.5">⚠️ Usa un fine-grained token con accesso solo a questo repository. Il token è cifrato e salvato in modo sicuro nel browser.</p>
           <div class="s-field"><label>GitHub Token</label><input type="password" id="s-github-token" placeholder="ghp_..." autocomplete="off"></div>
-          <button class="s-btn danger" onclick="removeGithubToken()" style="margin-top:4px;font-size:12px">🗑️ Rimuovi Token</button>
-          <button class="s-btn" onclick="saveTokenForHost()" style="margin-top:4px;font-size:12px;background:var(--teal);border-color:var(--teal);color:#fff">💾 Salva Token per Host</button>
+          <button class="s-btn danger" style="margin-top:4px;font-size:12px">🗑️ Rimuovi Token</button>
+          <button class="s-btn" style="margin-top:4px;font-size:12px;background:var(--teal);border-color:var(--teal);color:#fff">💾 Salva Token per Host</button>
           <p style="font-size:11px;color:var(--text2);margin-top:8px;line-height:1.5">💡 Cliccando "Salva Token per Host", l'host potrà pubblicare direttamente con il pulsante "🚀 Pubblica Ora" senza conoscere il token.</p>
           <div id="s-publish-msg" style="font-size:12px;min-height:18px;margin-top:4px"></div>
         </div>
@@ -696,7 +696,7 @@
         <div class="qr-grid" id="qr-grid">
           <!-- generated by renderQrSection() -->
         </div>
-        <button class="qr-print-btn" onclick="printAllQr()">🖨️ Stampa Tutti i QR</button>
+        <button class="qr-print-btn">🖨️ Stampa Tutti i QR</button>
       </div>
     </details>
 
@@ -709,7 +709,7 @@
         <div class="changelog-list" id="changelog-list">
           <!-- populated by JS -->
         </div>
-        <button class="s-btn danger" onclick="clearChangelog()" style="margin-top:8px;font-size:12px">🗑️ Cancella Storico</button>
+        <button class="s-btn danger" style="margin-top:8px;font-size:12px">🗑️ Cancella Storico</button>
       </div>
     </details>
 
@@ -721,7 +721,7 @@
         <div id="s-checkin-container" data-count="0">
           <!-- generated by JS -->
         </div>
-        <button class="s-add-btn" onclick="addSettingsCheckinStep()">➕ Aggiungi Step Check-in</button>
+        <button class="s-add-btn">➕ Aggiungi Step Check-in</button>
       </div>
     </details>
 
@@ -734,7 +734,7 @@
           <label>Dominio personalizzato</label>
           <input type="text" id="s-customDomain" placeholder="guida.miobnb.it">
         </div>
-        <button class="s-btn" onclick="copyCnameRecord()" style="margin-bottom:14px">📋 Copia Record CNAME</button>
+        <button class="s-btn" style="margin-bottom:14px">📋 Copia Record CNAME</button>
         <div class="s-sub-title">📖 Come configurare il dominio</div>
         <ol style="font-size:12px;color:var(--text2);line-height:1.9;padding-left:18px;margin-top:8px">
           <li>Acquista un dominio (es. su <strong>Aruba</strong>, Namecheap, Porkbun…)</li>
@@ -754,7 +754,7 @@
       <div class="s-fields">
         <p style="font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.5">Statistiche di utilizzo della guida. I dati sono salvati localmente nel browser degli ospiti.</p>
         <div id="an-dashboard"><!-- populated by JS --></div>
-        <button class="s-btn danger" onclick="resetAnalytics()" style="margin-top:14px;font-size:12px">🗑️ Reset Analytics</button>
+        <button class="s-btn danger" style="margin-top:14px;font-size:12px">🗑️ Reset Analytics</button>
       </div>
     </details>
 
@@ -765,8 +765,8 @@
 
 <div id="preview-banner">
   <span>👁️ Modalità Anteprima — Le modifiche NON sono ancora salvate</span>
-  <button class="preview-banner-btn" onclick="previewSave()">💾 Salva</button>
-  <button class="preview-banner-btn" onclick="previewCancel()">↩️ Annulla</button>
+  <button class="preview-banner-btn">💾 Salva</button>
+  <button class="preview-banner-btn">↩️ Annulla</button>
 </div>
 
 <div id="toast-container"></div>
@@ -790,22 +790,22 @@
       </div>
       <div class="pin-error" id="pin-error"></div>
       <div class="pin-keypad">
-        <button class="pin-key" onclick="pinKey('1')">1</button>
-        <button class="pin-key" onclick="pinKey('2')">2</button>
-        <button class="pin-key" onclick="pinKey('3')">3</button>
-        <button class="pin-key" onclick="pinKey('4')">4</button>
-        <button class="pin-key" onclick="pinKey('5')">5</button>
-        <button class="pin-key" onclick="pinKey('6')">6</button>
-        <button class="pin-key" onclick="pinKey('7')">7</button>
-        <button class="pin-key" onclick="pinKey('8')">8</button>
-        <button class="pin-key" onclick="pinKey('9')">9</button>
+        <button class="pin-key">1</button>
+        <button class="pin-key">2</button>
+        <button class="pin-key">3</button>
+        <button class="pin-key">4</button>
+        <button class="pin-key">5</button>
+        <button class="pin-key">6</button>
+        <button class="pin-key">7</button>
+        <button class="pin-key">8</button>
+        <button class="pin-key">9</button>
         <div></div>
-        <button class="pin-key" onclick="pinKey('0')">0</button>
-        <button class="pin-key" onclick="pinBackspace()">⌫</button>
+        <button class="pin-key">0</button>
+        <button class="pin-key">⌫</button>
       </div>
-      <button class="pin-cancel" onclick="closePinModal()">Annulla</button>
-      <button class="pin-cancel pin-forgot" onclick="forgotPin()">Non ricordo il PIN</button>
-      <button class="pin-cancel pin-login-btn" onclick="openLoginForm()">🛡️ Accesso Admin</button>
+      <button class="pin-cancel">Annulla</button>
+      <button class="pin-cancel pin-forgot">Non ricordo il PIN</button>
+      <button class="pin-cancel pin-login-btn">🛡️ Accesso Admin</button>
     </div>
     <!-- Login form view -->
     <div id="login-view" style="display:none">
@@ -814,8 +814,8 @@
       <input class="login-input" type="text" id="login-username" placeholder="Username" autocomplete="new-password" autocapitalize="none" autocorrect="off" spellcheck="false">
       <input class="login-input" type="password" id="login-password" placeholder="Password" autocomplete="new-password">
       <div class="login-error" id="login-error"></div>
-      <button class="login-submit-btn" onclick="submitLogin()">Accedi</button>
-      <button class="pin-cancel" style="margin-top:12px" onclick="closeLoginForm()">← Torna al PIN</button>
+      <button class="login-submit-btn">Accedi</button>
+      <button class="pin-cancel" style="margin-top:12px">← Torna al PIN</button>
     </div>
     <!-- Recovery view (H-2: replaces window.prompt(), works in iOS PWA standalone) -->
     <div id="recovery-view" style="display:none">
@@ -823,8 +823,8 @@
       <div class="pin-subtitle">Inserisci la parola segreta per sbloccare il PIN</div>
       <input class="login-input" type="password" id="recovery-word-input" placeholder="Parola segreta" autocomplete="off">
       <div class="login-error" id="recovery-error"></div>
-      <button class="login-submit-btn" onclick="submitRecovery()">Verifica</button>
-      <button class="pin-cancel" style="margin-top:12px" onclick="closeRecoveryView()">← Torna al PIN</button>
+      <button class="login-submit-btn">Verifica</button>
+      <button class="pin-cancel" style="margin-top:12px">← Torna al PIN</button>
     </div>
   </div>
 </div>

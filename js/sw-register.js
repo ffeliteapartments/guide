@@ -26,9 +26,10 @@ function showUpdateBanner(worker) {
   if (document.getElementById('sw-update-banner')) return;
   const banner = document.createElement('div');
   banner.id = 'sw-update-banner';
-  banner.innerHTML = '🔄 Nuova versione disponibile! <button class="sw-banner-btn-update" id="sw-update-btn">Aggiorna</button><button class="sw-banner-btn-close" onclick="this.parentElement.remove()">✕</button>';
+  banner.innerHTML = '🔄 Nuova versione disponibile! <button class="sw-banner-btn-update" id="sw-update-btn">Aggiorna</button><button class="sw-banner-btn-close" id="sw-close-btn">✕</button>';
   document.body.appendChild(banner);
 
+  document.getElementById('sw-close-btn').addEventListener('click', function() { banner.remove(); });
   document.getElementById('sw-update-btn').addEventListener('click', () => {
     // Dice al nuovo SW di attivarsi → trigga controllerchange → reload
     worker.postMessage({ type: 'SKIP_WAITING' });

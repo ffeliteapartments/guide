@@ -62,10 +62,56 @@ function sanitizeHtml(html) {
 }
 
 // ── PIN / credentials hashing ────────────────
+// Output format: base64(salt) + ':' + base64(derivedKey)
+// Legacy SHA-256 hashes (64-char hex, no colon) are still accepted by verifyPin().
 
-async function hashPin(pin) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pin));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+const PBKDF2_ITERATIONS = 600000;
+const PBKDF2_SALT_BYTES = 16;
+const PBKDF2_KEY_BYTES  = 32;
+
+async function hashPin(pin, existingSalt) {
+  const enc  = new TextEncoder();
+  const salt = existingSalt
+    ? Uint8Array.from(atob(existingSalt), c => c.charCodeAt(0))
+    : crypto.getRandomValues(new Uint8Array(PBKDF2_SALT_BYTES));
+
+  const keyMaterial = await crypto.subtle.importKey(
+    'raw', enc.encode(pin), 'PBKDF2', false, ['deriveBits']
+  );
+  const derived = await crypto.subtle.deriveBits(
+    { name: 'PBKDF2', salt, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
+    keyMaterial,
+    PBKDF2_KEY_BYTES * 8
+  );
+  const saltB64 = btoa(String.fromCharCode(...salt));
+  const hashB64 = btoa(String.fromCharCode(...new Uint8Array(derived)));
+  return saltB64 + ':' + hashB64;
+}
+
+// Constant-time comparison to prevent timing attacks.
+// Supports legacy plain SHA-256 hashes (64-char hex, no colon) for backward compatibility.
+// On first successful login with an old hash, the caller should re-hash and store PBKDF2 format.
+async function verifyPin(pin, storedHash) {
+  if (!storedHash || !pin) return false;
+
+  // Legacy: plain SHA-256 (64-char hex, no colon)
+  if (/^[a-f0-9]{64}$/.test(storedHash)) {
+    const buf    = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pin));
+    const legacy = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    return legacy === storedHash;
+  }
+
+  // PBKDF2 format: base64salt:base64hash
+  const colonIdx = storedHash.indexOf(':');
+  if (colonIdx === -1) return false;
+  const salt    = storedHash.substring(0, colonIdx);
+  const newHash = await hashPin(pin, salt);
+  if (newHash.length !== storedHash.length) return false;
+  let diff = 0;
+  for (let i = 0; i < newHash.length; i++) {
+    diff |= newHash.charCodeAt(i) ^ storedHash.charCodeAt(i);
+  }
+  return diff === 0;
 }
 
 // ── UI feedback helpers ───────────────────────

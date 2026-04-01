@@ -6,7 +6,7 @@ function getGitHubOwnerRepo() {
   const qrBase = (currentData && currentData.qrBaseUrl) ? currentData.qrBaseUrl.trim() : '';
   const m = qrBase.match(/^https?:\/\/([^.]+)\.github\.io\/([^/?#]+)/);
   if (m) return { owner: m[1], repo: m[2] };
-  return { owner: 'ffeliteapartments', repo: 'guide' };
+  return null; // No fallback — must be configured
 }
 
 // ── Shared GitHub commit helper ───────────────────────────────────────────────
@@ -14,7 +14,11 @@ function getGitHubOwnerRepo() {
 // patchHashes: when true, also patches PIN/user/pass/recovery hashes (admin flow).
 
 async function _commitDataToGitHub(token, dataObj, commitMessage, patchHashes) {
-  const { owner: OWNER, repo: REPO } = getGitHubOwnerRepo();
+  const ownerRepo = getGitHubOwnerRepo();
+  if (!ownerRepo) {
+    throw new Error('⚠️ Configura prima il "QR Base URL" (es: https://tuonome.github.io/guide) nelle impostazioni.');
+  }
+  const { owner: OWNER, repo: REPO } = ownerRepo;
   const DATA_FILE = 'js/data.js';
   const BRANCH    = 'main';
   const DATA_API  = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_FILE}`;
@@ -107,7 +111,13 @@ async function publishOnline() {
   if (msg) msg.textContent = '';
 
   try {
-    const { owner: OWNER, repo: REPO } = getGitHubOwnerRepo();
+    const ownerRepo = getGitHubOwnerRepo();
+    if (!ownerRepo) {
+      showErr(msg, '⚠️ Configura prima il "QR Base URL" (es: https://tuonome.github.io/guide) nelle impostazioni.');
+      if (btn) { btn.disabled = false; btn.textContent = '🚀 Pubblica Online'; }
+      return;
+    }
+    const { owner: OWNER, repo: REPO } = ownerRepo;
     const BRANCH = 'main';
 
     // Show deploy progress
@@ -266,8 +276,7 @@ async function changeRecoveryWord() {
   const newWord = document.getElementById('s-recovery-new').value;
   const msg = document.getElementById('s-recovery-msg');
   if (!currentWord) { showErr(msg, 'Inserisci la parola attuale.'); return; }
-  const currentHash = await hashPin(currentWord);
-  if (currentHash !== getStoredRecoveryHash()) { showErr(msg, 'Parola attuale non corretta.'); return; }
+  if (!await verifyPin(currentWord, getStoredRecoveryHash())) { showErr(msg, 'Parola attuale non corretta.'); return; }
   if (!newWord) { showErr(msg, 'La nuova parola non può essere vuota.'); return; }
   const newHash = await hashPin(newWord);
   localStorage.setItem(RECOVERY_KEY, newHash);
