@@ -1,4 +1,5 @@
-const CACHE_VERSION = '2026-03-31-v1775000731404';
+// NOTE: Update CACHE_VERSION manually on every deploy so users receive fresh assets.
+const CACHE_VERSION = '2026-04-01-v1775000731404';
 const CACHE_NAME = 'bnb-guide-' + CACHE_VERSION;
 const STATIC_ASSETS = [
   './',
@@ -15,8 +16,8 @@ const STATIC_ASSETS = [
   './js/settings-publish.js',
   './js/weather.js',
   './js/sw-register.js',
-  './js/qr-lib.js',
   './manifest.json',
+  './icon.svg',
   './icon-192.png',
   './icon-512.png',
   'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap'
@@ -75,6 +76,24 @@ self.addEventListener('fetch', e => {
         getCache().then(cache => cache.put(e.request, c));
         return r;
       }).catch(() => caches.match(e.request))
+    );
+    return;
+  }
+  // Stale-while-revalidate for JS and CSS: serve from cache immediately,
+  // then update cache in background for fresh assets on next load.
+  const isJsOrCss = /\.(js|css)(\?|$)/.test(url.pathname);
+  if (isJsOrCss) {
+    e.respondWith(
+      caches.match(e.request).then(cached => {
+        const networkFetch = fetch(e.request).then(response => {
+          if (response && response.status === 200 && response.type === 'basic') {
+            const c = response.clone();
+            getCache().then(cache => cache.put(e.request, c));
+          }
+          return response;
+        });
+        return cached || networkFetch;
+      })
     );
     return;
   }

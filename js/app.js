@@ -292,7 +292,7 @@ function renderApp(aptIndex) {
     document.getElementById('google-review-btn').href = reviewUrl;
     reviewContainer.style.display = '';
     document.getElementById('home-review-btn').href = reviewUrl;
-    homeReviewSection.style.display = '';
+    homeReviewSection.style.display = 'block';
   } else {
     reviewContainer.style.display = 'none';
     homeReviewSection.style.display = 'none';
@@ -688,7 +688,7 @@ function renderCheckinSteps(steps) {
   const container = document.getElementById('checkin-steps-list');
   if (!container) return;
   const section = document.getElementById('checkin-steps-section');
-  if (section) section.style.display = steps.length ? '' : 'none';
+  if (section) section.style.display = steps.length ? 'block' : 'none';
   container.innerHTML = '';
   steps.forEach((step, i) => {
     const title = langField(step, 'title') || '';
@@ -1118,7 +1118,7 @@ function renderReviews(reviews) {
       '<div class="review-author">— ' + escHtml(r.author || '') + '</div>';
     container.appendChild(card);
   });
-  section.style.display = '';
+  section.style.display = 'block';
 }
 
 
@@ -1132,7 +1132,7 @@ function updateWaFab() {
   if (!phone || currentData.hostPhone === '+39 000 000 0000') { fab.style.display = 'none'; fab.classList.remove('visible'); return; }
   const aptName = (currentData && currentData.apts && currentData.apts[currentAptIndex]) ? currentData.apts[currentAptIndex].name : '';
   const msg = encodeURIComponent('Ciao! Sono un ospite di ' + aptName + ', avrei bisogno di assistenza.');
-  fab.onclick = function() { window.open('https://wa.me/' + phone + '?text=' + msg, '_blank'); };
+  fab.onclick = function() { window.open('https://wa.me/' + phone + '?text=' + msg, '_blank', 'noopener,noreferrer'); };
   fab.style.display = '';
   setTimeout(() => fab.classList.add('visible'), 50);
 }

@@ -115,7 +115,6 @@ function removeSettingsCheckinStep(idx) {
 function renderSettingsContacts(contacts) {
   const container = document.getElementById('s-contacts-fields');
   container.dataset.count = contacts.length;
-  container.innerHTML = '';
   let html = '';
   contacts.forEach((c, i) => {
     html += `

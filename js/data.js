@@ -9,7 +9,7 @@ const DEFAULT_DATA = {
   hostPhone: "+39 000 000 0000",
   googleReviewUrl: "",
   qrBaseUrl: '',
-  supportPhone: '+393450307922',
+  supportPhone: '',
   customDomain: '',
   checkinSteps: [
     { icon: "📍", titleIt: "Raggiungi l'appartamento", titleEn: "Reach the apartment", descIt: "Segui le indicazioni su Google Maps per raggiungere l'indirizzo.", descEn: "Follow Google Maps directions to reach the address." },
@@ -734,11 +734,12 @@ function saveData(data) {
 // ════════════════════════════════════════════
 const RATE_LIMIT_KEY = 'bnb_rate_limit';
 const MAX_ATTEMPTS = 5;
-const LOCKOUT_DURATION = 5 * 60 * 1000; // 5 minutes
+const LOCKOUT_DURATION = 60 * 1000; // 60 seconds
 
 function checkRateLimit(type) {
+  // Uses sessionStorage so the counter resets automatically when the tab is closed.
   try {
-    const raw = localStorage.getItem(RATE_LIMIT_KEY);
+    const raw = sessionStorage.getItem(RATE_LIMIT_KEY);
     const data = raw ? JSON.parse(raw) : {};
     const entry = data[type] || { count: 0, lockedUntil: 0 };
     if (entry.lockedUntil && Date.now() < entry.lockedUntil) {
@@ -749,7 +750,7 @@ function checkRateLimit(type) {
       entry.count = 0;
       entry.lockedUntil = 0;
       data[type] = entry;
-      localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(data));
+      sessionStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(data));
     }
     return { locked: false, attempts: entry.count };
   } catch(e) { return { locked: false, attempts: 0 }; }
@@ -757,7 +758,7 @@ function checkRateLimit(type) {
 
 function recordFailedAttempt(type) {
   try {
-    const raw = localStorage.getItem(RATE_LIMIT_KEY);
+    const raw = sessionStorage.getItem(RATE_LIMIT_KEY);
     const data = raw ? JSON.parse(raw) : {};
     const entry = data[type] || { count: 0, lockedUntil: 0 };
     entry.count = (entry.count || 0) + 1;
@@ -766,17 +767,17 @@ function recordFailedAttempt(type) {
       entry.count = 0;
     }
     data[type] = entry;
-    localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(data));
+    sessionStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(data));
     return entry;
   } catch(e) { return { count: 0, lockedUntil: 0 }; }
 }
 
 function resetRateLimit(type) {
   try {
-    const raw = localStorage.getItem(RATE_LIMIT_KEY);
+    const raw = sessionStorage.getItem(RATE_LIMIT_KEY);
     const data = raw ? JSON.parse(raw) : {};
     delete data[type];
-    localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(data));
+    sessionStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(data));
   } catch(e) {}
 }
 

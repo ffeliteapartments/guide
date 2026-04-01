@@ -35,18 +35,23 @@ const WMO_LABELS_EN = {
 };
 
 async function fetchWeather(lat, lon) {
+  if (!Number.isFinite(Number(lat)) || !Number.isFinite(Number(lon))) {
+    throw new Error('Invalid coordinates: lat and lon must be finite numbers.');
+  }
+  const numLat = Number(lat);
+  const numLon = Number(lon);
   const cached = localStorage.getItem(WEATHER_CACHE_KEY);
   if (cached) {
     try {
       const {ts, data, clat, clon} = JSON.parse(cached);
-      if (Date.now() - ts < WEATHER_CACHE_TTL && clat === lat && clon === lon) return data;
+      if (Date.now() - ts < WEATHER_CACHE_TTL && clat === numLat && clon === numLon) return data;
     } catch(e) {}
   }
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weathercode,apparent_temperature&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=4`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${numLat}&longitude=${numLon}&current=temperature_2m,weathercode,apparent_temperature&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=4`;
   const resp = await fetch(url);
   if (!resp.ok) throw new Error('Weather API error');
   const data = await resp.json();
-  localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({ts: Date.now(), data, clat: lat, clon: lon}));
+  localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({ts: Date.now(), data, clat: numLat, clon: numLon}));
   return data;
 }
 
@@ -79,6 +84,10 @@ async function renderWeatherWidget(containerId, lat, lon, lang) {
     }
     if (!resolvedLat || !resolvedLon) {
       container.innerHTML = '';
+      return;
+    }
+    if (!Number.isFinite(Number(resolvedLat)) || !Number.isFinite(Number(resolvedLon))) {
+      container.innerHTML = `<div class="weather-unavailable">${lang==='en'?'⚠️ Invalid coordinates':'⚠️ Coordinate non valide'}</div>`;
       return;
     }
     const data = await fetchWeather(resolvedLat, resolvedLon);

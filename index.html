@@ -18,6 +18,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Guida FF Elite">
 <meta name="theme-color" content="#1a3238">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.open-meteo.com https://api.github.com;">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,7 +39,7 @@
 <div id="offline-banner">📵 Sei offline — la guida funziona comunque</div>
 
 <!-- Setup Banner (unconfigured data warning) -->
-<div id="setup-banner" style="display:none">
+<div id="setup-banner" class="d-none">
   ⚙️ Benvenuto! Configura il tuo B&amp;B cliccando il pulsante ⚙️ — gli ospiti vedranno i dati demo finché non personalizzi la guida.
 </div>
 
@@ -113,7 +114,7 @@
       </div>
 
       <!-- Weather Widget -->
-      <div id="weather-container" style="margin:0 0 4px"></div>
+      <div id="weather-container" class="mb-4"></div>
 
       <div class="welcome-card">
         <div class="welcome-title" id="w-title">Benvenuti! 👋</div>
@@ -167,11 +168,11 @@
         </div>
       </div>
 
-      <div id="home-review-section" style="display:none;padding:0 0 4px">
+      <div id="home-review-section" class="hidden-pb-4">
         <a id="home-review-btn" href="#" target="_blank" rel="noopener" class="maps-btn review-btn" style="display:flex"><span data-i18n="leaveReview">⭐ Lascia una Recensione su Google</span></a>
       </div>
 
-      <div class="reviews-section" id="reviews-section" style="display:none">
+      <div class="reviews-section d-none" id="reviews-section">
         <div class="reviews-title">⭐ Cosa dicono i nostri ospiti</div>
         <div class="reviews-container" id="reviews-container">
           <!-- populated by JS -->
@@ -186,12 +187,12 @@
         <div class="section-eyebrow">Il Tuo Appartamento</div>
         <div class="section-title">Soggiorno</div>
       </div>
-      <div class="section-pad" style="padding-top:0">
+      <div class="section-pad pt-0">
 
         <div class="guests-badge">👥 <span id="st-guests">4 persone</span></div>
 
         <!-- Self Check-in Steps -->
-        <div id="checkin-steps-section" style="display:none">
+        <div id="checkin-steps-section" class="d-none">
           <div class="checkout-steps" style="margin-top:20px">
             <div class="checkout-title">📅 <span data-i18n="selfCheckin">Self Check-in</span></div>
             <div class="section-sub" data-i18n="arrivalInstructions" style="font-size:13px;color:var(--text2);margin-bottom:14px">Istruzioni Arrivo</div>
@@ -294,7 +295,7 @@
         <div class="section-title">Luoghi</div>
         <div class="section-sub" data-i18n="placesSubtitle">Le attrazioni più belle nei dintorni</div>
       </div>
-      <div class="section-pad" style="padding-top:0" id="places-container">
+      <div class="section-pad pt-0" id="places-container">
         <!-- populated by JS -->
       </div>
     </div>
@@ -306,7 +307,7 @@
         <div class="section-title">Mangiare</div>
         <div class="section-sub" data-i18n="foodSubtitle">I migliori locali consigliati dall'host</div>
       </div>
-      <div class="section-pad" style="padding-top:0" id="food-container">
+      <div class="section-pad pt-0" id="food-container">
         <!-- populated by JS -->
       </div>
     </div>
@@ -318,7 +319,7 @@
         <div class="section-title">Muoversi</div>
         <div class="section-sub" data-i18n="transportSubtitle">Come spostarsi in città</div>
       </div>
-      <div class="section-pad" style="padding-top:0">
+      <div class="section-pad pt-0">
 
         <div id="transport-container"><!-- populated by JS --></div>
 
@@ -393,7 +394,7 @@
         <div class="section-title">Partenza</div>
         <div class="section-sub" data-i18n="departureSubtitle">Tutto quello che c'è da sapere prima di andare</div>
       </div>
-      <div class="section-pad" style="padding-top:0">
+      <div class="section-pad pt-0">
 
         <!-- Checkout steps -->
         <div class="checkout-steps">

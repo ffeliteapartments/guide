@@ -131,7 +131,10 @@ async function publishOnline() {
       if (!el) return;
       el.classList.remove('active', 'done', 'error');
       el.classList.add(state);
-      if (state === 'active') el.querySelector('.deploy-step-icon').innerHTML = '<div class="deploy-spinner"></div>';
+      if (state === 'active') {
+        const icon = el.querySelector('.deploy-step-icon');
+        if (icon) icon.innerHTML = '<div class="deploy-spinner"></div>';
+      }
     };
     const deployStart = Date.now();
     const timerInterval = setInterval(() => {

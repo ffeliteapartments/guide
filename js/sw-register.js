@@ -17,8 +17,7 @@ function showUpdateBanner() {
   if (document.getElementById('sw-update-banner')) return;
   const banner = document.createElement('div');
   banner.id = 'sw-update-banner';
-  banner.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--teal);color:#fff;padding:12px 20px;border-radius:12px;z-index:9999;display:flex;gap:12px;align-items:center;box-shadow:0 4px 20px rgba(0,0,0,.4);font-family:Jost,sans-serif;';
-  banner.innerHTML = '🔄 Nuova versione disponibile! <button onclick="location.reload()" style="background:#fff;color:var(--teal);border:none;padding:6px 14px;border-radius:8px;cursor:pointer;font-weight:600;">Aggiorna</button><button onclick="this.parentElement.remove()" style="background:none;border:none;color:#fff;cursor:pointer;font-size:18px;">✕</button>';
+  banner.innerHTML = '🔄 Nuova versione disponibile! <button class="sw-banner-btn-update" onclick="location.reload()">Aggiorna</button><button class="sw-banner-btn-close" onclick="this.parentElement.remove()">✕</button>';
   document.body.appendChild(banner);
 }
 
