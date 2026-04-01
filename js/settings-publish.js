@@ -154,7 +154,7 @@ async function publishOnline() {
 
       await _commitDataToGitHub(
         token,
-        collectFormData(),
+        await collectFormData(),
         'Aggiorna guida e PIN [via admin panel]',
         true /* patchHashes */
       );
@@ -246,7 +246,7 @@ async function hostPublishNow() {
   if (!confirm('Vuoi pubblicare le modifiche online? Saranno visibili a tutti gli ospiti in pochi secondi.')) return;
 
   // 1. Salva localmente
-  const d = collectFormData();
+  const d = await collectFormData();
   currentData = d;
   saveData(d);
   renderLanding();
