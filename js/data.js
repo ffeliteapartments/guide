@@ -211,7 +211,7 @@ const DEFAULT_DATA = {
       bedroomTagsIt: "Letto matrimoniale,Armadio,Biancheria inclusa,Cuscini extra",
       bedroomTagsEn: "Double bed,Wardrobe,Linen included,Extra pillows",
       wifi: "NomeRete",
-      wifiPass: "password123",
+      wifiPass: obfuscate("password123"),
       checkin: "15:00",
       checkout: "10:00",
       lat: '',
@@ -298,7 +298,7 @@ const DEFAULT_DATA = {
       bedroomTagsIt: "Letto matrimoniale,Armadio,Biancheria inclusa,Cuscini extra",
       bedroomTagsEn: "Double bed,Wardrobe,Linen included,Extra pillows",
       wifi: "NomeRete2",
-      wifiPass: "password456",
+      wifiPass: obfuscate("password456"),
       checkin: "15:00",
       checkout: "10:00",
       lat: '',
@@ -435,7 +435,7 @@ const PUBLISHED_DATA = {
       "maxGuests": "3 persone",
       "maxGuestsEn": "3 people",
       "wifi": "FF Elite Apartments",
-      "wifiPass": "XQKAPQ4LDG",
+      "wifiPass": "_OBF_AgsRGwoLbhYeHQ==",
       "checkin": "15:00",
       "checkout": "10:00",
       "lat": "",
@@ -748,22 +748,22 @@ let settingsDirty = false;
 let pinBuffer = '';
 const PIN_KEY = 'bnb_admin_pin';
 /* DEFAULT_PIN_HASH_START */
-const DEFAULT_PIN_HASH = 'd4c992883d2129e72928cb7fca98d6bacbe2de7bca321ec7d7095df5e10789f1';
+const DEFAULT_PIN_HASH = deobfuscateHash('ZDRjOTkyODgzZDIxMjllNzI5MjhjYjdmY2E5OGQ2YmFjYmUyZGU3YmNhMzIxZWM3ZDcwOTVkZjVlMTA3ODlmMQ==');
 /* DEFAULT_PIN_HASH_END */
 
 // Login credentials state
 const USER_KEY = 'bnb_admin_user';
 const PASS_KEY = 'bnb_admin_pass';
 /* DEFAULT_USER_HASH_START */
-const DEFAULT_USER_HASH = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918';
+const DEFAULT_USER_HASH = deobfuscateHash('OGM2OTc2ZTViNTQxMDQxNWJkZTkwOGJkNGRlZTE1ZGZiMTY3YTljODczZmM0YmI4YTgxZjZmMmFiNDQ4YTkxOA==');
 /* DEFAULT_USER_HASH_END */
 /* DEFAULT_PASS_HASH_START */
-const DEFAULT_PASS_HASH = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918';
+const DEFAULT_PASS_HASH = deobfuscateHash('OGM2OTc2ZTViNTQxMDQxNWJkZTkwOGJkNGRlZTE1ZGZiMTY3YTljODczZmM0YmI4YTgxZjZmMmFiNDQ4YTkxOA==');
 /* DEFAULT_PASS_HASH_END */
 
 const RECOVERY_KEY = 'bnb_recovery_hash';
 /* DEFAULT_RECOVERY_HASH_START */
-const DEFAULT_RECOVERY_HASH = 'e6c3da5b206634d7f3f3586d747ffdb36b5c675b2b8a4edd16bbe61c2ed50c4';
+const DEFAULT_RECOVERY_HASH = deobfuscateHash('ZTZjM2RhNWIyMDY2MzRkN2YzZjM1ODZkNzQ3ZmZkYjM2YjVjNjc1YjJiOGE0ZWRkMTZiYmU2MWMyZWQ1MGM0');
 /* DEFAULT_RECOVERY_HASH_END */
 
 function getStoredRecoveryHash() {

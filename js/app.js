@@ -8,7 +8,7 @@ function checkUnconfigured() {
   const firstApt = d.apts && d.apts[0];
   const isDefault = d.bbName === 'Il Tuo B&B' ||
     (firstApt && firstApt.wifi === 'NomeRete') ||
-    (firstApt && firstApt.wifiPass === 'password123');
+    (firstApt && deobfuscate(firstApt.wifiPass) === 'password123');
   banner.style.display = isDefault ? 'block' : 'none';
 }
 
@@ -175,9 +175,10 @@ function renderApp(aptIndex) {
   document.getElementById('st-guests').textContent = langField(apt, 'maxGuests');
   // Guard: hide default placeholder WiFi name and password
   const isDefaultWifi = apt.wifi === 'NomeRete' || apt.wifi === 'NomeRete2';
-  const isDefaultPass = apt.wifiPass === 'password123' || apt.wifiPass === 'password456';
+  const plainPass = deobfuscate(apt.wifiPass || '');
+  const isDefaultPass = plainPass === 'password123' || plainPass === 'password456';
   document.getElementById('st-wifi-name').textContent = isDefaultWifi ? '' : apt.wifi;
-  document.getElementById('st-wifi-pass').textContent = isDefaultPass ? '' : apt.wifiPass;
+  document.getElementById('st-wifi-pass').textContent = isDefaultPass ? '' : plainPass;
   const copyBtn = document.getElementById('copy-wifi-btn');
   if (copyBtn) copyBtn.style.display = isDefaultPass ? 'none' : '';
 
