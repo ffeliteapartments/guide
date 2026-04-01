@@ -1,6 +1,11 @@
 async function publishOnline() {
   const tokenInput = document.getElementById('s-github-token');
-  const token = (tokenInput && tokenInput.value.trim()) || sessionStorage.getItem('bnb_github_token') || '';
+  const typedToken = tokenInput && tokenInput.value.trim();
+  let token = typedToken || '';
+  if (!token) {
+    const enc = localStorage.getItem(HOST_TOKEN_STORE);
+    if (enc) token = await decryptToken(enc).catch(() => '');
+  }
   const msg = document.getElementById('s-publish-msg');
   const showErr = text => { if (msg) { msg.style.color = 'var(--accent)'; msg.textContent = '❌ ' + text; } else alert('❌ ' + text); };
   const showOk  = text => { if (msg) { msg.style.color = 'var(--teal)';   msg.textContent = '✅ ' + text; } else alert('✅ ' + text); };
@@ -9,8 +14,8 @@ async function publishOnline() {
     showErr('Inserisci il GitHub Token nella sezione Sicurezza PIN prima di pubblicare.');
     return;
   }
-  // Save token for convenience
-  sessionStorage.setItem('bnb_github_token', token);
+  // Persist token encrypted for future use
+  encryptToken(token).then(enc => localStorage.setItem(HOST_TOKEN_STORE, enc)).catch(() => {});
 
   const btn = document.getElementById('publish-btn');
   if (btn) { btn.disabled = true; btn.textContent = '⏳ Pubblicazione…'; }
@@ -74,28 +79,28 @@ async function publishOnline() {
     // 4. Patch DEFAULT_PIN_HASH
     let newContent = rawContent.replace(
       /\/\* DEFAULT_PIN_HASH_START \*\/[\s\S]*?\/\* DEFAULT_PIN_HASH_END \*\//,
-      `/* DEFAULT_PIN_HASH_START */\nconst DEFAULT_PIN_HASH = '${pinHash}';\n/* DEFAULT_PIN_HASH_END */`
+      `/* DEFAULT_PIN_HASH_START */\nconst DEFAULT_PIN_HASH = deobfuscateHash('${obfuscateHash(pinHash)}');\n/* DEFAULT_PIN_HASH_END */`
     );
 
     // 4b. Patch DEFAULT_USER_HASH
     const userHash = getStoredUserHash();
     newContent = newContent.replace(
       /\/\* DEFAULT_USER_HASH_START \*\/[\s\S]*?\/\* DEFAULT_USER_HASH_END \*\//,
-      `/* DEFAULT_USER_HASH_START */\nconst DEFAULT_USER_HASH = '${userHash}';\n/* DEFAULT_USER_HASH_END */`
+      `/* DEFAULT_USER_HASH_START */\nconst DEFAULT_USER_HASH = deobfuscateHash('${obfuscateHash(userHash)}');\n/* DEFAULT_USER_HASH_END */`
     );
 
     // 4c. Patch DEFAULT_PASS_HASH
     const passHash = getStoredPassHash();
     newContent = newContent.replace(
       /\/\* DEFAULT_PASS_HASH_START \*\/[\s\S]*?\/\* DEFAULT_PASS_HASH_END \*\//,
-      `/* DEFAULT_PASS_HASH_START */\nconst DEFAULT_PASS_HASH = '${passHash}';\n/* DEFAULT_PASS_HASH_END */`
+      `/* DEFAULT_PASS_HASH_START */\nconst DEFAULT_PASS_HASH = deobfuscateHash('${obfuscateHash(passHash)}');\n/* DEFAULT_PASS_HASH_END */`
     );
 
     // 4d. Patch DEFAULT_RECOVERY_HASH
     const recoveryHash = getStoredRecoveryHash();
     newContent = newContent.replace(
       /\/\* DEFAULT_RECOVERY_HASH_START \*\/[\s\S]*?\/\* DEFAULT_RECOVERY_HASH_END \*\//,
-      `/* DEFAULT_RECOVERY_HASH_START */\nconst DEFAULT_RECOVERY_HASH = '${recoveryHash}';\n/* DEFAULT_RECOVERY_HASH_END */`
+      `/* DEFAULT_RECOVERY_HASH_START */\nconst DEFAULT_RECOVERY_HASH = deobfuscateHash('${obfuscateHash(recoveryHash)}');\n/* DEFAULT_RECOVERY_HASH_END */`
     );
 
     // 5. Patch PUBLISHED_DATA
@@ -204,7 +209,7 @@ function renderSettingsApts(apts) {
         <div class="s-field"><label>Max ospiti (IT)</label><input type="text" id="s-a${i}-maxGuests" value="${escAttr(apt.maxGuests || '')}"></div>
         <div class="s-field"><label>Max ospiti (EN)</label><input type="text" id="s-a${i}-maxGuestsEn" value="${escAttr(apt.maxGuestsEn || '')}"></div>
         <div class="s-field"><label>WiFi — Nome rete</label><input type="text" id="s-a${i}-wifi" value="${escAttr(apt.wifi || '')}"></div>
-        <div class="s-field"><label>WiFi — Password</label><input type="text" id="s-a${i}-wifiPass" value="${escAttr(apt.wifiPass || '')}"></div>
+        <div class="s-field"><label>WiFi — Password</label><input type="text" id="s-a${i}-wifiPass" value="${escAttr(deobfuscate(apt.wifiPass || ''))}"></div>
         <div class="s-field"><label>Check-in (orario)</label><input type="text" id="s-a${i}-checkin" value="${escAttr(apt.checkin || '')}" placeholder="15:00"></div>
         <div class="s-field"><label>Check-out (orario)</label><input type="text" id="s-a${i}-checkout" value="${escAttr(apt.checkout || '')}" placeholder="10:00"></div>
         <div class="s-divider"></div>
@@ -331,7 +336,7 @@ function collectSettingsApts() {
      'howToReachIt','howToReachEn','howToAccessIt','howToAccessEn','parkingIt','parkingEn',
      'bedroomTagsIt','bedroomTagsEn','kitchenTagsIt','kitchenTagsEn','bathroomTagsIt','bathroomTagsEn'].forEach(k => {
       const el = document.getElementById(`s-a${i}-${k}`);
-      if (el) apt[k] = el.value;
+      if (el) apt[k] = k === 'wifiPass' ? obfuscate(el.value) : el.value;
     });
     apt.houseRules = collectAptHouseRules(i);
     apt.extraServices = collectAptExtraServices(i);
@@ -990,10 +995,13 @@ function populateSettingsForms() {
   document.getElementById('s-st-departureTitleIt').value = st.departureTitleIt || '';
   document.getElementById('s-st-departureTitleEn').value = st.departureTitleEn || '';
 
-  // GitHub token (stored separately)
-  const ghToken = sessionStorage.getItem('bnb_github_token') || '';
+  // GitHub token (show indicator if saved, but do not reveal the token)
   const ghField = document.getElementById('s-github-token');
-  if (ghField) ghField.value = ghToken;
+  if (ghField) {
+    const encTok = localStorage.getItem(HOST_TOKEN_STORE);
+    ghField.value = '';
+    ghField.placeholder = encTok ? '[Token salvato ✅]' : 'ghp_...';
+  }
 
   // QR Base URL
   const qrBaseUrlField = document.getElementById('s-qrBaseUrl');
@@ -1163,7 +1171,7 @@ function sendChangesAsHost() {
 //  HOST PUBLISH: TOKEN PRE-SALVATO DALL'ADMIN
 // ════════════════════════════════════════════
 
-function saveTokenForHost() {
+async function saveTokenForHost() {
   const tokenInput = document.getElementById('s-github-token');
   const token = (tokenInput && tokenInput.value.trim()) || '';
   if (!token) {
@@ -1171,8 +1179,10 @@ function saveTokenForHost() {
     return;
   }
   try {
-    sessionStorage.setItem('bnb_host_publish_token', token);
-    showToast('✅ Token salvato per la sessione corrente!', 'success');
+    const enc = await encryptToken(token);
+    localStorage.setItem(HOST_TOKEN_STORE, enc);
+    if (tokenInput) { tokenInput.value = ''; tokenInput.placeholder = '[Token salvato ✅]'; }
+    showToast('✅ Token cifrato e salvato in modo sicuro nel browser!', 'success');
   } catch (e) {
     showToast('❌ Errore nel salvataggio del token.', 'error');
   }
@@ -1181,8 +1191,9 @@ function saveTokenForHost() {
 async function hostPublishNow() {
   const btn = document.getElementById('host-publish-btn');
 
-  // Prova a recuperare il token pre-salvato dall'admin
-  const token = sessionStorage.getItem('bnb_host_publish_token') || '';
+  // Prova a recuperare il token pre-salvato dall'admin (cifrato in localStorage)
+  const encTok = localStorage.getItem(HOST_TOKEN_STORE) || '';
+  const token = encTok ? await decryptToken(encTok).catch(() => '') : '';
 
   if (!token) {
     // Fallback: nessun token configurato, usa il vecchio metodo di invio email/JSON
@@ -1203,8 +1214,6 @@ async function hostPublishNow() {
   if (btn) { btn.disabled = true; btn.textContent = '⏳ Pubblicazione…'; }
 
   try {
-    sessionStorage.setItem('bnb_github_token', token);
-
     const OWNER = 'ffeliteapartments';
     const REPO = 'guide';
     const DATA_FILE = 'js/data.js';
@@ -1252,7 +1261,6 @@ async function hostPublishNow() {
     showToast('❌ Errore: ' + (err.message || 'Errore sconosciuto.') + ' Prova a contattare l\'amministratore.', 'error');
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = '🚀 Pubblica Ora'; }
-    sessionStorage.removeItem('bnb_github_token');
   }
 }
 
@@ -1435,10 +1443,10 @@ async function changeRecoveryWord() {
 //  GITHUB TOKEN REMOVAL
 // ════════════════════════════════════════════
 function removeGithubToken() {
-  sessionStorage.removeItem('bnb_github_token');
-  sessionStorage.removeItem('bnb_host_publish_token');
+  localStorage.removeItem(TOKEN_STORE);
+  localStorage.removeItem(HOST_TOKEN_STORE);
   const field = document.getElementById('s-github-token');
-  if (field) field.value = '';
+  if (field) { field.value = ''; field.placeholder = 'ghp_...'; }
   const msg = document.getElementById('s-publish-msg');
   if (msg) { msg.style.color = 'var(--teal)'; msg.textContent = '✅ Token rimosso.'; setTimeout(() => { msg.textContent = ''; }, 2000); }
 }
