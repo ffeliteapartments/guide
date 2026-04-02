@@ -243,7 +243,7 @@ const PUBLISHED_DATA = {
   "bbName": "FF Elite Apartments",
   "subtitle": "GUIDA OSPITE",
   "cityZone": "Roma",
-  "theme": "romantic",
+  "theme": "dark",
   "pwaName": "",
   "pwaShortName": "",
   "hostName": "Nicolò",
