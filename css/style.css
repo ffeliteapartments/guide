@@ -1282,19 +1282,7 @@ body, .app-shell, .apt-card, .stat-card, .welcome-card,
     transition: background .12s;
   }
   .qr-dl-btn:active { background: var(--border); }
-  .qr-print-btn {
-    background: var(--teal);
-    border: none;
-    border-radius: 10px;
-    color: #fff;
-    font-family: 'Jost', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 12px;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 4px;
-  }
+
 
   /* ── SETTINGS: DYNAMIC BUTTONS ───────────────────── */
   .s-remove-btn {

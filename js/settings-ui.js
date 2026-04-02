@@ -584,29 +584,6 @@ function downloadQr(idx, aptName) {
   document.body.removeChild(link);
 }
 
-function printAllQr() {
-  var apts = (currentData && currentData.apts) || [];
-  var base = getGuideBaseUrl();
-  var items = '';
-  apts.forEach(function(apt, idx) {
-    var canvas = document.getElementById('qr-canvas-' + idx);
-    var dataUrl = canvas ? canvas.toDataURL('image/png') : '';
-    var name = apt.name || ('Appartamento ' + (idx + 1));
-    var url = base + '?apt=' + idx;
-    items += '<div style="page-break-inside:avoid;display:inline-block;margin:20px;text-align:center;vertical-align:top">'
-      + '<p style="font-family:serif;font-size:16px;color:#c9a84c;margin-bottom:8px">' + escHtml(name) + '</p>'
-      + (dataUrl ? '<img src="' + dataUrl + '" style="width:200px;height:200px">' : '')
-      + '<p style="font-size:10px;color:#666;margin-top:8px;word-break:break-all;max-width:200px">' + escHtml(url) + '</p>'
-      + '</div>';
-  });
-  var win = window.open('', '_blank', 'noopener');
-  if (!win) return;
-  win.document.write('<html><head><title>QR Codes</title><style>body{background:#fff;text-align:center;padding:20px}@media print{@page{margin:1cm}}</style></head><body>' + items + '</body></html>');
-  win.document.close();
-  win.focus();
-  setTimeout(function() { win.print(); }, 300);
-}
-
 function renderSettingsReviews(reviews) {
   const container = document.getElementById('s-reviews-container');
   if (!container) return;
@@ -697,12 +674,6 @@ function renderChangelogSection() {
   }).join('');
 }
 
-function clearChangelog() {
-  if (!confirm('Cancellare tutto lo storico modifiche?')) return;
-  localStorage.removeItem('bnb_changelog');
-  renderChangelogSection();
-}
-
 function copyCnameRecord() {
   const el = document.getElementById('s-customDomain');
   const domain = el ? el.value.trim() : '';
@@ -717,11 +688,3 @@ function copyCnameRecord() {
   }
 }
 
-function resetAnalytics() {
-  if (!confirm('Azzerare tutti i dati analytics?')) return;
-  if (typeof GuestAnalytics !== 'undefined') {
-    GuestAnalytics.reset();
-    GuestAnalytics.renderDashboard('an-dashboard');
-  }
-  showToast('📊 Analytics azzerati.', 'success');
-}

@@ -3,6 +3,11 @@
 // ════════════════════════════════════════════
 const GuestAnalytics = (function () {
   const KEY = 'gg_analytics';
+  const OWNER_DEVICE_KEY = 'bnb_is_owner_device';
+
+  function _isOwnerDevice() {
+    return localStorage.getItem(OWNER_DEVICE_KEY) === 'true';
+  }
 
   // Perf: in-memory cache to avoid redundant JSON.parse/stringify on every event
   let _cache = null;
@@ -61,6 +66,7 @@ const GuestAnalytics = (function () {
   }
 
   function trackVisit() {
+    if (_isOwnerDevice()) return;
     const d = getData();
     const now = new Date().toISOString();
     d.totalVisits = (d.totalVisits || 0) + 1;
@@ -73,6 +79,7 @@ const GuestAnalytics = (function () {
   }
 
   function trackPageView(tabName) {
+    if (_isOwnerDevice()) return;
     const d = getData();
     if (!d.pageViews) d.pageViews = {};
     d.pageViews[tabName] = (d.pageViews[tabName] || 0) + 1;
@@ -80,6 +87,7 @@ const GuestAnalytics = (function () {
   }
 
   function trackLang(lang) {
+    if (_isOwnerDevice()) return;
     const d = getData();
     if (!d.langCounts) d.langCounts = { it: 0, en: 0 };
     const key = (lang === 'en') ? 'en' : 'it';
