@@ -617,6 +617,7 @@ const DEFAULT_PIN_HASH = deobfuscateHash('dRAxHDwNCmI5OG4RCRcNFW09dS51LWdnYDQRIi
 // Login credentials state
 const USER_KEY = 'bnb_admin_user';
 const PASS_KEY = 'bnb_admin_pass';
+const OWNER_DEVICE_KEY = 'bnb_is_owner_device';
 /* DEFAULT_USER_HASH_START */
 const DEFAULT_USER_HASH = deobfuscateHash('NTU9GDQtDSwCbyg9dR49YwAZHDEJG2dnYBNsCD84Eh4+CQwQNTYrFBg1D2kqPGNtMDUZPj4DbRFtKx8xGS4/EwBtDgNn');
 /* DEFAULT_USER_HASH_END */

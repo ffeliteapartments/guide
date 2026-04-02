@@ -948,7 +948,7 @@ function checkPin() {
   verifyPin(pinBuffer, getStoredPinHash(), PIN_KEY).then(ok => {
     if (ok) {
       resetRateLimit('pin');
-      currentRole = 'host';
+      localStorage.setItem(OWNER_DEVICE_KEY, 'true');
       closePinModal();
       _openSettingsPanel();
     } else {
@@ -1114,6 +1114,7 @@ async function submitLogin() {
       localStorage.setItem(PASS_KEY, await hashPin(pass));
     }
     resetRateLimit('admin');
+    localStorage.setItem(OWNER_DEVICE_KEY, 'true');
     currentRole = 'admin';
     closePinModal();
     _openSettingsPanel();
@@ -1656,20 +1657,9 @@ function initEventListeners() {
   if (saveTokenBtn) saveTokenBtn.addEventListener('click', saveTokenForHost);
 
   // ── QR / Changelog / CNAME / Analytics ───
-  var qrPrintBtn = document.querySelector('.qr-print-btn');
-  if (qrPrintBtn) qrPrintBtn.addEventListener('click', printAllQr);
-
-  var clearChangelogBtn = document.evaluate('//button[contains(@class,"s-btn") and contains(.,"Cancella Storico")]',
-    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-  if (clearChangelogBtn) clearChangelogBtn.addEventListener('click', clearChangelog);
-
   var copyCnameBtn = document.evaluate('//button[contains(@class,"s-btn") and contains(.,"Copia Record CNAME")]',
     document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
   if (copyCnameBtn) copyCnameBtn.addEventListener('click', copyCnameRecord);
-
-  var resetAnalyticsBtn = document.evaluate('//button[contains(@class,"s-btn") and contains(.,"Reset Analytics")]',
-    document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-  if (resetAnalyticsBtn) resetAnalyticsBtn.addEventListener('click', resetAnalytics);
 
   // ── Preview banner ────────────────────────
   var previewSaveBtn = document.evaluate('//button[contains(@class,"preview-banner-btn") and contains(.,"Salva")]',
