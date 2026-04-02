@@ -241,7 +241,7 @@ const DEFAULT_DATA = {
 /* PUBLISHED_DATA_START */
 const PUBLISHED_DATA = {
   "bbName": "FF Elite Apartments",
-  "subtitle": "GUIDA OSPIT",
+  "subtitle": "GUIDA OSPITE",
   "cityZone": "Roma",
   "theme": "dark",
   "pwaName": "Guida - FF Elite Apartments",
