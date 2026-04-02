@@ -648,6 +648,12 @@ body, .app-shell, .apt-card, .stat-card, .welcome-card,
   }
   .copy-btn:active { transform: scale(.92); }
   .copy-btn.copied { background: var(--teal); }
+  .home-wifi-copy-btn {
+    margin-top: 6px;
+    padding: 4px 8px;
+    font-size: 13px;
+    align-self: flex-start;
+  }
 
   .rules-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
   .rule-item {

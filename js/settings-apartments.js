@@ -150,7 +150,7 @@ async function collectSettingsApts() {
   const apts = [];
   for (let i = 0; i < count; i++) {
     const apt = {};
-    // Collect all text/url fields; wifiPass is encrypted with AES-GCM
+    // Collect all text/url fields; wifiPass is XOR-obfuscated (portable across devices)
     const plainKeys = ['name','address','addressShort','mapsLink','maxGuests','maxGuestsEn','wifi','checkin','checkout','lat','lon',
      'howToReachIt','howToReachEn','howToAccessIt','howToAccessEn','parkingIt','parkingEn',
      'bedroomTagsIt','bedroomTagsEn','kitchenTagsIt','kitchenTagsEn','bathroomTagsIt','bathroomTagsEn'];
@@ -159,7 +159,7 @@ async function collectSettingsApts() {
       if (el) apt[k] = el.value;
     });
     const wifiEl = document.getElementById(`s-a${i}-wifiPass`);
-    apt.wifiPass = wifiEl ? await encryptWifi(wifiEl.value) : '';
+    apt.wifiPass = wifiEl ? obfuscate(wifiEl.value) : '';
     apt.houseRules = collectAptHouseRules(i);
     apt.extraServices = collectAptExtraServices(i);
     apt.places = collectAptPlaces(i);

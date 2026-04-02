@@ -195,8 +195,14 @@ function renderApp(aptIndex) {
   document.getElementById('st-wifi-pass').textContent = '';
   decryptWifi(apt.wifiPass || '').then(plainPass => {
     const isDefaultPass = plainPass === 'password123' || plainPass === 'password456';
-    document.getElementById('st-wifi-pass').textContent = isDefaultPass ? '' : plainPass;
-    if (copyBtn) copyBtn.style.display = isDefaultPass ? 'none' : '';
+    const displayPass = isDefaultPass ? '' : plainPass;
+    document.getElementById('st-wifi-pass').textContent = displayPass;
+    if (copyBtn) copyBtn.style.display = displayPass ? '' : 'none';
+    // Home WiFi copy button — same password, hidden until available
+    const homePassEl = document.getElementById('s-wifi-pass');
+    const homeCopyBtn = document.getElementById('copy-home-wifi-btn');
+    if (homePassEl) homePassEl.textContent = displayPass;
+    if (homeCopyBtn) homeCopyBtn.style.display = displayPass ? '' : 'none';
   });
 
   const stMaps = document.getElementById('st-maps');
@@ -845,7 +851,23 @@ function copyWifi() {
   }
 }
 
-function fallbackCopy(text, btn) {
+function copyHomeWifi() {
+  const pass = document.getElementById('s-wifi-pass').textContent;
+  const btn = document.getElementById('copy-home-wifi-btn');
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(pass).then(() => {
+      btn.textContent = '✅';
+      btn.classList.add('copied');
+      showToast('Copiato!', 'info');
+      setTimeout(() => { btn.textContent = '🗒️'; btn.classList.remove('copied'); }, 2000);
+    }).catch(() => fallbackCopy(pass, btn, '🗒️'));
+  } else {
+    fallbackCopy(pass, btn, '🗒️');
+  }
+}
+
+function fallbackCopy(text, btn, resetEmoji) {
+  resetEmoji = resetEmoji || '📋';
   const ta = document.createElement('textarea');
   ta.value = text;
   ta.style.position = 'fixed';
@@ -858,10 +880,10 @@ function fallbackCopy(text, btn) {
   if (ok) {
     btn.textContent = '✅';
     btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = '📋'; btn.classList.remove('copied'); }, 2000);
+    setTimeout(() => { btn.textContent = resetEmoji; btn.classList.remove('copied'); }, 2000);
   } else {
     btn.textContent = '❌';
-    setTimeout(() => { btn.textContent = '📋'; }, 2000);
+    setTimeout(() => { btn.textContent = resetEmoji; }, 2000);
   }
 }
 
@@ -1477,7 +1499,6 @@ function init() {
   applyTheme(savedTheme);
 
   migratePinIfNeeded();
-  migrateWifiPasswords(); // async: migrates _OBF_ XOR passwords to AES-GCM in background
 
   (function() {
     try {
@@ -1547,6 +1568,9 @@ function initEventListeners() {
   // ── Copy WiFi button ──────────────────────
   var copyWifiBtn = document.getElementById('copy-wifi-btn');
   if (copyWifiBtn) copyWifiBtn.addEventListener('click', copyWifi);
+
+  var copyHomeWifiBtn = document.getElementById('copy-home-wifi-btn');
+  if (copyHomeWifiBtn) copyHomeWifiBtn.addEventListener('click', copyHomeWifi);
 
   // ── Bottom nav bar (data-tab attribute) ──
   document.querySelectorAll('.nav-item[data-tab]').forEach(function(btn) {
