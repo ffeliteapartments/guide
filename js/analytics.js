@@ -126,14 +126,14 @@ const GuestAnalytics = (function () {
     const isoNow = now.toISOString();
     d.totalVisits = (d.totalVisits || 0) + 1;
     if (!d.firstVisit) d.firstVisit = isoNow;
-    const wasReturning = !!d.lastVisit;
     d.lastVisit = isoNow;
 
     // Unique visitors
     const { isNew } = _getOrCreateUuid();
     if (isNew) {
       d.uniqueVisitors = (d.uniqueVisitors || 0) + 1;
-    } else if (wasReturning) {
+    } else {
+      // Any visit by a known UUID (non-new visitor) counts as a return visit
       d.returnVisits = (d.returnVisits || 0) + 1;
     }
 

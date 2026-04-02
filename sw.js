@@ -14,6 +14,8 @@ const STATIC_ASSETS = [
   './js/settings-apartments.js',
   './js/settings-ui.js',
   './js/settings-publish.js',
+  './js/settings-multitenant.js',
+  './js/settings-versioning.js',
   './js/weather.js',
   './js/sw-register.js',
   './manifest.json',

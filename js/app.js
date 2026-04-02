@@ -1271,7 +1271,8 @@ function renderReviews(reviews) {
   container.className = 'reviews-container' + (reviews.length >= 4 ? ' reviews-carousel' : '');
 
   reviews.forEach(function(r) {
-    const stars = '★'.repeat(Math.min(5, r.stars || 5)) + '☆'.repeat(Math.max(0, 5 - (r.stars || 5)));
+    const starCount = Math.min(5, r.stars || 5);
+    const stars = '★'.repeat(starCount) + '☆'.repeat(Math.max(0, 5 - starCount));
     const text = (currentLang === 'en' && r.textEn) ? r.textEn : (r.textIt || r.textEn || '');
     if (!text && !r.author) return;
     const card = document.createElement('div');
@@ -1569,7 +1570,7 @@ function initAccessibility() {
     if (e.target.classList.contains('fs-btn') || e.target.classList.contains('fs-option-btn')) {
       applyFontSize(e.target.dataset.size);
     }
-    if (e.target.id === 's-high-contrast' || (e.target.closest && e.target.closest('.s-toggle-row') && e.target.type === 'checkbox' && e.target.id === 's-high-contrast')) {
+    if (e.target.id === 's-high-contrast') {
       applyHighContrast(e.target.checked);
     }
   });

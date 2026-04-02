@@ -900,6 +900,10 @@ function addChangelogEntry(description, who) {
 const MAX_SNAPSHOTS = 20;
 
 function simpleHash(str) {
+  // Only hashes the first 200 characters for performance. This is sufficient
+  // for deduplication purposes — consecutive saves with identical content will
+  // match, while even small edits change the leading characters and produce a
+  // different hash. Full-content integrity is not required here.
   let hash = 0;
   for (let i = 0; i < Math.min(str.length, 200); i++) {
     hash = ((hash << 5) - hash) + str.charCodeAt(i);
