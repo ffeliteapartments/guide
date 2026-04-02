@@ -243,10 +243,13 @@ const PUBLISHED_DATA = {
   "bbName": "FF Elite Apartments",
   "subtitle": "GUIDA OSPITE",
   "cityZone": "Roma",
+  "theme": "light",
+  "pwaName": "",
+  "pwaShortName": "",
   "hostName": "Nicolò",
   "hostPhone": "+393342177311",
   "googleReviewUrl": "https://g.page/r/CZvIjdaReVG_EBM/review",
-  "qrBaseUrl": "",
+  "qrBaseUrl": "https://ffeliteapartments.github.io/guide",
   "supportPhone": "+393450307922",
   "customDomain": "",
   "checkinSteps": [
@@ -295,7 +298,6 @@ const PUBLISHED_DATA = {
       "maxGuests": "3 persone",
       "maxGuestsEn": "3 people",
       "wifi": "FF Elite Apartments",
-      "wifiPass": "_OBF_AgsRGwoLbhYeHQ==",
       "checkin": "15:00",
       "checkout": "10:00",
       "lat": "",
@@ -312,6 +314,7 @@ const PUBLISHED_DATA = {
       "kitchenTagsEn": "Cooktop,Oven,Refrigerator,Dishwasher,Coffee maker,Microwave",
       "bathroomTagsIt": "Doccia,Asciugamani,Phon,Prodotti igiene",
       "bathroomTagsEn": "Shower,Towels,Hairdryer, Hygiene products",
+      "wifiPass": "_AESGCM_Wj5lDt+WLrES/Hr6sK2i04doH/KPw5VUCrfklvupCJf0AevWEOc=",
       "houseRules": [
         {
           "icon": "🔇",
