@@ -243,7 +243,7 @@ const PUBLISHED_DATA = {
   "bbName": "FF Elite Apartments",
   "subtitle": "GUIDA OSPITE",
   "cityZone": "Roma",
-  "theme": "dark",
+  "theme": "light",
   "pwaName": "",
   "pwaShortName": "",
   "hostName": "Nicolò",
@@ -314,7 +314,7 @@ const PUBLISHED_DATA = {
       "kitchenTagsEn": "Cooktop,Oven,Refrigerator,Dishwasher,Coffee maker,Microwave",
       "bathroomTagsIt": "Doccia,Asciugamani,Phon,Prodotti igiene",
       "bathroomTagsEn": "Shower,Towels,Hairdryer, Hygiene products",
-      "wifiPass": "_AESGCM_FTHZOONXlyK7HANc0nlXvO/Z6sBRj5hxWpX59hZe+ORWr/j5QIY=",
+      "wifiPass": "_OBF_AgsRGwoLbhYeHQ==",
       "houseRules": [
         {
           "icon": "🔇",
