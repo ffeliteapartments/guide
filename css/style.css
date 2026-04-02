@@ -1862,3 +1862,146 @@ body, .app-shell, .apt-card, .stat-card, .welcome-card,
 .pt-0 { padding-top: 0; }
 .d-none { display: none; }
 .hidden-pb-4 { display: none; padding-bottom: 4px; }
+
+/* ── Skip to content ── */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 8px;
+  background: var(--accent);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 9999;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+.skip-link:focus { top: 8px; }
+
+/* ── Focus visible ── */
+:focus-visible {
+  outline: 3px solid var(--accent) !important;
+  outline-offset: 2px;
+}
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid var(--accent) !important;
+  outline-offset: 2px;
+}
+
+/* ── Font size control (guest header) ── */
+.font-size-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 8px;
+}
+.fs-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text1);
+  border-radius: 6px;
+  padding: 3px 7px;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.15s, color 0.15s;
+}
+.fs-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.fs-btn:hover:not(.active) { background: var(--hover); }
+
+/* ── Font size options (settings) ── */
+.font-size-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 6px 0 4px;
+}
+.fs-option-btn {
+  flex: 1;
+  min-width: 90px;
+  padding: 8px 6px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text1);
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  text-align: center;
+}
+.fs-option-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.fs-option-btn:hover:not(.active) { background: var(--hover); }
+
+/* ── High contrast mode ── */
+body.high-contrast {
+  --text1: #ffffff;
+  --text2: #e0e0e0;
+  --card: #0a0a0a;
+  --bg: #000000;
+  --border: #666666;
+  --accent: #ff6b35;
+  --gold: #ffd700;
+  --teal: #00ffcc;
+}
+body.high-contrast .nav-item,
+body.high-contrast .lang-card,
+body.high-contrast .review-card,
+body.high-contrast .rule-card {
+  border: 1.5px solid #888 !important;
+}
+
+/* ── Analytics Dashboard ── */
+.an-bar-teal { background: var(--teal) !important; }
+.an-bar-gold { background: var(--gold) !important; }
+.an-lang-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: var(--text1);
+}
+.an-lang-row > span:first-child { min-width: 36px; }
+.an-lang-row > span:last-child { min-width: 56px; text-align: right; }
+.an-hourly-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 4px;
+  margin: 8px 0 16px;
+}
+.an-hour-cell {
+  background: color-mix(in srgb, var(--accent) var(--alpha, 10%), var(--card));
+  border-radius: 4px;
+  padding: 6px 2px;
+  text-align: center;
+  cursor: default;
+  min-height: 38px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+}
+.an-hour-label {
+  font-size: 10px;
+  color: var(--text2);
+  font-weight: 500;
+}
+.an-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.an-lang-bars { margin-bottom: 12px; }

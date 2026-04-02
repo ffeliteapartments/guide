@@ -28,6 +28,7 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<a href="#guide-content" class="skip-link">Salta al contenuto</a>
 <!-- Splash Screen -->
 <div id="splash-screen">
   <div class="splash-content">
@@ -84,6 +85,11 @@
     <button class="back-btn" aria-label="Torna indietro">←</button>
     <div class="guide-apt-name" id="guide-apt-name">Appartamento 1</div>
     <button class="lang-toggle-btn" id="lang-toggle-btn">🇬🇧 EN</button>
+    <div class="font-size-ctrl" id="font-size-ctrl" aria-label="Dimensione testo">
+      <button class="fs-btn" data-size="small" aria-label="Testo piccolo" title="Testo piccolo">A-</button>
+      <button class="fs-btn active" data-size="normal" aria-label="Testo normale" title="Testo normale">A</button>
+      <button class="fs-btn" data-size="large" aria-label="Testo grande" title="Testo grande">A+</button>
+    </div>
   </div>
 
   <div class="guide-content" id="guide-content">
@@ -550,6 +556,19 @@
             <span>Minimal</span>
           </div>
         </div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">Aa Dimensione Testo</div>
+        <div class="font-size-options" id="s-font-size-options">
+          <button class="fs-option-btn" data-size="small">A- Piccolo (14px)</button>
+          <button class="fs-option-btn active" data-size="normal">A Normale (16px)</button>
+          <button class="fs-option-btn" data-size="large">A+ Grande (18px)</button>
+        </div>
+        <div class="s-divider"></div>
+        <div class="s-sub-title">♿ Alto Contrasto</div>
+        <label class="s-toggle-row">
+          <span>Attiva Alto Contrasto</span>
+          <input type="checkbox" id="s-high-contrast" class="s-toggle">
+        </label>
       </div>
     </details>
 

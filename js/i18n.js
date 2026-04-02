@@ -82,7 +82,14 @@ const UI_STRINGS = {
     selfCheckin:    'Self Check-in',
     arrivalInstructions: 'Istruzioni Arrivo',
     updateAvailable: 'Aggiornamento disponibile',
-    updateNow:       'Aggiorna ora'
+    updateNow:       'Aggiorna ora',
+    waMsg_home:      'Ciao, ho una domanda riguardo al mio soggiorno presso ',
+    waMsg_stay:      'Ciao, ho un problema con l\'appartamento ',
+    waMsg_stay_suffix: ' (WiFi/accesso/altro)',
+    waMsg_places:    'Ciao, vorrei un consiglio su cosa visitare vicino a ',
+    waMsg_food:      'Ciao, vorrei un consiglio su dove mangiare vicino a ',
+    waMsg_transport: 'Ciao, ho bisogno di aiuto con i trasporti per ',
+    waMsg_departure: 'Ciao, ho una domanda riguardo al check-out di '
   },
   en: {
     landingIntro:   'Welcome! Select your apartment to access the complete guide.',
@@ -156,7 +163,14 @@ const UI_STRINGS = {
     selfCheckin:    'Self Check-in',
     arrivalInstructions: 'Arrival Instructions',
     updateAvailable: 'Update available',
-    updateNow:       'Update now'
+    updateNow:       'Update now',
+    waMsg_home:      'Hello, I have a question about my stay at ',
+    waMsg_stay:      'Hello, I have an issue at apartment ',
+    waMsg_stay_suffix: ' (WiFi/access/other)',
+    waMsg_places:    'Hello, I would like a recommendation on what to visit near ',
+    waMsg_food:      'Hello, I would like a recommendation on where to eat near ',
+    waMsg_transport: 'Hello, I need help with transport for ',
+    waMsg_departure: 'Hello, I have a question about the check-out of '
   }
 };
 

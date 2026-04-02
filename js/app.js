@@ -97,6 +97,8 @@ function openGuide(aptIndex, lang) {
   guide.classList.add('active');
   renderApp(aptIndex);
   switchTab('home');
+  if (typeof GuestAnalytics !== 'undefined') GuestAnalytics.trackGuideEntered();
+  updateWaFab('home');
 }
 
 function switchLang() {
@@ -825,6 +827,7 @@ function requestService(svc) {
   const url     = phone
     ? `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`
     : `https://wa.me/?text=${encodeURIComponent(msg)}`;
+  if (typeof GuestAnalytics !== 'undefined') GuestAnalytics.trackExternalClick('whatsapp');
   window.open(url, '_blank', 'noopener,noreferrer');
 }
 
@@ -834,6 +837,7 @@ function requestService(svc) {
 function switchTab(tabId) {
   showTab(tabId);
   if (typeof GuestAnalytics !== 'undefined') GuestAnalytics.trackPageView(tabId);
+  updateWaFab(tabId);
 }
 
 // ════════════════════════════════════════════
@@ -842,6 +846,7 @@ function switchTab(tabId) {
 function copyWifi() {
   const pass = document.getElementById('st-wifi-pass').textContent;
   const btn = document.getElementById('copy-wifi-btn');
+  if (typeof GuestAnalytics !== 'undefined') GuestAnalytics.trackWifiCopy();
   if (navigator.clipboard) {
     navigator.clipboard.writeText(pass).then(() => {
       btn.textContent = '✅';
@@ -857,6 +862,7 @@ function copyWifi() {
 function copyHomeWifi() {
   const pass = document.getElementById('s-wifi-pass').textContent;
   const btn = document.getElementById('copy-home-wifi-btn');
+  if (typeof GuestAnalytics !== 'undefined') GuestAnalytics.trackWifiCopy();
   if (navigator.clipboard) {
     navigator.clipboard.writeText(pass).then(() => {
       btn.textContent = '✅';
@@ -1016,6 +1022,7 @@ function _openSettingsPanel() {
   panel.querySelectorAll('input, textarea, select').forEach(function(el) {
     el.addEventListener('input', function() { settingsDirty = true; }, { once: false });
   });
+  if (typeof GuestAnalytics !== 'undefined') GuestAnalytics.renderDashboard('an-dashboard');
 }
 
 function applyRoleVisibility() {
@@ -1270,14 +1277,31 @@ function renderReviews(reviews) {
 // ════════════════════════════════════════════
 //  WHATSAPP FAB
 // ════════════════════════════════════════════
-function updateWaFab() {
+function updateWaFab(tabId) {
   const fab = document.getElementById('wa-fab');
   if (!fab) return;
   const phone = ((currentData && currentData.hostPhone) || '').replace(/[\s\-\(\)]/g, '').replace(/^\+/, '');
   if (!phone || currentData.hostPhone === '+39 000 000 0000') { fab.style.display = 'none'; fab.classList.remove('visible'); return; }
   const aptName = (currentData && currentData.apts && currentData.apts[currentAptIndex]) ? currentData.apts[currentAptIndex].name : '';
-  const msg = encodeURIComponent('Ciao! Sono un ospite di ' + aptName + ', avrei bisogno di assistenza.');
-  fab.onclick = function() { window.open('https://wa.me/' + phone + '?text=' + msg, '_blank', 'noopener,noreferrer'); };
+
+  if (!tabId) {
+    const activeTab = document.querySelector('.tab-section.active');
+    tabId = activeTab ? activeTab.id.replace('tab-', '') : 'home';
+  }
+
+  let msgText;
+  if (tabId === 'stay') {
+    msgText = t('waMsg_stay') + aptName + t('waMsg_stay_suffix');
+  } else {
+    const key = 'waMsg_' + tabId;
+    msgText = t(key) + aptName;
+  }
+
+  const msg = encodeURIComponent(msgText);
+  fab.onclick = function() {
+    if (typeof GuestAnalytics !== 'undefined') GuestAnalytics.trackExternalClick('whatsapp');
+    window.open('https://wa.me/' + phone + '?text=' + msg, '_blank', 'noopener,noreferrer');
+  };
   fab.style.display = '';
   setTimeout(() => fab.classList.add('visible'), 50);
 }
@@ -1478,11 +1502,49 @@ function updateDynamicManifest() {
 }
 
 // ════════════════════════════════════════════
+//  FONT SIZE & HIGH CONTRAST ACCESSIBILITY
+// ════════════════════════════════════════════
+const FONT_SIZE_KEY = 'bnb_font_size';
+const HIGH_CONTRAST_KEY = 'bnb_high_contrast';
+
+function applyFontSize(size) {
+  const sizes = { small: '14px', normal: '16px', large: '18px' };
+  document.documentElement.style.fontSize = sizes[size] || '16px';
+  document.querySelectorAll('.fs-btn, .fs-option-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.size === size);
+  });
+  try { localStorage.setItem(FONT_SIZE_KEY, size); } catch(e) {}
+}
+
+function applyHighContrast(enabled) {
+  document.body.classList.toggle('high-contrast', enabled);
+  const chk = document.getElementById('s-high-contrast');
+  if (chk) chk.checked = enabled;
+  try { localStorage.setItem(HIGH_CONTRAST_KEY, enabled ? '1' : '0'); } catch(e) {}
+}
+
+function initAccessibility() {
+  const savedSize = localStorage.getItem(FONT_SIZE_KEY) || 'normal';
+  applyFontSize(savedSize);
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('fs-btn') || e.target.classList.contains('fs-option-btn')) {
+      applyFontSize(e.target.dataset.size);
+    }
+    if (e.target.id === 's-high-contrast' || (e.target.closest && e.target.closest('.s-toggle-row') && e.target.type === 'checkbox' && e.target.id === 's-high-contrast')) {
+      applyHighContrast(e.target.checked);
+    }
+  });
+  const hc = localStorage.getItem(HIGH_CONTRAST_KEY) === '1';
+  applyHighContrast(hc);
+}
+
+// ════════════════════════════════════════════
 //  INIT
 // ════════════════════════════════════════════
 function init() {
   currentData = loadData();
   updateDynamicManifest();
+  initAccessibility();
 
   // Splash screen
   const splash = document.getElementById('splash-screen');
@@ -1745,4 +1807,17 @@ function initEventListeners() {
       }
     });
   }
+
+  // ── Analytics: external link click tracking ──
+  document.addEventListener('click', function(e) {
+    if (typeof GuestAnalytics === 'undefined') return;
+    const a = e.target.closest('a[href]');
+    if (!a) return;
+    const href = a.href || '';
+    if (a.classList.contains('google-maps-btn') || href.includes('google.com/maps') || href.includes('maps.google')) {
+      GuestAnalytics.trackExternalClick('maps');
+    } else if (a.id === 'google-review-btn' || a.id === 'home-review-btn' || href.includes('g.page/r') || href.includes('search.google.com/local')) {
+      GuestAnalytics.trackExternalClick('review');
+    }
+  });
 }
