@@ -146,7 +146,7 @@ async function encryptWifi(plaintext) {
 
 async function decryptWifi(ciphertext) {
   if (!ciphertext) return '';
-  // Handle legacy XOR-obfuscated values transparently
+  // Handle legacy XOR-obfuscated values (migrated to AES-GCM on first boot)
   if (ciphertext.startsWith(_OBF_PREFIX)) return deobfuscate(ciphertext);
   if (!ciphertext.startsWith(_WIFI_AES_PREFIX)) return ciphertext; // plain-text fallback
   try {
