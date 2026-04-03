@@ -23,6 +23,7 @@ const STATIC_ASSETS = [
   './icon.svg',
   './icon-192.png',
   './icon-512.png',
+  './og-image.png',
   'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap'
 ];
 
@@ -92,10 +93,10 @@ self.addEventListener('fetch', e => {
     );
     return;
   }
-  // Stale-while-revalidate for JS and CSS: serve from cache immediately,
+  // Stale-while-revalidate for JS, CSS, and image assets: serve from cache immediately,
   // then update cache in background for fresh assets on next load.
-  const isJsOrCss = /\.(js|css)(\?|$)/.test(url.pathname);
-  if (isJsOrCss) {
+  const isAppAsset = /\.(js|css|png|svg|webp|jpe?g|gif|ico)(\?|$)/.test(url.pathname);
+  if (isAppAsset) {
     e.respondWith(
       caches.match(e.request).then(cached => {
         const networkFetch = fetch(e.request).then(async response => {
@@ -121,7 +122,7 @@ self.addEventListener('fetch', e => {
             if (changed) {
               await cache.put(e.request, forCache);
               // Notify clients only once per SW activation to avoid repeated banners
-              // when multiple JS/CSS assets are revalidated in parallel.
+              // when multiple assets are revalidated in parallel.
               if (!_contentUpdateNotified) {
                 _contentUpdateNotified = true;
                 self.clients.matchAll().then(clients => {
