@@ -772,7 +772,29 @@ function switchProperty(id) {
   window.location.href = window.location.pathname + (id === 'default' ? '' : '?property=' + id);
 }
 
+// ════════════════════════════════════════════
+//  FIREBASE INTEGRATION HELPERS
+// ════════════════════════════════════════════
+
+// Ritorna true se Firebase è configurato con credenziali reali
+// (non placeholder). Controlla il flag impostato da firebase-config.js.
+function isFirebaseConfigured() {
+  return window._firebaseConfigured === true;
+}
+
 function loadData() {
+  // Se Firebase è configurato, controlla prima la cache offline Firestore
+  if (isFirebaseConfigured()) {
+    try {
+      const slug = typeof getGuideSlugFromUrl === 'function' ? getGuideSlugFromUrl() : 'default';
+      const cachedRaw = localStorage.getItem('bnb_guide_cache_' + slug);
+      if (cachedRaw) {
+        const cached = JSON.parse(cachedRaw);
+        return mergeWithDefaults(cached, DEFAULT_DATA);
+      }
+    } catch(e) { console.warn('[data] Impossibile leggere cache Firestore:', e); }
+  }
+
   try {
     const raw = localStorage.getItem(getDataKey());
     if (raw) {
@@ -817,6 +839,11 @@ function saveData(data) {
   try {
     localStorage.setItem(getDataKey(), JSON.stringify(data));
   } catch(e) { console.error('Failed to save data:', e); }
+
+  // Se Firebase è configurato, salva anche su Firestore
+  if (isFirebaseConfigured() && typeof saveGuideToFirestore === 'function') {
+    saveGuideToFirestore(data);
+  }
 }
 
 

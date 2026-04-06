@@ -22,7 +22,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Guest Guide">
 <meta name="theme-color" content="#1a3238">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.open-meteo.com https://api.github.com https://api.mymemory.translated.net;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://*.googleapis.com https://*.gstatic.com https://*.firebaseapp.com https://*.firebaseio.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.open-meteo.com https://api.github.com https://api.mymemory.translated.net https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com;">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1019,6 +1019,16 @@
       <button class="login-submit-btn">Accedi</button>
       <button class="pin-cancel" style="margin-top:12px">← Torna al PIN</button>
     </div>
+    <!-- Firebase Auth login view — mostrato quando Firebase è configurato -->
+    <div id="firebase-login-view" style="display:none">
+      <div class="pin-title">🔥 Accesso Host</div>
+      <div class="pin-subtitle">Inserisci le tue credenziali Firebase</div>
+      <input class="login-input" type="email" id="fb-login-email" placeholder="Email" autocomplete="email" autocapitalize="none" autocorrect="off" spellcheck="false">
+      <input class="login-input" type="password" id="fb-login-password" placeholder="Password" autocomplete="current-password">
+      <div class="login-error" id="fb-login-error"></div>
+      <button class="login-submit-btn fb-login-submit-btn">Accedi</button>
+      <button class="pin-cancel fb-login-cancel-btn" style="margin-top:12px">Annulla</button>
+    </div>
     <!-- Recovery view (H-2: replaces window.prompt(), works in iOS PWA standalone) -->
     <div id="recovery-view" style="display:none">
       <div class="pin-title">🔑 Recovery PIN</div>
@@ -1031,6 +1041,14 @@
   </div>
 </div>
 
+<!-- Firebase compat SDK (no bundler) — caricato prima degli altri script -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script defer src="js/firebase-config.js"></script>
+<script defer src="js/firebase-public.js"></script>
+<script defer src="js/firebase-auth.js"></script>
+<script defer src="js/firebase-save.js"></script>
 <script defer src="js/crypto.js"></script>
 <script defer src="js/i18n.js"></script>
 <script defer src="js/utils.js"></script>
