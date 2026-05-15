@@ -1,5 +1,5 @@
 // NOTE: Update CACHE_VERSION manually on every deploy so users receive fresh assets.
-const CACHE_VERSION = '2026-05-15-v1778832645799';
+const CACHE_VERSION = '2026-05-15-v1778833213816';
 const CACHE_NAME = 'bnb-guide-' + CACHE_VERSION;
 const STATIC_ASSETS = [
   './',
